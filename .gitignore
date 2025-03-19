@@ -132,3 +132,4 @@ $RECYCLE.BIN/
 
 data/ks-projects-201801.csv
 data/ks-projects-201612.csv
+*.Rproj
