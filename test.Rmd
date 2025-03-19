@@ -15,8 +15,8 @@ library(readr)
 ```
 
 ```{r}
-data <- read_csv("ks-projects-201612.csv")
-data1 <- read_csv("ks-projects-201801.csv")
+data <- read_csv("data/ks-projects-201612.csv")
+data1 <- read_csv("data/ks-projects-201801.csv")
 ```
 
 ```{r}
