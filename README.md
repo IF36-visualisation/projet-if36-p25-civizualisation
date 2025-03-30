@@ -16,9 +16,9 @@ Equipe Civizualisation :
 
 ## 📌 Introduction
 
-L'objectif de ce projet d'IF36 est d'analysée et présenter des données d'une base de données que l'on à choisie. Nous avons ainsi décidé d'utiliser les données du site de financement collaboratif Kickstarter.
+L'objectif de ce projet d'IF36 est d'analyser et de présenter des données issues d'une base de données que nous avons choisie. Nous avons ainsi décidé d'utiliser les données du site de financement collaboratif Kickstarter.
 
-Ce projet nous permettra d'explorer les tendances du financement de projet participatif, d'identifier les facteurs qui influence le succès d'un projet et d'évaluer la probabilité de réussite des campagnes sur cette plateforme.
+Ce projet nous permettra d'explorer les tendances du financement participatif, d'identifier les facteurs qui influencent le succès d'un projet et d'évaluer la probabilité de réussite des campagnes sur cette plateforme.
 
 ## 📁 Présentation des données
 Nos données proviennent de la plateforme **Kaggle** où nous avons trouvé un jeu de données sur **Kickstarter**.
@@ -77,9 +77,9 @@ Ce fichier contient plus d'individus que le premier, exclut les variables inutil
 
 ## 📊 Plan d'analyse
 
-L'objectif de notre analyse est d'identifié les facteurs qui influencent la réussite ou non du financement d'un projet et d'en tirer des tendances utilises.
+L'objectif de notre analyse est d'identifier les facteurs qui influencent la réussite ou non du financement d'un projet et d'en tirer des tendances utiles.
 
-### 🔍 Question d'analyse
+### 🔍 Questions d'analyse
 
 - Quels sont les taux de réussite des campagnes en fonction des catégories ?
 
@@ -93,7 +93,7 @@ L'objectif de notre analyse est d'identifié les facteurs qui influencent la ré
 
 - Le titre impacte-t-il la réussite d'une campagne ?
 
-### 📈 Variable à comparer
+### 📈 Variables à comparer
 
 - Succès/échec vs Catégorie principale
 
@@ -103,16 +103,14 @@ L'objectif de notre analyse est d'identifié les facteurs qui influencent la ré
 
 - Montant collecté vs Objectif fixé
 
-- Succès/échec vs Mot les plus récurents dans les titres
+- Succès/échec vs Mots les plus récurrents dans les titres
 
 ### ⚠️ Limitations et problèmes potentiels
 
-À cause de possible biais dans l’approche de certains campagnes de financements, on peut avoir des objectifs volontairement bas pour assurer la réussite.
+À cause de possibles biais dans l'approche de certaines campagnes de financement, on peut avoir des objectifs volontairement bas pour assurer la réussite.
 
-Le taux de conversion USD peut imposer du biais selon les taux de change.
+Le taux de conversion USD peut introduire un biais selon les taux de change.
 
-De plus, d’autres facteurs externes (tendances économique, médiatique) non pris en compte dans les données peuvent aussi jouer un rôle sur le succès ou non.
+De plus, d'autres facteurs externes (tendances économiques, médiatiques) non pris en compte dans les données peuvent aussi jouer un rôle sur le succès ou non.
 
-Cette analyse devrait nous permettre d’aboutir à une meilleure compréhension des dynamiques du financement participatif et, pourquoi pas, au modèle prédictif de la réussite de campagne.
-
-
+Cette analyse devrait nous permettre d'aboutir à une meilleure compréhension des dynamiques du financement participatif et, pourquoi pas, à un modèle prédictif de la réussite des campagnes.
