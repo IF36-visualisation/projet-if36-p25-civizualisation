@@ -1,86 +1,81 @@
-# 📊 Civizualisation - Projet sur des données de Kickstarter
+# 📊 Projet IF36 - Analyse des données de Kickstarter
 
-## ✅ Sommaire :
+L'objectif de ce projet d'IF36 est d'analyser et de présenter des données issues d'un jeu de données de notre choix.
 
--   Introduction
--   Les données
--   Plan d'analyse
+## 👥 Membres
+Equipe Civizualisation :
+- Florian Bonelli
+- Eyvan FAURE
+- Ryan OUYED
+- Lucas SAURON
 
-## 📌 Introduction :
+## 📚 Sommaire
+- [📌 Introduction](#📌-introduction)
+- [📁 Présentation des données](#📁-présentation-des-données)
+- [📊 Plan d'analyse](#📊-plan-danalyse)
+
+## 📌 Introduction
 
 L'objectif de ce projet d'IF36 est d'analysée et présenter des données d'une base de données que l'on à choisie. Nous avons ainsi décidé d'utiliser les données du site de financement collaboratif Kickstarter.
 
-Ce projet nous permettra d’explorer les tendances du financement de projet participatif, d’identifier les facteurs qui influence le succès d’un projet et d’évaluer la probabilité de réussite des campagnes sur cette plateforme.
+Ce projet nous permettra d'explorer les tendances du financement de projet participatif, d'identifier les facteurs qui influence le succès d'un projet et d'évaluer la probabilité de réussite des campagnes sur cette plateforme.
 
-### 📁 Les données :
+## 📁 Présentation des données
+Nos données proviennent de la plateforme **Kaggle** où nous avons trouvé un jeu de données sur **Kickstarter**.
 
-Nos données proviennent de la plateforme **Kaggle** ou nous avons trouver un jeu de données sur **Kickstarter**. 
+[![Kickstarter](https://i.kickstarter.com/tq0sfld-kickstarter-logo-green.png?origin=static&sig=f4aHZ5ZiQhwZCgzBFzJqR3WIwCUT6jVw6mALfOHvmu0%3D)](https://www.kaggle.com/datasets/kemical/kickstarter-projects?select=ks-projects-201801.csv)
 
+### Premier fichier : `ks-projects-201612.csv`
 
- [![Kickstarter](https://i.kickstarter.com/tq0sfld-kickstarter-logo-green.png?origin=static&sig=f4aHZ5ZiQhwZCgzBFzJqR3WIwCUT6jVw6mALfOHvmu0%3D)](https://www.kaggle.com/datasets/kemical/kickstarter-projects?select=ks-projects-201801.csv)
+Ce premier jeu de données au format CSV (Comma-Separated Values) contient 321 616 individus et 17 variables.
 
+| Variable             | Type de données   | Description                                                                            |
+|----------------------|-------------------|----------------------------------------------------------------------------------------|
+| `ID`                 | Integer           | Identifiant unique du projet                                                           |
+| `name`               | String            | Nom du projet                                                                          |
+| `category`           | String            | Catégorie spécifique du projet                                                         |
+| `main_category`      | String            | Catégorie principale du projet                                                         |
+| `currency`           | String            | Devise utilisée pour le financement                                                    |
+| `deadline`           | Date              | Date limite pour la collecte des fonds                                                 |
+| `goal`               | Float             | Montant que le projet espère récolter                                                  |
+| `launched`           | Date and time     | Date et heure de lancement du projet                                                   |
+| `pledged`            | Float             | Somme totale engagée par les contributeurs                                             |
+| `state`              | String            | État de la campagne (ex : "failed", "successful")                                      |
+| `backers`            | Integer           | Nombre de contributeurs                                                                |
+| `country`            | String            | Pays où le projet est lancé (ISO 3166)                                                 |
+| `usd pledged`        | Float             | Montant collecté en USD (conversion réalisée par Kickstarter)                          |
+| NA                   | NA                | NA                                                                                     |
+| NA                   | NA                | NA                                                                                     |
+| NA                   | NA                | NA                                                                                     |
+| NA                   | NA                | NA                                                                                     |
 
-Cette plateforme de financement participatif permet à des créateurs de lever des fonds pour financer leurs projets.
+On remarque que les 4 dernières variables sont sans titre et sans données.
 
-Ce jeu de données regroupe des informations sur les campagnes de financement lancées entre **mai 2009 et février 2017**.
+### Deuxième fichier : `ks-projects-201801.csv`
 
-Sur Kaggle, nous disposons de 2 fichiers avec des données
+Ce deuxième jeu de données au format CSV (Comma-Separated Values) contient 375 765 individus et 15 variables.
 
-Fichier 1 : ks-projects-201612.csv
+| Variable             | Type de données   | Description                                                                            |
+|----------------------|-------------------|----------------------------------------------------------------------------------------|
+| `ID`                 | Integer           | Identifiant unique du projet                                                           |
+| `name`               | String            | Nom du projet                                                                          |
+| `category`           | String            | Catégorie spécifique du projet                                                         |
+| `main_category`      | String            | Catégorie principale du projet                                                         |
+| `currency`           | String            | Devise utilisée pour le financement                                                    |
+| `deadline`           | Date              | Date limite pour la collecte des fonds                                                 |
+| `goal`               | Float             | Montant que le projet espère récolter                                                  |
+| `launched`           | Date and time     | Date et heure de lancement du projet                                                   |
+| `pledged`            | Float             | Somme totale engagée par les contributeurs                                             |
+| `state`              | String            | État de la campagne (ex : "failed", "successful")                                      |
+| `backers`            | Integer           | Nombre de contributeurs                                                                |
+| `country`            | String            | Pays où le projet est lancé (ISO 3166)                                                 |
+| `usd pledged`        | Float             | Montant collecté en USD (conversion réalisée par Kickstarter)                          |
+| `usd_pledged_real`   | Float             | Montant collecté en USD (conversion réalisée par l'API fixer.io)                       |
+| `usd_goal_real`      | Float             | Montant que le projet espère collecter en USD (conversion réalisée par l'API fixer.io) |
 
--   **Nombre d'observations** : 321 616 individus
+Ce fichier contient plus d'individus que le premier, exclut les variables inutiles et ajoute deux variables supplémentaires par rapport au premier fichier.
 
--   **Nombre de variables** : 16 dimensions
-
--   **Format des données** : Fichier CSV (Comma-Separated Values)
-
-Fichier 2 : ks-projects-201801.csv
-
--   **Nombre d'observations** : 375765 individus
-
--   **Nombre de variables** : 15 dimensions
-
--   **Format des données** : Fichier CSV (Comma-Separated Values)
-
-Les principales variables incluent :
-
--   **ID** : Identifiant unique du projet (int)
-
--   **Name** : Nom du projet (string)
-
--   **Category** et **Main_category** : Domaine du projet (Musique, Film, Technologie, etc.) (string)
-
--   **Currency** : Devise utilisée pour le financement (String)
-
--   **Launched** et **Deadline** : Période de collecte des fonds (Date)
-
--   **Goal** : Montant que le projet espère récolter (int)
-
--   **Pledge** : Somme totale engagée par les contributeurs (int)
-
--   **State** : Succès ou échec de la campagne (String)
-
--   **USD pledge** : montant collecté en USD (int)
-
--   **Country** : pays où le montant est demandé (String)
-
--   **Number of baker** : number of backers (int)
-
-Certaines variables sont uniques pour chaque fichier du jeu de données.
-
-Fichier 1 : ks-projects-201612.csv
-
--   **3 Colonnes sans titre et sans donnée** : Aucune information dans les 3 colonnes
-
-Fichier 2 : ks-projects-201801.csv :
-
--   **usd pledge real** : montant que le projet espère collecter en USD (conversion réalisé par KS) (int)
-
--   **usd goal real** : montant que le projet espère collecter en USD (conversion réalisé par fixer.io API) (int)
-
-Ce jeu de données est pertinent pour analyser les tendances du financement participatif, étudier les facteurs de réussite et modéliser la probabilité de succès d'un projet.
-
-## 📊 Plan d'analyse :
+## 📊 Plan d'analyse
 
 L'objectif de notre analyse est d'identifié les facteurs qui influencent la réussite ou non du financement d'un projet et d'en tirer des tendances utilises.
 
@@ -98,7 +93,7 @@ L'objectif de notre analyse est d'identifié les facteurs qui influencent la ré
 
 - Le titre impacte-t-il la réussite d'une campagne ?
 
-### 📈 Variable à comparer 
+### 📈 Variable à comparer
 
 - Succès/échec vs Catégorie principale
 
