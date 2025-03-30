@@ -75,6 +75,10 @@ Ce deuxième jeu de données au format CSV (Comma-Separated Values) contient 375
 
 Ce fichier contient plus d'individus que le premier, exclut les variables inutiles et ajoute deux variables supplémentaires par rapport au premier fichier.
 
+En observant juste les noms des fichiers, il est raisonnable de supposer que le fichier `ks-projects-201612.csv` contient des données jusqu'en décembre 2016, tandis que le fichier `ks-projects-201801.csv` inclut des données jusqu'en janvier 2018. Une vérification sera nécessaire pour s'assurer qu'il n'y a pas de doublons entre les individus présents dans ces deux fichiers.
+
+De plus, si c'est le cas, le fichier de 2018 semble être plus pertinent à utiliser seul. En effet, il ne comporte pas les variables vides présentes dans le fichier de 2016, inclut deux variables supplémentaires (`usd_pledged_real` et `usd_goal_real`), contient un plus grand nombre d'individus et propose des données plus récentes.
+
 ## 📊 Plan d'analyse
 
 L'objectif de notre analyse est d'identifier les facteurs qui influencent la réussite ou non du financement d'un projet et d'en tirer des tendances utiles.
