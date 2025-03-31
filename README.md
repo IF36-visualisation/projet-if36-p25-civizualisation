@@ -13,16 +13,28 @@ Equipe Civizualisation :
 
 ## 📚 Sommaire
 
-- [📌 Introduction](#-introduction)
+- [📝 Contexte des données choisis](#-contexte-des-données-choisis)
 - [📥 Téléchargement des données](#-téléchargement-des-données)
 - [📁 Présentation des données](#-présentation-des-données)
 - [📊 Plan d'analyse](#-plan-danalyse)
 
-## 📌 Introduction
+## 📝 Contexte des données choisis
 
-L'objectif de ce projet d'IF36 est d'analyser et de présenter des données issues d'une base de données que nous avons choisie. Nous avons ainsi décidé d'utiliser les données du site de financement collaboratif Kickstarter.
+[![Kickstarter](https://i.kickstarter.com/tq0sfld-kickstarter-logo-green.png?origin=static&sig=f4aHZ5ZiQhwZCgzBFzJqR3WIwCUT6jVw6mALfOHvmu0%3D)](https://www.kaggle.com/datasets/kemical/kickstarter-projects?select=ks-projects-201801.csv)
+
+Nous avons choisi d'utiliser les données du site de financement collaboratif Kickstarter.
+
+Kickstarter offre l'opportunité à des créateurs de transformer des idées en réalité grâce au financement participatif.
+
+Cette plateforme permet de lever des fonds pour financer des projets en mettant en relation des contributeurs du monde entier.
+
+Nous avons décidé d'utiliser le jeu de données [Kickstarter Projects](https://www.kaggle.com/datasets/kemical/kickstarter-projects) disponible sur Kaggle.
+
+Ces données sont collectées depuis la plateforme [Kickstarter](https://www.kickstarter.com/).
 
 Ce projet nous permettra d'explorer les tendances du financement participatif, d'identifier les facteurs qui influencent le succès d'un projet et d'évaluer la probabilité de réussite des campagnes sur cette plateforme.
+
+Nous chercherons également à visualiser ces données de manière claire et intuitive pour mieux comprendre les dynamiques du financement collaboratif.
 
 ## 📥 Téléchargement des données
 
@@ -57,10 +69,6 @@ Suivez les étapes ci-dessous pour récupérer les fichiers nécessaires :
     ```
 
 ## 📁 Présentation des données
-
-Nos données proviennent de la plateforme **Kaggle** où nous avons trouvé un jeu de données sur **Kickstarter**.
-
-[![Kickstarter](https://i.kickstarter.com/tq0sfld-kickstarter-logo-green.png?origin=static&sig=f4aHZ5ZiQhwZCgzBFzJqR3WIwCUT6jVw6mALfOHvmu0%3D)](https://www.kaggle.com/datasets/kemical/kickstarter-projects?select=ks-projects-201801.csv)
 
 ### Premier fichier : `ks-projects-201612.csv`
 
@@ -118,40 +126,34 @@ De plus, si c'est le cas, le fichier de 2018 semble être plus pertinent à util
 
 ## 📊 Plan d'analyse
 
-L'objectif de notre analyse est d'identifier les facteurs qui influencent la réussite ou non du financement d'un projet et d'en tirer des tendances utiles.
+### 🎯 Objectif principal de l'analyse
+
+L'objectif principal de notre analyse est de comprendre les dynamiques du financement participatif sur Kickstarter. Plus précisément, nous cherchons à identifier des tendances utiles pour optimiser les chances de succès des projets afin de dégager les facteurs qui influencent la réussite ou l'échec d'une campagne.
 
 ### 🔍 Questions d'analyse
 
-- Quels sont les taux de réussite des campagnes en fonction des catégories ?
-
-- Le montant de l'objectif impacte-t-il la probabilité de succès ?
-
-- Y a-t-il des périodes de l'année plus propices aux campagnes réussies ?
-
-- L'écart entre l'objectif initial et les fonds réellement collectés varie-t-il selon la catégorie ou la devise ?
-
-- Peut-on prédire la réussite d'un projet en fonction de ses caractéristiques initiales ?
-
-- Le titre impacte-t-il la réussite d'une campagne ?
+- Quels sont les taux de réussite des campagnes selon les catégories ?
+- Dans quelle mesure le montant de l'objectif influence-t-il la probabilité de succès d'une campagne ?
+- Existe-t-il des périodes de l'année où les campagnes ont plus de chances de réussir ?
+- L'écart entre l'objectif initial et les fonds réellement collectés varie-t-il en fonction de la catégorie ou de la devise utilisée ?
+- Le choix des mots dans le titre d'une campagne a-t-il un impact sur son succès ?
 
 ### 📈 Variables à comparer
 
-- Succès/échec vs Catégorie principale
+Pour répondre à nos questions d'analyse, nous comparerons les variables suivantes :
 
-- Succès/échec vs Montant de l'objectif
+- **Taux de réussite et d'échec par catégorie** : Identifier les catégories où les campagnes réussissent ou échouent le plus souvent.
+- **Taux de réussite et d'échec en fonction du montant de l'objectif** : Analyser l'impact du montant demandé sur le succès ou l'échec des campagnes.
+- **Taux de réussite et d'échec selon la période de lancement** : Étudier si certaines périodes de l'année influencent les chances de succès ou d'échec.
+- **Écart entre le montant collecté et l'objectif fixé** : Comparer les fonds espérés et les fonds réellement obtenus pour évaluer les écarts.
+- **Impact des mots-clés dans les titres sur le succès** : Identifier les mots les plus fréquents dans les titres des campagnes réussies et leur influence.
 
-- Succès/échec vs Période de lancement
-
-- Montant collecté vs Objectif fixé
-
-- Succès/échec vs Mots les plus récurrents dans les titres
+Ces comparaisons nous permettront de mieux comprendre les facteurs influençant le succès des campagnes Kickstarter.
 
 ### ⚠️ Limitations et problèmes potentiels
 
-À cause de possibles biais dans l'approche de certaines campagnes de financement, on peut avoir des objectifs volontairement bas pour assurer la réussite.
+- Certains porteurs de projets peuvent fixer des objectifs volontairement bas pour maximiser leurs chances de succès ou, au contraire, volontairement élevé par manque de serieux, ce qui pourrait biaiser les résultats de l'analyse.
 
-Le taux de conversion USD peut introduire un biais selon les taux de change.
+- Les taux de conversion en USD peuvent introduire des biais en fonction des fluctuations des taux de change.
 
-De plus, d'autres facteurs externes (tendances économiques, médiatiques) non pris en compte dans les données peuvent aussi jouer un rôle sur le succès ou non.
-
-Cette analyse devrait nous permettre d'aboutir à une meilleure compréhension des dynamiques du financement participatif et, pourquoi pas, à un modèle prédictif de la réussite des campagnes.
+- Des facteurs externes, tels que les tendances économiques ou médiatiques, qui ne sont pas inclus dans les données, peuvent également influencer le succès des campagnes.

@@ -1,13 +1,14 @@
 ---
 title: "Test"
-author: "Lucas"
-date: "2025-03-19"
+author: "Civizualisation"
+date: "2025-03-30"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
 ```{r}
 library(ggplot2)
 library(dplyr)
@@ -15,20 +16,19 @@ library(readr)
 ```
 
 ```{r}
-data <- read_csv("data/ks-projects-201612.csv")
-data1 <- read_csv("data/ks-projects-201801.csv")
+data2016 <- read_csv("./data/ks-projects-201612.csv", show_col_types = FALSE)
+data2018 <- read_csv("./data/ks-projects-201801.csv", show_col_types = FALSE)
 ```
 
 ```{r}
-data <- data%>% select(-...14,-...15,-...16,-...17)
-data1 <- data1 %>% select(-usd_pledged_real  , -usd_goal_real       )
+data2016 <- data2016 %>%
+  select(-starts_with("..."))
 ```
 
 ```{r}
-head(data)
-```
+View(data2016)
+View(data2018)
 
-```{r}
-head(data1)
+glimpse(data2016)
+glimpse(data2018)
 ```
-
