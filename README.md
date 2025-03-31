@@ -3,16 +3,20 @@
 L'objectif de ce projet d'IF36 est d'analyser et de présenter des données issues d'un jeu de données de notre choix.
 
 ## 👥 Membres
+
 Equipe Civizualisation :
-- Florian Bonelli
+
+- Florian BONELLI
 - Eyvan FAURE
 - Ryan OUYED
 - Lucas SAURON
 
 ## 📚 Sommaire
-- [📌 Introduction](#📌-introduction)
-- [📁 Présentation des données](#📁-présentation-des-données)
-- [📊 Plan d'analyse](#📊-plan-danalyse)
+
+- [📌 Introduction](#-introduction)
+- [📥 Téléchargement des données](#-téléchargement-des-données)
+- [📁 Présentation des données](#-présentation-des-données)
+- [📊 Plan d'analyse](#-plan-danalyse)
 
 ## 📌 Introduction
 
@@ -20,7 +24,40 @@ L'objectif de ce projet d'IF36 est d'analyser et de présenter des données issu
 
 Ce projet nous permettra d'explorer les tendances du financement participatif, d'identifier les facteurs qui influencent le succès d'un projet et d'évaluer la probabilité de réussite des campagnes sur cette plateforme.
 
+## 📥 Téléchargement des données
+
+Les données utilisées dans ce projet ne sont pas incluses dans ce repo en raison de leur taille.
+
+Vous devez les télécharger manuellement.
+
+Suivez les étapes ci-dessous pour récupérer les fichiers nécessaires :
+
+1. Téléchargez l'archive contenant les jeux de données.
+
+    ```bash
+    curl -L -o ./data/kickstarter-projects.zip https://www.kaggle.com/api/v1/datasets/download/kemical/kickstarter-projects
+    ```
+
+2. Une fois l'archive téléchargée, extrayez les fichiers.
+
+    ```bash
+    unzip ./data/kickstarter-projects.zip -d ./data
+    ```
+
+    Si `unzip` n'est pas installé, vous pouvez l'installer avec la commande suivante
+
+    ```bash
+    sudo apt-get install unzip
+    ```
+
+3. (Facultatif) Après avoir extrait les fichiers, vous pouvez supprimer l'archive pour libérer de l'espace.
+
+    ```bash
+    rm ./data/kickstarter-projects.zip
+    ```
+
 ## 📁 Présentation des données
+
 Nos données proviennent de la plateforme **Kaggle** où nous avons trouvé un jeu de données sur **Kickstarter**.
 
 [![Kickstarter](https://i.kickstarter.com/tq0sfld-kickstarter-logo-green.png?origin=static&sig=f4aHZ5ZiQhwZCgzBFzJqR3WIwCUT6jVw6mALfOHvmu0%3D)](https://www.kaggle.com/datasets/kemical/kickstarter-projects?select=ks-projects-201801.csv)

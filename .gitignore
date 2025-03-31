@@ -1,3 +1,10 @@
+# Data files
+data/kickstarter-projects.zip
+data/ks-projects-201612.csv
+data/ks-projects-201801.csv
+
+# RStudio project files
+*.Rproj
 
 # Created by https://www.toptal.com/developers/gitignore/api/osx,macos,windows,linux,r
 # Edit at https://www.toptal.com/developers/gitignore?templates=osx,macos,windows,linux,r
@@ -129,7 +136,3 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/osx,macos,windows,linux,r
-
-data/ks-projects-201801.csv
-data/ks-projects-201612.csv
-*.Rproj
