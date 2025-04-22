@@ -30,7 +30,7 @@ Nos données proviennent de la plateforme **Kaggle** où nous avons trouvé un j
 Ce premier jeu de données au format CSV (Comma-Separated Values) contient 321 616 individus et 17 variables.
 
 | Variable | Type de données | Description |
-|------------------|------------------|------------------------------------|
+|----|----|----|
 | `ID` | Integer | Identifiant unique du projet |
 | `name` | String | Nom du projet |
 | `category` | String | Catégorie spécifique du projet |
@@ -56,7 +56,7 @@ On remarque que les 4 dernières variables sont sans titre et sans données.
 Ce deuxième jeu de données au format CSV (Comma-Separated Values) contient 375 765 individus et 15 variables.
 
 | Variable | Type de données | Description |
-|------------------|------------------|------------------------------------|
+|----|----|----|
 | `ID` | Integer | Identifiant unique du projet |
 | `name` | String | Nom du projet |
 | `category` | String | Catégorie spécifique du projet |
@@ -121,7 +121,7 @@ Cette analyse devrait nous permettre d'aboutir à une meilleure compréhension d
 
 ## 🧭 Exploration
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE, include=FALSE}
 library(ggplot2)
 library(dplyr)
 library(readr)
