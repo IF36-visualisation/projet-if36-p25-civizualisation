@@ -216,3 +216,8 @@ Ce graphique représente la quantité de projets lancés sur Kickstarter par pay
 On remarque une proéminence des pays anglo-saxons dans les pays dont le plus de projets sont validés.
 On peut lier ça au fait que, dans de nombreux pays, une offre plus locale et adaptée s'est développée. Par exemple en France, KickStarter est rarement cité comme la meilleure plateforme de crowdfunding:
 https://bpifrance-creation.fr/encyclopedie/financements/financement-participatif/sites-plateformes-crowdfunding
+
+```{r}
+ggplot(data2018,aes(x=reorder(country,-table(country)[country]), fill=state)) + geom_bar(position="fill") + scale_y_log10() + scale_fill_manual(values=c("orange", "red", "blue","green","black","grey")) 
+```
+On remarque que tous les pays ont des taux d'échec et de réussite plutôt similaires (outlier: luxembourg)
