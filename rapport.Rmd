@@ -119,7 +119,7 @@ De plus, d'autres facteurs externes (tendances économiques, médiatiques) non p
 
 Cette analyse devrait nous permettre d'aboutir à une meilleure compréhension des dynamiques du financement participatif et, pourquoi pas, à un modèle prédictif de la réussite des campagnes.
 
-## 🧭 Exploration
+## 🧭 Exploration des Données
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 library(ggplot2)
@@ -127,5 +127,8 @@ library(dplyr)
 library(readr)
 
 dataKickstarter <- read_csv("./data/ks-projects-201801.csv")
+head(dataKickstarter)
 
 ```
+
+## Netoyage des données
