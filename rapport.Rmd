@@ -131,4 +131,51 @@ head(dataKickstarter)
 
 ```
 
-## Netoyage des données
+## Nettoyage des données
+
+```{r}
+# Assurons nous que nos données ne contiennent aucun individus doublon
+# Pour cela nous allons utiliser la variable ID qui se veut unique pour chaque individu
+
+# Regardons tout d'abord si dans chaque fichier, un individu n'a pas de doublon dans le même fichier
+
+# Pour le fichier 2016
+cat("Nombre d'IDs uniques dans ks-projects-201612.csv :", length(unique(data2016$ID)), "\n")
+cat("Nombre d'IDs dans ks-projects-201612.csv :", length(data2016$ID), "\n")
+cat("Nombre d'IDs doublon dans ks-projects-201612.csv :", length(data2016$ID) - length(unique(data2016$ID)), "\n")
+
+# Pour le fichier 2018
+cat("Nombre d'IDs uniques dans ks-projects-201801.csv :", length(unique(data2018$ID)), "\n")
+cat("Nombre d'IDs dans ks-projects-201801.csv :", length(data2018$ID), "\n")
+cat("Nombre d'IDs doublon dans ks-projects-201801.csv :", length(data2018$ID) - length(unique(data2018$ID)), "\n")
+
+# Nous avons aucun doublons dans chacun de nos 2 fichiers.
+
+# Maintenant si on regarde nos 2 fichiers dans leur ensemble, regardons si nous avons des ids de 2016 qui sont dans 2018 et inversement.
+
+
+cat("IDs présents dans ks-projects-201612.csv mais pas dans ks-projects-201801.csv :", length(setdiff(data2016$ID, data2018$ID)), "\n")
+cat("IDs présents dans ks-projects-201801.csv mais pas dans ks-projects-201612.csv :", length(setdiff(data2018$ID, data2016$ID)), "\n")
+# On peut observer que le nombre d'id dans data2016 qui ne se trouvent pas dans data2018 est égal à 0.
+# Autrement dit, toutes les individus du fichier data2016 se trouvent dans data2018.
+
+
+# Pour conclure, nous pouvons donc utiliser le fichier ks-projects-201801.csv seulement sans utiliser le fichier ks-projects-201612.csv
+# pour éviter les doublons et avoir plus de données.
+data <- data2018
+```
+
+```{r}
+# Vérifions s'il y a des lignes entièrement vides
+nb_empty_rows <- sum(rowSums(is.na(data)) == ncol(data))
+cat("Nombre de lignes entièrement vides :", nb_empty_rows, "\n")
+
+# Vérifions s'il y a des valeurs NA dans nos données
+nb_na_values <- sapply(data, function(x) sum(is.na(x)))
+cat("Nombre de valeurs NA par colonne :\n")
+print(nb_na_values)
+
+# Ajouter dans un tableau les lignes qui contiennent des valeurs vides
+rows_with_na <- data[apply(data, 1, function(row) any(is.na(row))), ]
+cat("Nombre de lignes contenant des valeurs NA :", nrow(rows_with_na), "\n")
+```
