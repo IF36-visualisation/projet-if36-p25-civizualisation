@@ -208,7 +208,7 @@ cat("Nombre de lignes contenant des valeurs NA :", nrow(rows_with_na), "\n")
 #Question: Combien de projets sont lancés par pays? Quelle proportion de projets réussis?
 
 ```{r}
-ggplot(data2018,aes(x=reorder(country,-table(country)[country]), fill=state)) + geom_bar() + scale_y_log10() + scale_fill_manual(values=c("orange", "red", "blue","green","black","grey"))
+ggplot(data_kickstarter,aes(x=reorder(country,-table(country)[country]), fill=state)) + geom_bar() + scale_y_log10() + scale_fill_manual(values=c("orange", "red", "blue","green","black","grey"))
 #Note de lecture: l'axe des ordonnées est logarithmique 
 ```
 
@@ -218,6 +218,6 @@ On peut lier ça au fait que, dans de nombreux pays, une offre plus locale et ad
 https://bpifrance-creation.fr/encyclopedie/financements/financement-participatif/sites-plateformes-crowdfunding
 
 ```{r}
-ggplot(data2018,aes(x=reorder(country,-table(country)[country]), fill=state)) + geom_bar(position="fill") + scale_y_log10() + scale_fill_manual(values=c("orange", "red", "blue","green","black","grey")) 
+ggplot(data_kickstarter,aes(x=reorder(country,-table(country)[country]), fill=state)) + geom_bar(position="fill") + scale_y_log10() + scale_fill_manual(values=c("orange", "red", "blue","green","black","grey")) 
 ```
 On remarque que tous les pays ont des taux d'échec et de réussite plutôt similaires (outlier: luxembourg)
