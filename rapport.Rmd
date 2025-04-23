@@ -119,7 +119,7 @@ De plus, d'autres facteurs externes (tendances économiques, médiatiques) non p
 
 Cette analyse devrait nous permettre d'aboutir à une meilleure compréhension des dynamiques du financement participatif et, pourquoi pas, à un modèle prédictif de la réussite des campagnes.
 
-## 🧭 Exploration des Données
+## 🧭 Exploration et Nettoyage des données
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 library(ggplot2)
@@ -133,7 +133,7 @@ glimpse(data2016)
 glimpse(data2018)
 ```
 
-## Nettoyage des données
+
 
 ```{r}
 # Assurons nous que nos données ne contiennent aucun individus doublon
