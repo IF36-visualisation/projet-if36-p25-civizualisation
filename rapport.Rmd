@@ -126,6 +126,6 @@ library(ggplot2)
 library(dplyr)
 library(readr)
 
-dataKickstarter <- read_csv("/Users/florianbonelli/Documents/UTT/ISI4/IF36/Projet/projet-if36-p25-civizualisation/data/ks-projects-201801.csv")
+dataKickstarter <- read_csv("./data/ks-projects-201801.csv")
 
 ```
