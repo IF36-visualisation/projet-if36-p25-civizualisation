@@ -208,5 +208,11 @@ cat("Nombre de lignes contenant des valeurs NA :", nrow(rows_with_na), "\n")
 #Question: Combien de projets sont lancés par pays? Quelle proportion de projets réussis?
 
 ```{r}
-ggplot(data_,aes(x=country, fill=state)) + geom_bar() + scale_y_log10() + scale_fill_manual(values=c("orange", "red", "blue","green","black","grey"))
+ggplot(data2018,aes(x=reorder(country,-table(country)[country]), fill=state)) + geom_bar() + scale_y_log10() + scale_fill_manual(values=c("orange", "red", "blue","green","black","grey"))
+#Note de lecture: l'axe des ordonnées est logarithmique 
 ```
+
+Ce graphique représente la quantité de projets lancés sur Kickstarter par pays. En vert sont représentés les projets réussis.
+On remarque une proéminence des pays anglo-saxons dans les pays dont le plus de projets sont validés.
+On peut lier ça au fait que, dans de nombreux pays, une offre plus locale et adaptée s'est développée. Par exemple en France, KickStarter est rarement cité comme la meilleure plateforme de crowdfunding:
+https://bpifrance-creation.fr/encyclopedie/financements/financement-participatif/sites-plateformes-crowdfunding
