@@ -164,7 +164,7 @@ cat("IDs présents dans ks-projects-201801.csv mais pas dans ks-projects-201612.
 
 # Pour conclure, nous pouvons donc utiliser le fichier ks-projects-201801.csv seulement sans utiliser le fichier ks-projects-201612.csv
 # pour éviter les doublons et avoir plus de données.
-data <- data2018
+data_kickstarter <- data2018
 ```
 
 ```{r}
