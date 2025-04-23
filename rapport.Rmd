@@ -225,3 +225,26 @@ ggplot(data_kickstarter, aes(x=reorder(country, -table(country)[country]), fill=
     theme_minimal()
 ```
 On remarque que tous les pays ont des taux d'échec et de réussite plutôt similaires (outlier: luxembourg)
+
+```{r}
+
+success_rates <- data_kickstarter %>%
+  group_by(country) %>%
+  summarise(
+    total = n(),
+    successful = sum(state == "successful"),
+    success_rate = successful / total
+  ) %>%
+  arrange(desc(success_rate))
+
+ggplot(success_rates, aes(x = reorder(country, success_rate), y = success_rate)) +
+  geom_col(fill = "green") +
+  scale_y_continuous(labels = scales::percent_format()) +
+  labs(
+    title = "Taux de réussite des campagnes par pays",
+    x = "Pays",
+    y = "Taux de réussite"
+  ) +
+  theme_minimal() +
+  coord_flip()
+```
