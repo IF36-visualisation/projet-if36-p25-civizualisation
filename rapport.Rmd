@@ -126,9 +126,11 @@ library(ggplot2)
 library(dplyr)
 library(readr)
 
-dataKickstarter <- read_csv("./data/ks-projects-201801.csv")
-head(dataKickstarter)
+data2016 <- read_csv("./data/ks-projects-201612.csv")
+data2018 <- read_csv("./data/ks-projects-201801.csv")
 
+glimpse(data2016)
+glimpse(data2018)
 ```
 
 ## Nettoyage des données
