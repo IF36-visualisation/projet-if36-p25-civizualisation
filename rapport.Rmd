@@ -30,7 +30,7 @@ Nos données proviennent de la plateforme **Kaggle** où nous avons trouvé un j
 Ce premier jeu de données au format CSV (Comma-Separated Values) contient 321 616 individus et 17 variables.
 
 | Variable | Type de données | Description |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | `ID` | Integer | Identifiant unique du projet |
 | `name` | String | Nom du projet |
 | `category` | String | Catégorie spécifique du projet |
@@ -56,7 +56,7 @@ On remarque que les 4 dernières variables sont sans titre et sans données.
 Ce deuxième jeu de données au format CSV (Comma-Separated Values) contient 375 765 individus et 15 variables.
 
 | Variable | Type de données | Description |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | `ID` | Integer | Identifiant unique du projet |
 | `name` | String | Nom du projet |
 | `category` | String | Catégorie spécifique du projet |
@@ -126,6 +126,7 @@ library(ggplot2)
 library(dplyr)
 library(readr)
 library(tidyr)
+library(lubridate)
 
 
 data2016 <- read_csv("./data/ks-projects-201612.csv")
@@ -134,8 +135,6 @@ data2018 <- read_csv("./data/ks-projects-201801.csv")
 glimpse(data2016)
 glimpse(data2018)
 ```
-
-
 
 ```{r}
 # Assurons nous que nos données ne contiennent aucun individus doublon
@@ -199,6 +198,9 @@ data_kickstarter <- data_kickstarter %>% drop_na()
 data_kickstarter <- data_kickstarter %>% filter(state != "undefined")
 
 data_kickstarter <- data_kickstarter %>% filter(country != "N,0\"")
+
+# Mettre au format de date "launched"
+data_kickstarter$launched <- as.Date(data_kickstarter$launched)
 ```
 
 #Question: Combien de projets sont lancés par pays? Quelle proportion de projets réussis?
@@ -212,10 +214,7 @@ ggplot(data_kickstarter, aes(x=reorder(country, -table(country)[country]), fill=
 #Note de lecture: l'axe des ordonnées est logarithmique
 ```
 
-Ce graphique représente la quantité de projets lancés sur Kickstarter par pays. En vert sont représentés les projets réussis.
-On remarque une proéminence des pays anglo-saxons dans les pays dont le plus de projets sont validés.
-On peut lier ça au fait que, dans de nombreux pays, une offre plus locale et adaptée s'est développée. Par exemple en France, KickStarter est rarement cité comme la meilleure plateforme de crowdfunding:
-https://bpifrance-creation.fr/encyclopedie/financements/financement-participatif/sites-plateformes-crowdfunding
+Ce graphique représente la quantité de projets lancés sur Kickstarter par pays. En vert sont représentés les projets réussis. On remarque une proéminence des pays anglo-saxons dans les pays dont le plus de projets sont validés. On peut lier ça au fait que, dans de nombreux pays, une offre plus locale et adaptée s'est développée. Par exemple en France, KickStarter est rarement cité comme la meilleure plateforme de crowdfunding: <https://bpifrance-creation.fr/encyclopedie/financements/financement-participatif/sites-plateformes-crowdfunding>
 
 ```{r}
 ggplot(data_kickstarter, aes(x=reorder(country, -table(country)[country]), fill=state)) +
@@ -224,6 +223,7 @@ ggplot(data_kickstarter, aes(x=reorder(country, -table(country)[country]), fill=
     scale_fill_manual(values=c("orange", "red", "blue", "green", "black", "grey")) +
     theme_minimal()
 ```
+
 On remarque que tous les pays ont des taux d'échec et de réussite plutôt similaires (outlier: luxembourg)
 
 ```{r}
@@ -248,3 +248,91 @@ ggplot(success_rates, aes(x = reorder(country, success_rate), y = success_rate))
   theme_minimal() +
   coord_flip()
 ```
+
+#Existe-t-il des périodes de l'année où les campagnes ont plus de chances de réussir ?
+
+```{r}
+# Ajout du mois en clair dans une nouvelle table
+data_kickstarter2 <- data_kickstarter %>%
+  mutate(mois = month(launched, label = TRUE, abbr = FALSE))
+
+# Calcul du taux de réussite par mois
+monthly_success_rate <- data_kickstarter2 %>%
+  group_by(mois) %>%
+  summarise(
+    total = n(),
+    success = sum(state == "successful"),
+    success_rate = success / total,
+    .groups = "drop"
+  )
+
+# Visualisation
+ggplot(monthly_success_rate, aes(x = mois, y = success_rate)) +
+  geom_col(fill = "forestgreen") +
+  labs(
+    title = "Taux de réussite mensuel des campagnes Kickstarter par date de lancement",
+    x = "Mois",
+    y = "Taux de réussite"
+  ) +
+  theme_minimal()
+```
+Ce graphique illustre le taux de réussite mensuel des campagnes Kickstarter selon la date de lancement. On observe que ce taux fluctue dans une plage relativement étroite, comprise entre 0,29 et 0,38. Bien que les taux de réussite semblent similaires, des tendances notables se dégagent, qui peuvent être expliquées par des facteurs contextuels.
+
+En particulier, on remarque un **taux de réussite plus faible en décembre**, probablement en raison des périodes de fêtes. Pendant ce mois, de nombreuses personnes privilégient l'achat de cadeaux plutôt que de contribuer à des campagnes de financement participatif. Cela pourrait expliquer la baisse de l'engagement.
+
+Par ailleurs, une tendance saisonnière apparaît durant l'été, période de vacances où les dépenses personnelles sont souvent consacrées à des loisirs, notamment les voyages. L'augmentation des coûts liés aux voyages pourrait réduire la capacité des individus à financer des projets, ce qui se traduit par une légère diminution du taux de réussite des campagnes lancées pendant cette période.
+
+On peut se demander si la corrélation se poursuie au niveau de la cloture des campagnes ?
+
+```{r}
+# Ajout du mois en clair dans une nouvelle table
+data_kickstarter2 <- data_kickstarter %>%
+  mutate(mois = month(deadline, label = TRUE, abbr = FALSE))
+
+# Calcul du taux de réussite par mois
+monthly_success_rate <- data_kickstarter2 %>%
+  group_by(mois) %>%
+  summarise(
+    total = n(),
+    success = sum(state == "successful"),
+    success_rate = success / total,
+    .groups = "drop"
+  )
+
+# Visualisation
+ggplot(monthly_success_rate, aes(x = mois, y = success_rate)) +
+  geom_col(fill = "red") +
+  labs(
+    title = "Taux de réussite mensuel des campagnes Kickstarter",
+    x = "Mois",
+    y = "Taux de réussite"
+  ) +
+  theme_minimal()
+```
+Ce graphique illustre le taux de réussite mensuel des campagnes Kickstarter par rapport à la date de cloture de la campagne. On peut observer que les taux sont les mêmes que pour celle du lancement mais décaler d'un mois. 
+
+Pour vérifier si cela est possible, il faut qu'on observe la durée des campagnes ?
+```{r}
+# Calcul de la durée de la campagne et filtrage des campagnes avec durée < 5000 jours
+data_kickstarter <- data_kickstarter %>%
+  mutate(
+    duree_campagne = as.Date(deadline) - as.Date(launched)
+  ) %>%
+  filter(duree_campagne < 5000)
+
+# Calcul de la moyenne de la durée des campagnes
+moyenne_duree <- mean(data_kickstarter$duree_campagne, na.rm = TRUE)
+
+# Visualisation
+ggplot(data_kickstarter, aes(x = launched, y = duree_campagne)) +
+  geom_point(color = "blue", alpha = 0.5) +  # Nuage de points
+  geom_hline(yintercept = moyenne_duree, linetype = "dashed", color = "red") +  # Ligne de moyenne
+  labs(
+    title = "Durée des campagnes Kickstarter",
+    x = "Date de lancement",
+    y = "Durée de la campagne (jours)"
+  ) +
+  theme_minimal() +
+  annotate("text", x = as.Date("2015-01-01"), y = moyenne_duree + 100, label = paste("Moyenne = ", round(moyenne_duree, 1)), color = "red", hjust = 0)
+```
+Ce graphique représente la durée des campagnes sur Kickstarter en jour. On observe qu'en moyenne, une campagne dure 34 jours. On a donc une corrélation avec l'hypothèse que l'on a faite. Le décalage d'un mois sur les taux de réussite selon si l'on se place sur la date de lancement ou de cloture est dû aux temps moyen d'une campagne. Donc, si l'on suit nos observations, la p
