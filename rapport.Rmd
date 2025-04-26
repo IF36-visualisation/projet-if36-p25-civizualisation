@@ -164,87 +164,90 @@ Ces comparaisons nous permettront de mieux comprendre les facteurs influençant 
 
 - Des facteurs externes, tels que les tendances économiques ou médiatiques, qui ne sont pas inclus dans les données, peuvent également influencer le succès des campagnes.
 
-## 🧭 Exploration et Nettoyage des données
+## 🧭 Exploration des données
 
-```{r message=FALSE, warning=FALSE, include=FALSE}
-library(ggplot2)
-library(dplyr)
-library(readr)
-library(tidyr)
-library(lubridate)
+Pour effectuer notre analyse, nous utilisons les libraries suivantes :
 
-
-data2016 <- read_csv("./data/ks-projects-201612.csv")
-data2018 <- read_csv("./data/ks-projects-201801.csv")
-
-glimpse(data2016)
-glimpse(data2018)
+```{r message=FALSE, warning=FALSE}
+library(ggplot2)   # Pour la visualisation des données
+library(dplyr)     # Pour la manipulation des données
+library(readr)     # Pour la lecture des fichiers CSV
+library(tidyr)     # Pour le nettoyage et la transformation des données
+library(lubridate) # Pour la gestion des dates
 ```
 
+Nous chargeons les deux fichiers de données nécessaires à notre analyse :
+
+```{r message=FALSE, warning=FALSE}
+data2016 <- read_csv("./data/ks-projects-201612.csv", show_col_types = FALSE)
+data2018 <- read_csv("./data/ks-projects-201801.csv", show_col_types = FALSE)
+```
+
+### 🧹 Nettoyage des données
+
+Assurons nous que nos données ne contiennent aucun individus doublon
+Pour cela nous allons utiliser la variable ID qui se veut unique pour chaque individu
+
+Regardons tout d'abord si dans chaque fichier, un individu n'a pas de doublon dans le même fichier
+
+Pour vérifier le nombre d'IDs uniques et les doublons dans les fichiers `ks-projects-201612.csv` et `ks-projects-201801.csv`, nous allons effectuer les étapes suivantes :
+
+Nous comptons le nombre total d'IDs, le nombre d'IDs uniques, et calculons le nombre d'IDs en doublon en soustrayant les IDs uniques des IDs totaux.
+
 ```{r}
-# Assurons nous que nos données ne contiennent aucun individus doublon
-# Pour cela nous allons utiliser la variable ID qui se veut unique pour chaque individu
-
-# Regardons tout d'abord si dans chaque fichier, un individu n'a pas de doublon dans le même fichier
-
-# Pour le fichier 2016
 cat("Nombre d'IDs uniques dans ks-projects-201612.csv :", length(unique(data2016$ID)), "\n")
 cat("Nombre d'IDs dans ks-projects-201612.csv :", length(data2016$ID), "\n")
 cat("Nombre d'IDs doublon dans ks-projects-201612.csv :", length(data2016$ID) - length(unique(data2016$ID)), "\n")
+```
 
-# Pour le fichier 2018
+```{r}
 cat("Nombre d'IDs uniques dans ks-projects-201801.csv :", length(unique(data2018$ID)), "\n")
 cat("Nombre d'IDs dans ks-projects-201801.csv :", length(data2018$ID), "\n")
 cat("Nombre d'IDs doublon dans ks-projects-201801.csv :", length(data2018$ID) - length(unique(data2018$ID)), "\n")
+```
 
-# Nous avons aucun doublons dans chacun de nos 2 fichiers.
+Nous avons aucun doublons dans chacun de nos 2 fichiers.
 
-# Maintenant si on regarde nos 2 fichiers dans leur ensemble, regardons si nous avons des ids de 2016 qui sont dans 2018 et inversement.
+Maintenant si on regarde nos 2 fichiers dans leur ensemble, regardons si nous avons des ids de 2016 qui sont dans 2018 et inversement.
 
+```{r}
+cat("IDs uniquement présents dans ks-projects-201612.csv :", length(setdiff(data2016$ID, data2018$ID)), "\n")
+cat("IDs uniquement présents dans ks-projects-201801.csv :", length(setdiff(data2018$ID, data2016$ID)), "\n")
+```
 
-cat("IDs présents dans ks-projects-201612.csv mais pas dans ks-projects-201801.csv :", length(setdiff(data2016$ID, data2018$ID)), "\n")
-cat("IDs présents dans ks-projects-201801.csv mais pas dans ks-projects-201612.csv :", length(setdiff(data2018$ID, data2016$ID)), "\n")
-# On peut observer que le nombre d'id dans data2016 qui ne se trouvent pas dans data2018 est égal à 0.
-# Autrement dit, toutes les individus du fichier data2016 se trouvent dans data2018.
+On peut observer que le nombre d'id dans data2016 qui ne se trouvent pas dans data2018 est égal à 0.
+Autrement dit, toutes les individus du fichier data2016 se trouvent dans data2018.
 
+Pour conclure, nous pouvons donc utiliser le fichier `ks-projects-201801.csv` seulement sans utiliser le fichier ks-projects-201612.csv pour éviter les doublons et avoir plus de données.
 
-# Pour conclure, nous pouvons donc utiliser le fichier ks-projects-201801.csv seulement sans utiliser le fichier ks-projects-201612.csv
-# pour éviter les doublons et avoir plus de données.
+```{r}
 data_kickstarter <- data2018
 ```
 
+#### Vérifions s'il y a des lignes entièrement vides
+
 ```{r}
-# Vérifions s'il y a des lignes entièrement vides
-nb_empty_rows <- sum(rowSums(is.na(data_kickstarter)) == ncol(data_kickstarter))
-cat("Nombre de lignes entièrement vides :", nb_empty_rows, "\n")
+cat(sum(rowSums(is.na(data_kickstarter)) == ncol(data_kickstarter)))
 ```
 
-```{r}
-# Vérifions s'il y a des lignes entièrement vides
-nb_empty_rows <- sum(rowSums(is.na(data_kickstarter)) == ncol(data_kickstarter))
-cat("Nombre de lignes entièrement vides :", nb_empty_rows, "\n")
-
-# Vérifions s'il y a des valeurs NA dans nos données
-nb_na_values <- sapply(data_kickstarter, function(x) sum(is.na(x)))
-cat("Nombre de valeurs NA par colonne :\n")
-print(nb_na_values)
-
-# Ajouter dans un tableau les lignes qui contiennent des valeurs vides
-rows_with_na <- data_kickstarter[apply(data_kickstarter, 1, function(row) any(is.na(row))), ]
-cat("Nombre de lignes contenant des valeurs NA :", nrow(rows_with_na), "\n")
-```
+#### Nettoyage des individus comportant des valeurs NA
 
 ```{r}
-# Nettoyage des données
+print(sapply(data_kickstarter, function(x) sum(is.na(x))))
 data_kickstarter <- data_kickstarter %>% drop_na()
+print(sapply(data_kickstarter, function(x) sum(is.na(x))))
 ```
+
+#### Nettoyage des individus comportant des valeurs non valides
 
 ```{r}
 data_kickstarter <- data_kickstarter %>% filter(state != "undefined")
-
 data_kickstarter <- data_kickstarter %>% filter(country != "N,0\"")
+```
 
-# Mettre au format de date "launched"
+#### Conversion de la caractéristique "launched" en format Date
+
+```{r}
 data_kickstarter$launched <- as.Date(data_kickstarter$launched)
 ```
 
