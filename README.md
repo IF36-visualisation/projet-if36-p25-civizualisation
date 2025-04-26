@@ -4,7 +4,7 @@ L'objectif de ce projet d'IF36 est d'analyser et de présenter des données issu
 
 ## 👥 Membres
 
-Equipe Civizualisation :
+Équipe Civizualisation :
 
 - Florian BONELLI
 - Eyvan FAURE
@@ -156,7 +156,7 @@ Ces comparaisons nous permettront de mieux comprendre les facteurs influençant 
 
 ### ⚠️ Limitations et problèmes potentiels
 
-- Certains porteurs de projets peuvent fixer des objectifs volontairement bas pour maximiser leurs chances de succès ou, au contraire, volontairement élevé par manque de serieux, ce qui pourrait biaiser les résultats de l'analyse.
+- Certains porteurs de projets peuvent fixer des objectifs volontairement bas pour maximiser leurs chances de succès ou, au contraire, volontairement élevé par manque de sérieux, ce qui pourrait biaiser les résultats de l'analyse.
 
 - Les taux de conversion en USD peuvent introduire des biais en fonction des fluctuations des taux de change et de l'inflation.
 
