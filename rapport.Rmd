@@ -252,35 +252,194 @@ data_kickstarter <- data_kickstarter %>% filter(country != "N,0\"")
 data_kickstarter$launched <- as.Date(data_kickstarter$launched)
 ```
 
+### Quels sont les taux de réussite des campagnes en fonction des catégories ?
+
+Nous allons analyser les taux de réussite des campagnes Kickstarter en fonction des catégories.
+Cette analyse nous permettra d'identifier les catégories qui réussissent le mieux et celles qui rencontrent plus de difficultés.
+
+#### Nombre total de campagnes Kickstarter par catégorie
+
+Dans un premier temps, nous allons commencer par regarder le nombre total de campagnes Kickstarter par catégorie.
+Cela nous permettra de voir si certaines catégories sont sur-représentées ou sous-représentées.
+
+```{r}
+campaign_counts <- data_kickstarter %>%
+  group_by(main_category) %>%
+  summarise(total_campaigns = n()) %>%
+  arrange(desc(total_campaigns))
+
+ggplot(campaign_counts, aes(x = reorder(main_category, total_campaigns), y = total_campaigns)) +
+  geom_col(fill = "steelblue") +
+  labs(
+    title = "Nombre total de campagnes Kickstarter par catégorie entre 2009 et 2018",
+    x = "Catégorie",
+    y = "Nombre total de campagnes"
+  ) +
+  scale_y_continuous(labels=function(x) format(x, big.mark = " ", scientific = FALSE)) +
+  theme_minimal() +
+  coord_flip()
+```
+
+Cette visualisation montre que certaines catégories, comme **Film & Video** et **Music**, ont un nombre très élevé de campagnes, tandis que d'autres, comme **Dance**, en ont beaucoup moins.
+On observe aussi un écart significatif entre **Film & Video** et **Dance**.
+
+#### Taux de réussite des campagnes Kickstarter par catégorie
+
+Examinons maintenant le taux de réussite pour chaque catégorie.
+Pour cela, nous allons regarder le pourcentage de projets réussis dans une catégorie.
+
+```{r}
+success_rates <- data_kickstarter %>%
+  group_by(main_category) %>%
+  summarise(
+    total = n(),
+    successful = sum(state == "successful"),
+    success_rate = successful / total
+  ) %>%
+  arrange(desc(success_rate))
+
+ggplot(success_rates, aes(x = reorder(main_category, success_rate), y = success_rate)) +
+  geom_col(fill = "forestgreen") +
+  scale_y_continuous(labels = scales::percent_format()) +
+  labs(
+    title = "Taux de réussite des campagnes Kickstarter par catégorie entre 2009 et 2018",
+    x = "Catégorie",
+    y = "Taux de réussite"
+  ) +
+  theme_minimal() +
+  coord_flip()
+```
+
+Dans cette visualisation, nous observons que les catégories **Dance**, **Theater** et **Comics** affichent les taux de réussite les plus élevés, avec notamment près de **60%** de réussite pour ces deux catégories.
+Cela peut s'expliquer par une communauté plus engagée ou des projets bien ciblés dans ces domaines.
+
+En revanche, les catégories comme **Technology** et **Journalism** ont les taux de réussite les plus faibles, autour de **20%**.
+Cela peut être dû à des projets plus complexes avec des coûts beaucoup plus élevés.
+
+Cela peut expliquer en partie les différences de taux de réussite : les catégories avec moins de projets peuvent avoir une communauté plus ciblée et engagée.
+
+#### Répartition des montants demandés par catégorie
+
+Enfin, analysons la répartition des montants demandés dans chaque catégorie possible de projets. Cela nous permettra de vérifier si certaines catégories ont des budgets aux des montants plus élevés ou plus faibles.
+
+```{r}
+data_kickstarter <- data_kickstarter %>%
+  mutate(
+    goal_category = case_when(
+      goal < 1000 ~ "< 1k",
+      goal < 10000 ~ "1k - 10k",
+      goal < 50000 ~ "10k - 50k",
+      goal < 100000 ~ "50k - 100k",
+      TRUE ~ "> 100k"
+    )
+  )
+
+normalized_data <- data_kickstarter %>%
+  group_by(main_category) %>%
+  mutate(total_projects = n()) %>%
+  ungroup() %>%
+  group_by(main_category, goal_category) %>%
+  summarise(
+    project_count = n(),
+    total_projects = first(total_projects),
+    normalized_count = (project_count / total_projects),
+    .groups = "drop"
+  ) %>%
+  ungroup()
+
+normalized_data$goal_category <- factor(normalized_data$goal_category, levels=c("< 1k", "1k - 10k", "10k - 50k", "50k - 100k", "> 100k"))
+
+ggplot(normalized_data, aes(x = reorder(main_category, total_projects), y = normalized_count, fill = goal_category)) +
+  geom_bar(stat = "identity", position = position_stack(reverse = TRUE)) +
+  scale_y_continuous(labels = scales::percent_format()) +
+  scale_fill_manual(
+    values = c("< 1k" = "forestgreen", "1k - 10k" = "green", "10k - 50k" = "gold", "50k - 100k" = "darkorange", "> 100k" = "red")
+  ) +
+  labs(
+    title = "Répartition des projets par catégorie et montant demandé entre 2009 et 2018",
+    x = "Catégorie",
+    y = "Répartition des projets",
+    fill = "Montant demandé (USD)"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "bottom",
+    text = element_text(size = 10)
+  ) +
+  coord_flip()
+```
+
+Ce graphique révèle que certaines catégories, comme **Technology**, ont une proportion plus élevée de projets demandant des montants importants (2/3 des projets à plus de 10 000 dollars).
+A l'inverse la catégorie **Dance** regroupe des projets de plus petits montants (80% en dessous de 10 000 dollars).
+
+Les projets nécessitant des financements plus importants, comme ceux de la catégorie **Technology**, ont souvent des taux de réussite plus faibles car ils impliquent des besoins financiers plus lourds.
+À l'inverse, des catégories comme **Dance** demandent des budgets plus modestes, ce qui permet à un plus grand nombre de projets de réussir sans exiger des sommes trop importantes.
+
+Une exception notable est la catégorie **Journalism** qui, malgré des besoins financiers modestes, embarque peu de contributeurs, ce qui peut expliquer son faible taux de réussite.
+
 ### Question: Combien de projets sont lancés par pays ? Quelle proportion de projets réussis ?
 
 ```{r}
 # Note de lecture: l'axe des ordonnées est logarithmique
-ggplot(data_kickstarter, aes(x=reorder(country, table(country)[country]))) +
-    geom_bar(fill="forestgreen") +
-    scale_y_log10(breaks=c(10,100,1000,10000,30000,100000,300000),labels=label_comma() ) +
-    labs(title = "Quantité de projets selon le pays", x="Code Pays",y="Nombre de projets",caption="Note: l'échelle est logarithmique")+
-    coord_flip()+
-    theme_minimal()
+ggplot(data_kickstarter, aes(x = reorder(country, table(country)[country]))) +
+  geom_bar(fill = "forestgreen") +
+  scale_y_log10(
+    breaks = c(10, 100, 1000, 10000, 30000, 100000, 300000),
+    labels = scales::label_comma()
+  ) +
+  labs(
+    title = "Quantité de projets selon le pays",
+    x = "Code Pays",
+    y = "Nombre de projets",
+    caption = "Note: l'échelle est logarithmique"
+  ) +
+  coord_flip() +
+  theme_minimal()
+```
+
+```{r}
+# Note de lecture: l'axe des ordonnées est logarithmique
+ggplot(data_kickstarter, aes(x = reorder(country, table(country)[country]))) +
+  geom_bar(fill = "forestgreen") +
+  scale_y_log10(
+    breaks = c(10, 100, 1000, 10000, 30000, 100000, 300000),
+    labels = scales::label_comma()
+  ) +
+  labs(
+    title = "Quantité de projets selon le pays",
+    x = "Code Pays",
+    y = "Nombre de projets",
+    caption = "Note: l'échelle est logarithmique"
+  ) +
+  coord_flip() +
+  theme_minimal()
 ```
 
 Ce graphique représente la quantité de projets lancés sur Kickstarter par pays.
 
 On remarque une grande surreprésentation des Etats-Unis, pays de création de Kickstarter.
 
-On remarque ensuite une proéminence des pays anglo-saxons dans les pays dont le plus de projets sont validés. 
-On peut lier cela au fait que, dans de nombreux pays, une offre plus locale et adaptée s'est développée. 
+On remarque ensuite une proéminence des pays anglo-saxons dans les pays dont le plus de projets sont validés.
+On peut lier cela au fait que, dans de nombreux pays, une offre plus locale et adaptée s'est développée.
 
 Par exemple en France, Kickstarter est rarement cité comme la meilleure plateforme de crowdfunding:
 <https://bpifrance-creation.fr/encyclopedie/financements/financement-participatif/sites-plateformes-crowdfunding>
 
 ```{r}
-ggplot(data_kickstarter, aes(x=reorder(country, -table(country)[country]), fill=state)) +
-    geom_bar(position="fill") +
-    scale_fill_manual(breaks = c("suspended","canceled","failed","live","successful"),values=c("grey", "orange", "red", "blue", "green")) +
-    scale_y_continuous(labels = scales::percent_format()) +
-    labs(title = "Répartition des statuts des projets selon le pays", x="Code Pays",y="",colour="Statut")+
-    theme_minimal()
+ggplot(data_kickstarter, aes(x = reorder(country, -table(country)[country]), fill = state)) +
+  geom_bar(position = "fill") +
+  scale_fill_manual(
+    breaks = c("suspended", "canceled", "failed", "live", "successful"),
+    values = c("grey", "orange", "red", "blue", "green")
+  ) +
+  scale_y_continuous(labels = scales::percent_format()) +
+  labs(
+    title = "Répartition des statuts des projets selon le pays",
+    x = "Code Pays",
+    y = "",
+    fill = "Statut"
+  ) +
+  theme_minimal()
 ```
 
 On remarque que tous les pays ont des taux d'échec et de réussite relativement similaires.
@@ -309,6 +468,7 @@ ggplot(success_rates, aes(x = reorder(country, success_rate), y = success_rate))
   theme_minimal() +
   coord_flip()
 ```
+
 On constate que les taux de réussite varient beaucoup selon le pays, de 37% à 15%.
 On constate que les deux pays avec le plus haut taux de réussite sont aussi ceux qui ont le plus de projets (mais ce n'est pas le cas au delà des deux premiers).
 Dans la suite de notre rapport, nous pourrions évaluer s'il existe une corrélation entre le nombre de projets lancés dans chaque pays et leur taux de réussite.
