@@ -174,6 +174,7 @@ library(dplyr)     # Pour la manipulation des données
 library(readr)     # Pour la lecture des fichiers CSV
 library(tidyr)     # Pour le nettoyage et la transformation des données
 library(lubridate) # Pour la gestion des dates
+library(scales)    # Pour passer les échelles en nombres à virgule
 ```
 
 Nous chargeons les deux fichiers de données nécessaires à notre analyse :
@@ -255,24 +256,37 @@ data_kickstarter$launched <- as.Date(data_kickstarter$launched)
 
 ```{r}
 # Note de lecture: l'axe des ordonnées est logarithmique
-ggplot(data_kickstarter, aes(x=reorder(country, -table(country)[country]), fill=state)) +
-    geom_bar() +
-    scale_y_log10() +
-    scale_fill_manual(values=c("orange", "red", "blue", "green", "black", "grey")) +
+ggplot(data_kickstarter, aes(x=reorder(country, table(country)[country]))) +
+    geom_bar(fill="forestgreen") +
+    scale_y_log10(breaks=c(10,100,1000,10000,30000,100000,300000),labels=label_comma() ) +
+    labs(title = "Quantité de projets selon le pays", x="Code Pays",y="Nombre de projets",caption="Note: l'échelle est logarithmique")+
+    coord_flip()+
     theme_minimal()
 ```
 
-Ce graphique représente la quantité de projets lancés sur Kickstarter par pays. En vert sont représentés les projets réussis. On remarque une proéminence des pays anglo-saxons dans les pays dont le plus de projets sont validés. On peut lier ça au fait que, dans de nombreux pays, une offre plus locale et adaptée s'est développée. Par exemple en France, Kickstarter est rarement cité comme la meilleure plateforme de crowdfunding: <https://bpifrance-creation.fr/encyclopedie/financements/financement-participatif/sites-plateformes-crowdfunding>
+Ce graphique représente la quantité de projets lancés sur Kickstarter par pays.
+
+On remarque une grande surreprésentation des Etats-Unis, pays de création de Kickstarter.
+
+On remarque ensuite une proéminence des pays anglo-saxons dans les pays dont le plus de projets sont validés. 
+On peut lier cela au fait que, dans de nombreux pays, une offre plus locale et adaptée s'est développée. 
+
+Par exemple en France, Kickstarter est rarement cité comme la meilleure plateforme de crowdfunding:
+<https://bpifrance-creation.fr/encyclopedie/financements/financement-participatif/sites-plateformes-crowdfunding>
 
 ```{r}
 ggplot(data_kickstarter, aes(x=reorder(country, -table(country)[country]), fill=state)) +
     geom_bar(position="fill") +
-    scale_y_log10() +
-    scale_fill_manual(values=c("orange", "red", "blue", "green", "black", "grey")) +
+    scale_fill_manual(breaks = c("suspended","canceled","failed","live","successful"),values=c("grey", "orange", "red", "blue", "green")) +
+    scale_y_continuous(labels = scales::percent_format()) +
+    labs(title = "Répartition des statuts des projets selon le pays", x="Code Pays",y="",colour="Statut")+
     theme_minimal()
 ```
 
-On remarque que tous les pays ont des taux d'échec et de réussite plutôt similaires (outlier: Luxembourg)
+On remarque que tous les pays ont des taux d'échec et de réussite relativement similaires.
+
+On remarque une grande proportion de projets en cours au Japon. Cela s'explique par le fait que Kickstarter a été lancé en Septembre 2017 au Japon, soit un an avant la finalisation de notre base de donnée en 2018. Ainsi, il est normal d'avoir une surreprésentation de projets en cours de financement:
+<https://www.theverge.com/2017/8/17/16161068/kickstarter-japan-launch-september>
 
 ```{r}
 success_rates <- data_kickstarter %>%
@@ -295,6 +309,9 @@ ggplot(success_rates, aes(x = reorder(country, success_rate), y = success_rate))
   theme_minimal() +
   coord_flip()
 ```
+On constate que les taux de réussite varient beaucoup selon le pays, de 37% à 15%.
+On constate que les deux pays avec le plus haut taux de réussite sont aussi ceux qui ont le plus de projets (mais ce n'est pas le cas au delà des deux premiers).
+Dans la suite de notre rapport, nous pourrions évaluer s'il existe une corrélation entre le nombre de projets lancés dans chaque pays et leur taux de réussite.
 
 ### Existe-t-il des périodes de l'année où les campagnes ont plus de chances de réussir ?
 
