@@ -168,6 +168,15 @@ Ces comparaisons nous permettront de mieux comprendre les facteurs influençant 
 ## 🧭 Exploration des données
 
 Pour effectuer notre analyse, nous utilisons les libraries suivantes :
+```{r}
+#instalation des paquet si neccesaire
+
+#install.packages("syuzhet")
+#install.packages("dplyr")
+#install.packages("tidytext")
+#install.packages("ggplot2")
+#install.packages("stringr")
+```
 
 ```{r message=FALSE, warning=FALSE}
 library(ggplot2)   # Pour la visualisation des données
@@ -176,6 +185,10 @@ library(readr)     # Pour la lecture des fichiers CSV
 library(tidyr)     # Pour le nettoyage et la transformation des données
 library(lubridate) # Pour la gestion des dates
 library(scales)    # Pour passer les échelles en nombres à virgule
+library(stringr) # Pour l'analyse du texte
+library(tidytext) # Pour l'analyse du texte
+library(syuzhet) # Pour l'analyse émotionelle du text
+
 ```
 
 Nous chargeons les deux fichiers de données nécessaires à notre analyse :
@@ -550,3 +563,211 @@ ggplot(data_kickstarter, aes(x = launched, y = duree_campagne)) +
 ```
 
 Ce graphique représente la durée des campagnes sur Kickstarter, exprimée en jours. On constate qu'en moyenne, une campagne dure 34 jours. Cette observation confirme l'hypothèse précédemment formulée : le décalage d’un mois observé entre les taux de réussite selon que l'on se base sur la date de lancement ou sur la date de clôture s'explique par la durée moyenne des campagnes. Ainsi, d'après nos analyses, les périodes les plus favorables au succès d'un projet se situent entre février et juin, ainsi qu'entre septembre et novembre.
+
+### Le choix des mots dans le titre d'une campagne a-t-il un impact sur son succès ?
+
+#### La longueur du titre influence-t-elle le taux de succès d'une campagne ?
+```{r}
+data_kickstarter <- data_kickstarter %>%
+  mutate(title_length_words = nchar(name))
+
+# Calculer la moyenne de la longueur des titres par état
+mean_title_length <- data_kickstarter %>%
+  group_by(state) %>%
+  summarise(mean_length = mean(title_length_words, na.rm = TRUE))
+
+# Tracer un graphique à barres
+ggplot(mean_title_length, aes(x = state, y = mean_length, fill = state)) +
+  geom_col() +
+  labs(title = "Moyenne de la longueur des titres par succès/échec",
+       x = "État du projet",
+       y = "Longueur moyenne du titre (nombre de mots)") +
+  theme_minimal()
+
+```
+D'après ce graphique nous pouvons observer qu'il semble y avoir une relation entre la taille du titre et le fait qu'il réussie ou pas. Les projet qui sont succesfull ont en moyenne plus de caractères qu'un porjet qui échoue , cependant cette différence n'est pas significative 
+
+#### Certains mots dans le titre sont-ils plus fréquents dans les campagnes réussies que dans les campagnes échouées ?
+```{r}
+
+data_kickstarter_succesfull <- data_kickstarter %>%
+  filter(state == "successful")
+
+words <- data_kickstarter_succesfull %>%
+  select(name) %>%
+  unnest_tokens(word, name)
+
+# Enlever les mots très courants ("stop words") si besoin
+data("stop_words") # du package tidytext
+words_clean <- words %>%
+  anti_join(stop_words, by = "word")
+
+# Compter les mots les plus fréquents
+word_counts <- words_clean %>%
+  count(word, sort = TRUE)  
+top_words <- word_counts %>%
+  slice_max(n, n = 20)
+
+ggplot(top_words, aes(x = reorder(word, n), y = n)) +
+  geom_col(fill = "steelblue") +
+  coord_flip() +
+  labs(title = "Mots les plus fréquents dans les projets Kickstarter réussis",
+       x = "Mot", y = "Fréquence") +
+  theme_minimal()
+
+```
+
+Qu'en est il pour les campagnes non réussie ?
+```{r}
+
+data_kickstarter_failed <- data_kickstarter %>%
+  filter(state == "failed")
+
+words <- data_kickstarter_failed %>%
+  select(name) %>%
+  unnest_tokens(word, name)
+
+# Enlever les mots très courants ("stop words") si besoin
+data("stop_words") # du package tidytext
+words_clean <- words %>%
+  anti_join(stop_words, by = "word")
+
+# Compter les mots les plus fréquents
+word_counts <- words_clean %>%
+  count(word, sort = TRUE)  
+top_words <- word_counts %>%
+  slice_max(n, n = 20)
+
+ggplot(top_words, aes(x = reorder(word, n), y = n)) +
+  geom_col(fill = "steelblue") +
+  coord_flip() +
+  labs(title = "Mots les plus fréquents dans les projets Kickstarter qui ont échoué",
+       x = "Mot", y = "Fréquence") +
+  theme_minimal()
+
+```
+
+On s'apperçoit rapidement que les mots les plus utilisés n'ont pas de lien avec la réussite ou non d'un projet mais plutôt avec les catégories les plus représentés, biaisant ainsi l'analyse des mots fréquents dans les titres. Pour corriger ce biais, nous allons normaliser la fréquence des mots en tenant compte de la proportion de chaque catégorie, en multipliant la fréquence brute d'un mot par l'inverse de la proportion de sa catégorie.
+
+
+
+```{r}
+
+
+words <- data_kickstarter_succesfull %>%
+  select(name,main_category) %>%
+  unnest_tokens(word, name)
+
+# Enlever les mots très courants ("stop words") si besoin
+data("stop_words") # du package tidytext
+words_clean <- words %>%
+  anti_join(stop_words, by = "word")
+
+
+# Calculer la proportion de chaque catégorie
+category_proportions <- data_kickstarter %>%
+  group_by(main_category) %>%
+  summarise(category_count = n()) %>%
+  mutate(category_proportion = category_count / sum(category_count))
+
+
+# Compter les mots les plus fréquents par catégorie
+word_counts <- words_clean %>%
+  group_by(word, main_category) %>%
+  count() %>%
+  left_join(category_proportions, by = "main_category")
+
+# Normaliser la fréquence des mots par l'inverse de la proportion de la catégorie
+word_counts <- word_counts %>%
+  mutate(normalized_frequency = (n  / category_proportion))
+top_words <- word_counts  %>%
+  arrange(desc(normalized_frequency)) %>%
+  slice_head(n = 20)
+
+top_words <- word_counts  %>%
+  ungroup()%>%
+  arrange(desc(normalized_frequency)) %>%
+  slice_head(n = 20)
+
+ggplot(top_words, aes(x = reorder(word, normalized_frequency), y = normalized_frequency)) +
+  geom_col(fill = "steelblue") +
+  coord_flip() +
+  labs(title = "Mots les plus fréquents dans les projets Kickstarter échoués (fréquence normalisée)",
+       x = "Mot", y = "Fréquence normalisée") +
+  theme_minimal()
+
+```
+
+```{r}
+
+
+words <- data_kickstarter_failed %>%
+  select(name,main_category) %>%
+  unnest_tokens(word, name)
+
+# Enlever les mots très courants ("stop words") si besoin
+data("stop_words") # du package tidytext
+words_clean <- words %>%
+  anti_join(stop_words, by = "word")
+
+
+# Calculer la proportion de chaque catégorie
+category_proportions <- data_kickstarter %>%
+  group_by(main_category) %>%
+  summarise(category_count = n()) %>%
+  mutate(category_proportion = category_count / sum(category_count))
+
+
+# Compter les mots les plus fréquents par catégorie
+word_counts <- words_clean %>%
+  group_by(word, main_category) %>%
+  count() %>%
+  left_join(category_proportions, by = "main_category")
+
+# Normaliser la fréquence des mots par l'inverse de la proportion de la catégorie
+word_counts <- word_counts %>%
+  mutate(normalized_frequency = (n  / category_proportion))
+top_words <- word_counts  %>%
+  arrange(desc(normalized_frequency)) %>%
+  slice_head(n = 20)
+
+top_words <- word_counts  %>%
+  ungroup()%>%
+  arrange(desc(normalized_frequency)) %>%
+  slice_head(n = 20)
+
+ggplot(top_words, aes(x = reorder(word, normalized_frequency), y = normalized_frequency)) +
+  geom_col(fill = "steelblue") +
+  coord_flip() +
+  labs(title = "Mots les plus fréquents dans les projets Kickstarter échoués (fréquence normalisée)",
+       x = "Mot", y = "Fréquence normalisée") +
+  theme_minimal()
+
+```
+
+On voit que malgrès après avoir contrebalancé l'éffet de la sureprésentations de certaines catégories visible à travers le titre ne permet pas de trouver des mots particuliers présent dans le titre des projets qui réussisent ou échouent.
+En dehors des mots qui se trouvent dans les catégories les plus représenté ce graphique nous confirme que les catégories tel que le journalisme et le design ont une proportion de projet qui échouent élevé.
+Si une analyse simple des mots présent dans le titre ne montre rien peut être qu'une analyse plus poussé basé sur des mots dit expressif ou à conotation positive ou négative peut avoir un impact.
+
+#### L'utilisation de mots émotionnels ou marketing dans le titre est-elle corrélée avec un meilleur taux de succès ?
+
+```{r}
+# Calculer le score de sentiment pour chaque titre
+data_kickstarter_sentiment <- data_kickstarter %>%
+  filter(state == "successful" | state == "failed") %>%
+  mutate(
+    sentiment_score = get_sentiment(name, method = "syuzhet")
+  )
+
+# Créer un graphique pour voir si le score de sentiment est corrélé au succès
+ggplot(data_kickstarter_sentiment, aes(x = sentiment_score, fill = state)) +
+  geom_histogram(position = "dodge", binwidth = 0.1, alpha = 0.7) +
+  labs(title = "Corrélation entre le sentiment du titre et le succès du projet",
+       x = "Score de sentiment (méthode Syuzhet)",
+       y = "Fréquence") +
+  theme_minimal() +
+  scale_fill_manual(values = c("red", "green"), labels = c("Échoué", "Réussi"))
+```
+Ce graphique illustre la corrélation entre le sentiment des titres des projets Kickstarter (mesuré par la méthode Syuzhet, de -4 à 4) et leur succès, distinguant les projets "Échoués" (rouge) et "Réussis" (vert). On observe que la plupart des projets, qu’ils aient réussi ou échoué, ont un score de sentiment proche de 0 (neutre), avec un pic marqué à cette valeur. Les projets échoués prédominent légèrement dans les scores négatifs (<-2), tandis que les projets réussis sont un peu plus fréquents dans les scores positifs (>2). Cette analyse suggère que le sentiment du titre n’influence que marginalement le succès d’un projet, confirmant que d’autres facteurs pourraient jouer un rôle plus déterminant dans les résultats des campagnes Kickstarter.
+
+
