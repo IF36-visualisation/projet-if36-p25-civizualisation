@@ -413,7 +413,10 @@ Ce graphique représente la quantité de projets lancés sur Kickstarter par pay
 
 On remarque une grande sur-représentation des Etats-Unis, pays de création de Kickstarter.
 
-On remarque ensuite une proéminence des pays anglo-saxons dans les pays dont le plus de projets sont validés. On peut lier cela au fait que, dans de nombreux pays, une offre plus locale et adaptée s'est développée.
+On remarque ensuite une proéminence des pays anglo-saxons dans les pays dont le plus de projets sont validés. 
+
+On peut lier cela au fait que Kickstarter a été lancé progressivement dans le monde. Pour avoir une vision qui reflète mieux la popularité de Kickstarter, on pourrait comparer les quantités de projets selon le temps dans un prochain livrable.
+On peut également expliquer cela par le fait que, dans de nombreux pays, une offre plus locale et adaptée a eu le temps de se développer, avant l'arrivée de Kickstarter ou en parallèle.
 
 Par exemple en France, Kickstarter est rarement cité comme la meilleure plateforme de crowdfunding: <https://bpifrance-creation.fr/encyclopedie/financements/financement-participatif/sites-plateformes-crowdfunding>
 
