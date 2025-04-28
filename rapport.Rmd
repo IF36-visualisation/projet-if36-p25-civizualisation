@@ -9,17 +9,17 @@ L'objectif de ce projet d'IF36 est d'analyser et de présenter des données issu
 
 Équipe Civizualisation :
 
--   Florian BONELLI
--   Eyvan FAURE
--   Ryan OUYED
--   Lucas SAURON
+- Florian BONELLI
+- Eyvan FAURE
+- Ryan OUYED
+- Lucas SAURON
 
 ## 📚 Sommaire
 
--   📝 Contexte des données choisis
--   📥 Téléchargement des données
--   📁 Présentation des données
--   📊 Plan d'analyse
+- 📝 Contexte des données choisis
+- 📥 Téléchargement des données
+- 📁 Présentation des données
+- 📊 Plan d'analyse
 
 ## 📝 Contexte des données choisis
 
@@ -47,13 +47,13 @@ Il faut les télécharger manuellement.
 
 Suivez les étapes ci-dessous pour récupérer les fichiers nécessaires :
 
-1.  Téléchargez l'archive contenant les jeux de données.
+1. Téléchargez l'archive contenant les jeux de données.
 
     ``` bash
     curl -L -o ./data/kickstarter-projects.zip https://www.kaggle.com/api/v1/datasets/download/kemical/kickstarter-projects
     ```
 
-2.  Une fois l'archive téléchargée, extrayez les fichiers.
+2. Une fois l'archive téléchargée, extrayez les fichiers.
 
     ``` bash
     unzip ./data/kickstarter-projects.zip -d ./data
@@ -65,7 +65,7 @@ Suivez les étapes ci-dessous pour récupérer les fichiers nécessaires :
     sudo apt-get install unzip
     ```
 
-3.  (Facultatif) Après avoir extrait les fichiers, vous pouvez supprimer l'archive pour libérer de l'espace.
+3. (Facultatif) Après avoir extrait les fichiers, vous pouvez supprimer l'archive pour libérer de l'espace.
 
     ``` bash
     rm ./data/kickstarter-projects.zip
@@ -135,60 +135,50 @@ L'objectif principal de notre analyse est de comprendre les dynamiques du financ
 
 ### 🔍 Questions d'analyse
 
--   Quels sont les taux de réussite des campagnes selon les catégories ?
--   Dans quelle mesure le montant de l'objectif influence-t-il la probabilité de succès d'une campagne ?
--   Existe-t-il des périodes de l'année où les campagnes ont plus de chances de réussir ?
--   Quels sont les pays où le plus de campagnes sont créées? Parmi eux, lesquels ont les meilleurs taux de réussite?
--   L'écart entre l'objectif initial et les fonds réellement collectés varie-t-il en fonction de la catégorie ou de la devise utilisée ?
--   Le choix des mots dans le titre d'une campagne a-t-il un impact sur son succès ?
--   Comment a évolué le taux de réussite et le nombre de campagne au fil des années? Les campagnes sont elles plus ambitieuses qu'avant?
+- Quels sont les taux de réussite des campagnes selon les catégories ?
+- Dans quelle mesure le montant de l'objectif influence-t-il la probabilité de succès d'une campagne ?
+- Existe-t-il des périodes de l'année où les campagnes ont plus de chances de réussir ?
+- Quels sont les pays où le plus de campagnes sont créées? Parmi eux, lesquels ont les meilleurs taux de réussite?
+- L'écart entre l'objectif initial et les fonds réellement collectés varie-t-il en fonction de la catégorie ou de la devise utilisée ?
+- Le choix des mots dans le titre d'une campagne a-t-il un impact sur son succès ?
+- Comment a évolué le taux de réussite et le nombre de campagne au fil des années? Les campagnes sont elles plus ambitieuses qu'avant?
 
 ### 📈 Variables à comparer
 
 Pour répondre à nos questions d'analyse, nous comparerons les variables suivantes :
 
--   **Taux de réussite et d'échec par catégorie** : Identifier les catégories où les campagnes réussissent ou échouent le plus souvent.
--   **Taux de réussite et d'échec en fonction du montant de l'objectif** : Analyser l'impact du montant demandé sur le succès ou l'échec des campagnes.
--   **Taux de réussite et d'échec selon la période de lancement** : Étudier si certaines périodes de l'année influencent les chances de succès ou d'échec.
--   **Nombre de campagnes créées et leur taux de réussite selon le pays, sur une période donnée**: Comparer les pays où les campagnes sont les plus populaires pour observer des différences de nombres de campagnes et de taux de réussite selon les régions.
--   **Écart entre le montant collecté et l'objectif fixé** : Comparer les fonds espérés et les fonds réellement obtenus pour évaluer les écarts.
--   **Impact des mots-clés dans les titres sur le succès** : Identifier les mots les plus fréquents dans les titres des campagnes réussies et leur influence.
--   **Nombre de campagnes réussies montant moyen récolté par campagne réussie selon l'année** : Comparer le nombre de campagnes réussies et leur valeur moyenne chaque année pour dégager des tendances.
+- **Taux de réussite et d'échec par catégorie** : Identifier les catégories où les campagnes réussissent ou échouent le plus souvent.
+- **Taux de réussite et d'échec en fonction du montant de l'objectif** : Analyser l'impact du montant demandé sur le succès ou l'échec des campagnes.
+- **Taux de réussite et d'échec selon la période de lancement** : Étudier si certaines périodes de l'année influencent les chances de succès ou d'échec.
+- **Nombre de campagnes créées et leur taux de réussite selon le pays, sur une période donnée**: Comparer les pays où les campagnes sont les plus populaires pour observer des différences de nombres de campagnes et de taux de réussite selon les régions.
+- **Écart entre le montant collecté et l'objectif fixé** : Comparer les fonds espérés et les fonds réellement obtenus pour évaluer les écarts.
+- **Impact des mots-clés dans les titres sur le succès** : Identifier les mots les plus fréquents dans les titres des campagnes réussies et leur influence.
+- **Nombre de campagnes réussies montant moyen récolté par campagne réussie selon l'année** : Comparer le nombre de campagnes réussies et leur valeur moyenne chaque année pour dégager des tendances.
 
 Ces comparaisons nous permettront de mieux comprendre les facteurs influençant le succès des campagnes Kickstarter.
 
 ### ⚠️ Limitations et problèmes potentiels
 
--   Certains porteurs de projets peuvent fixer des objectifs volontairement bas pour maximiser leurs chances de succès ou, au contraire, volontairement élevé par manque de sérieux, ce qui pourrait biaiser les résultats de l'analyse.
+- Certains porteurs de projets peuvent fixer des objectifs volontairement bas pour maximiser leurs chances de succès ou, au contraire, volontairement élevé par manque de sérieux, ce qui pourrait biaiser les résultats de l'analyse.
 
--   Les taux de conversion en USD peuvent introduire des biais en fonction des fluctuations des taux de change et de l'inflation.
+- Les taux de conversion en USD peuvent introduire des biais en fonction des fluctuations des taux de change et de l'inflation.
 
--   Des facteurs externes, tels que les tendances économiques ou médiatiques, qui ne sont pas inclus dans les données, peuvent également influencer le succès des campagnes.
+- Des facteurs externes, tels que les tendances économiques ou médiatiques, qui ne sont pas inclus dans les données, peuvent également influencer le succès des campagnes.
 
 ## 🧭 Exploration des données
 
 Pour effectuer notre analyse, nous utilisons les libraries suivantes :
-```{r}
-#instalation des paquet si neccesaire
-
-#install.packages("syuzhet")
-#install.packages("dplyr")
-#install.packages("tidytext")
-#install.packages("ggplot2")
-#install.packages("stringr")
-```
 
 ```{r message=FALSE, warning=FALSE}
-library(ggplot2)   # Pour la visualisation des données
-library(dplyr)     # Pour la manipulation des données
-library(readr)     # Pour la lecture des fichiers CSV
-library(tidyr)     # Pour le nettoyage et la transformation des données
+library(ggplot2) # Pour la visualisation des données
+library(dplyr) # Pour la manipulation des données
+library(readr) # Pour la lecture des fichiers CSV
+library(tidyr) # Pour le nettoyage et la transformation des données
 library(lubridate) # Pour la gestion des dates
-library(scales)    # Pour passer les échelles en nombres à virgule
+library(scales) # Pour passer les échelles en nombres à virgule
 library(stringr) # Pour l'analyse du texte
 library(tidytext) # Pour l'analyse du texte
-library(syuzhet) # Pour l'analyse émotionelle du text
-
+library(syuzhet) # Pour l'analyse émotionnelle du texte
 ```
 
 Nous chargeons les deux fichiers de données nécessaires à notre analyse :
@@ -285,7 +275,7 @@ ggplot(campaign_counts, aes(x = reorder(main_category, total_campaigns), y = tot
     x = "Catégorie",
     y = "Nombre total de campagnes"
   ) +
-  scale_y_continuous(labels=function(x) format(x, big.mark = " ", scientific = FALSE)) +
+  scale_y_continuous(labels = function(x) format(x, big.mark = " ", scientific = FALSE)) +
   theme_minimal() +
   coord_flip()
 ```
@@ -353,7 +343,7 @@ normalized_data <- data_kickstarter %>%
   ) %>%
   ungroup()
 
-normalized_data$goal_category <- factor(normalized_data$goal_category, levels=c("< 1k", "1k - 10k", "10k - 50k", "50k - 100k", "> 100k"))
+normalized_data$goal_category <- factor(normalized_data$goal_category, levels = c("< 1k", "1k - 10k", "10k - 50k", "50k - 100k", "> 100k"))
 
 ggplot(normalized_data, aes(x = reorder(main_category, total_projects), y = normalized_count, fill = goal_category)) +
   geom_bar(stat = "identity", position = position_stack(reverse = TRUE)) +
@@ -381,7 +371,7 @@ Les projets nécessitant des financements plus importants, comme ceux de la cat�
 
 Une exception notable est la catégorie **Journalism** qui, malgré des besoins financiers modestes, embarque peu de contributeurs, ce qui peut expliquer son faible taux de réussite.
 
-### Question: Combien de projets sont lancés par pays ? Quelle proportion de projets réussis ?
+### Combien de projets sont lancés par pays ? Quelle proportion de projets réussis ?
 
 ```{r}
 # Note de lecture: l'axe des ordonnées est logarithmique
@@ -421,7 +411,7 @@ ggplot(data_kickstarter, aes(x = reorder(country, table(country)[country]))) +
 
 Ce graphique représente la quantité de projets lancés sur Kickstarter par pays.
 
-On remarque une grande surreprésentation des Etats-Unis, pays de création de Kickstarter.
+On remarque une grande sur-représentation des Etats-Unis, pays de création de Kickstarter.
 
 On remarque ensuite une proéminence des pays anglo-saxons dans les pays dont le plus de projets sont validés. On peut lier cela au fait que, dans de nombreux pays, une offre plus locale et adaptée s'est développée.
 
@@ -446,7 +436,7 @@ ggplot(data_kickstarter, aes(x = reorder(country, -table(country)[country]), fil
 
 On remarque que tous les pays ont des taux d'échec et de réussite relativement similaires.
 
-On remarque une grande proportion de projets en cours au Japon. Cela s'explique par le fait que Kickstarter a été lancé en Septembre 2017 au Japon, soit un an avant la finalisation de notre base de donnée en 2018. Ainsi, il est normal d'avoir une surreprésentation de projets en cours de financement: <https://www.theverge.com/2017/8/17/16161068/kickstarter-japan-launch-september>
+On remarque une grande proportion de projets en cours au Japon. Cela s'explique par le fait que Kickstarter a été lancé en Septembre 2017 au Japon, soit un an avant la finalisation de notre base de donnée en 2018. Ainsi, il est normal d'avoir une sur-représentation de projets en cours de financement: <https://www.theverge.com/2017/8/17/16161068/kickstarter-japan-launch-september>
 
 ```{r}
 success_rates <- data_kickstarter %>%
@@ -534,7 +524,7 @@ ggplot(monthly_success_rate, aes(x = mois, y = success_rate)) +
   theme_minimal()
 ```
 
-Ce graphique illustre le taux de réussite mensuel des campagnes Kickstarter en fonction de leur date de clôture. On observe que les taux sont similaires à ceux basés sur la date de lancement, mais décalés d’un mois.
+Ce graphique illustre le taux de réussite mensuel des campagnes Kickstarter en fonction de leur date de clôture. On observe que les taux sont similaires à ceux basés sur la date de lancement, mais décalés d'un mois.
 
 Pour vérifier si cela est possible, il faut qu'on observe la durée des campagnes ?
 
@@ -551,8 +541,8 @@ moyenne_duree <- mean(data_kickstarter$duree_campagne, na.rm = TRUE)
 
 # Visualisation
 ggplot(data_kickstarter, aes(x = launched, y = duree_campagne)) +
-  geom_point(color = "blue", alpha = 0.5) +  # Nuage de points
-  geom_hline(yintercept = moyenne_duree, linetype = "dashed", color = "red") +  # Ligne de moyenne
+  geom_point(color = "blue", alpha = 0.5) + # Nuage de points
+  geom_hline(yintercept = moyenne_duree, linetype = "dashed", color = "red") + # Ligne de moyenne
   labs(
     title = "Durée des campagnes Kickstarter",
     x = "Date de lancement",
@@ -562,11 +552,12 @@ ggplot(data_kickstarter, aes(x = launched, y = duree_campagne)) +
   annotate("text", x = as.Date("2015-01-01"), y = moyenne_duree + 100, label = paste("Moyenne = ", round(moyenne_duree, 1)), color = "red", hjust = 0)
 ```
 
-Ce graphique représente la durée des campagnes sur Kickstarter, exprimée en jours. On constate qu'en moyenne, une campagne dure 34 jours. Cette observation confirme l'hypothèse précédemment formulée : le décalage d’un mois observé entre les taux de réussite selon que l'on se base sur la date de lancement ou sur la date de clôture s'explique par la durée moyenne des campagnes. Ainsi, d'après nos analyses, les périodes les plus favorables au succès d'un projet se situent entre février et juin, ainsi qu'entre septembre et novembre.
+Ce graphique représente la durée des campagnes sur Kickstarter, exprimée en jours. On constate qu'en moyenne, une campagne dure 34 jours. Cette observation confirme l'hypothèse précédemment formulée : le décalage d'un mois observé entre les taux de réussite selon que l'on se base sur la date de lancement ou sur la date de clôture s'explique par la durée moyenne des campagnes. Ainsi, d'après nos analyses, les périodes les plus favorables au succès d'un projet se situent entre février et juin, ainsi qu'entre septembre et novembre.
 
 ### Le choix des mots dans le titre d'une campagne a-t-il un impact sur son succès ?
 
 #### La longueur du titre influence-t-elle le taux de succès d'une campagne ?
+
 ```{r}
 data_kickstarter <- data_kickstarter %>%
   mutate(title_length_words = nchar(name))
@@ -579,21 +570,23 @@ mean_title_length <- data_kickstarter %>%
 # Tracer un graphique à barres
 ggplot(mean_title_length, aes(x = state, y = mean_length, fill = state)) +
   geom_col() +
-  labs(title = "Moyenne de la longueur des titres par succès/échec",
-       x = "État du projet",
-       y = "Longueur moyenne du titre (nombre de mots)") +
+  labs(
+    title = "Moyenne de la longueur des titres par succès/échec",
+    x = "État du projet",
+    y = "Longueur moyenne du titre (nombre de mots)"
+  ) +
   theme_minimal()
-
 ```
-D'après ce graphique nous pouvons observer qu'il semble y avoir une relation entre la taille du titre et le fait qu'il réussie ou pas. Les projet qui sont succesfull ont en moyenne plus de caractères qu'un porjet qui échoue , cependant cette différence n'est pas significative 
+
+D'après ce graphique nous pouvons observer qu'il semble y avoir une relation entre la taille du titre et le fait qu'il réussie ou pas. Les projet qui sont successful ont en moyenne plus de caractères qu'un projet qui échoue, cependant cette différence n'est pas significative
 
 #### Certains mots dans le titre sont-ils plus fréquents dans les campagnes réussies que dans les campagnes échouées ?
-```{r}
 
-data_kickstarter_succesfull <- data_kickstarter %>%
+```{r}
+data_kickstarter_successful <- data_kickstarter %>%
   filter(state == "successful")
 
-words <- data_kickstarter_succesfull %>%
+words <- data_kickstarter_successful %>%
   select(name) %>%
   unnest_tokens(word, name)
 
@@ -604,22 +597,23 @@ words_clean <- words %>%
 
 # Compter les mots les plus fréquents
 word_counts <- words_clean %>%
-  count(word, sort = TRUE)  
+  count(word, sort = TRUE)
 top_words <- word_counts %>%
   slice_max(n, n = 20)
 
 ggplot(top_words, aes(x = reorder(word, n), y = n)) +
   geom_col(fill = "steelblue") +
   coord_flip() +
-  labs(title = "Mots les plus fréquents dans les projets Kickstarter réussis",
-       x = "Mot", y = "Fréquence") +
+  labs(
+    title = "Mots les plus fréquents dans les projets Kickstarter réussis",
+    x = "Mot", y = "Fréquence"
+  ) +
   theme_minimal()
-
 ```
 
 Qu'en est il pour les campagnes non réussie ?
-```{r}
 
+```{r}
 data_kickstarter_failed <- data_kickstarter %>%
   filter(state == "failed")
 
@@ -634,28 +628,25 @@ words_clean <- words %>%
 
 # Compter les mots les plus fréquents
 word_counts <- words_clean %>%
-  count(word, sort = TRUE)  
+  count(word, sort = TRUE)
 top_words <- word_counts %>%
   slice_max(n, n = 20)
 
 ggplot(top_words, aes(x = reorder(word, n), y = n)) +
   geom_col(fill = "steelblue") +
   coord_flip() +
-  labs(title = "Mots les plus fréquents dans les projets Kickstarter qui ont échoué",
-       x = "Mot", y = "Fréquence") +
+  labs(
+    title = "Mots les plus fréquents dans les projets Kickstarter qui ont échoué",
+    x = "Mot", y = "Fréquence"
+  ) +
   theme_minimal()
-
 ```
 
-On s'apperçoit rapidement que les mots les plus utilisés n'ont pas de lien avec la réussite ou non d'un projet mais plutôt avec les catégories les plus représentés, biaisant ainsi l'analyse des mots fréquents dans les titres. Pour corriger ce biais, nous allons normaliser la fréquence des mots en tenant compte de la proportion de chaque catégorie, en multipliant la fréquence brute d'un mot par l'inverse de la proportion de sa catégorie.
-
-
+On s'aperçoit rapidement que les mots les plus utilisés n'ont pas de lien avec la réussite ou non d'un projet mais plutôt avec les catégories les plus représentés, biaisant ainsi l'analyse des mots fréquents dans les titres. Pour corriger ce biais, nous allons normaliser la fréquence des mots en tenant compte de la proportion de chaque catégorie, en multipliant la fréquence brute d'un mot par l'inverse de la proportion de sa catégorie.
 
 ```{r}
-
-
-words <- data_kickstarter_succesfull %>%
-  select(name,main_category) %>%
+words <- data_kickstarter_successful %>%
+  select(name, main_category) %>%
   unnest_tokens(word, name)
 
 # Enlever les mots très courants ("stop words") si besoin
@@ -663,13 +654,11 @@ data("stop_words") # du package tidytext
 words_clean <- words %>%
   anti_join(stop_words, by = "word")
 
-
 # Calculer la proportion de chaque catégorie
 category_proportions <- data_kickstarter %>%
   group_by(main_category) %>%
   summarise(category_count = n()) %>%
   mutate(category_proportion = category_count / sum(category_count))
-
 
 # Compter les mots les plus fréquents par catégorie
 word_counts <- words_clean %>%
@@ -679,30 +668,29 @@ word_counts <- words_clean %>%
 
 # Normaliser la fréquence des mots par l'inverse de la proportion de la catégorie
 word_counts <- word_counts %>%
-  mutate(normalized_frequency = (n  / category_proportion))
-top_words <- word_counts  %>%
+  mutate(normalized_frequency = (n / category_proportion))
+top_words <- word_counts %>%
   arrange(desc(normalized_frequency)) %>%
   slice_head(n = 20)
 
-top_words <- word_counts  %>%
-  ungroup()%>%
+top_words <- word_counts %>%
+  ungroup() %>%
   arrange(desc(normalized_frequency)) %>%
   slice_head(n = 20)
 
 ggplot(top_words, aes(x = reorder(word, normalized_frequency), y = normalized_frequency)) +
   geom_col(fill = "steelblue") +
   coord_flip() +
-  labs(title = "Mots les plus fréquents dans les projets Kickstarter échoués (fréquence normalisée)",
-       x = "Mot", y = "Fréquence normalisée") +
+  labs(
+    title = "Mots les plus fréquents dans les projets Kickstarter échoués (fréquence normalisée)",
+    x = "Mot", y = "Fréquence normalisée"
+  ) +
   theme_minimal()
-
 ```
 
 ```{r}
-
-
 words <- data_kickstarter_failed %>%
-  select(name,main_category) %>%
+  select(name, main_category) %>%
   unnest_tokens(word, name)
 
 # Enlever les mots très courants ("stop words") si besoin
@@ -710,13 +698,11 @@ data("stop_words") # du package tidytext
 words_clean <- words %>%
   anti_join(stop_words, by = "word")
 
-
 # Calculer la proportion de chaque catégorie
 category_proportions <- data_kickstarter %>%
   group_by(main_category) %>%
   summarise(category_count = n()) %>%
   mutate(category_proportion = category_count / sum(category_count))
-
 
 # Compter les mots les plus fréquents par catégorie
 word_counts <- words_clean %>%
@@ -726,28 +712,29 @@ word_counts <- words_clean %>%
 
 # Normaliser la fréquence des mots par l'inverse de la proportion de la catégorie
 word_counts <- word_counts %>%
-  mutate(normalized_frequency = (n  / category_proportion))
-top_words <- word_counts  %>%
+  mutate(normalized_frequency = (n / category_proportion))
+top_words <- word_counts %>%
   arrange(desc(normalized_frequency)) %>%
   slice_head(n = 20)
 
-top_words <- word_counts  %>%
-  ungroup()%>%
+top_words <- word_counts %>%
+  ungroup() %>%
   arrange(desc(normalized_frequency)) %>%
   slice_head(n = 20)
 
 ggplot(top_words, aes(x = reorder(word, normalized_frequency), y = normalized_frequency)) +
   geom_col(fill = "steelblue") +
   coord_flip() +
-  labs(title = "Mots les plus fréquents dans les projets Kickstarter échoués (fréquence normalisée)",
-       x = "Mot", y = "Fréquence normalisée") +
+  labs(
+    title = "Mots les plus fréquents dans les projets Kickstarter échoués (fréquence normalisée)",
+    x = "Mot", y = "Fréquence normalisée"
+  ) +
   theme_minimal()
-
 ```
 
-On voit que malgrès après avoir contrebalancé l'éffet de la sureprésentations de certaines catégories visible à travers le titre ne permet pas de trouver des mots particuliers présent dans le titre des projets qui réussisent ou échouent.
+On voit que malgré après avoir contrebalancé l'effet de la sur-représentations de certaines catégories visible à travers le titre ne permet pas de trouver des mots particuliers présent dans le titre des projets qui réussissent ou échouent.
 En dehors des mots qui se trouvent dans les catégories les plus représenté ce graphique nous confirme que les catégories tel que le journalisme et le design ont une proportion de projet qui échouent élevé.
-Si une analyse simple des mots présent dans le titre ne montre rien peut être qu'une analyse plus poussé basé sur des mots dit expressif ou à conotation positive ou négative peut avoir un impact.
+Si une analyse simple des mots présent dans le titre ne montre rien peut être qu'une analyse plus poussé basé sur des mots dit expressif ou à connotation positive ou négative peut avoir un impact.
 
 #### L'utilisation de mots émotionnels ou marketing dans le titre est-elle corrélée avec un meilleur taux de succès ?
 
@@ -762,12 +749,13 @@ data_kickstarter_sentiment <- data_kickstarter %>%
 # Créer un graphique pour voir si le score de sentiment est corrélé au succès
 ggplot(data_kickstarter_sentiment, aes(x = sentiment_score, fill = state)) +
   geom_histogram(position = "dodge", binwidth = 0.1, alpha = 0.7) +
-  labs(title = "Corrélation entre le sentiment du titre et le succès du projet",
-       x = "Score de sentiment (méthode Syuzhet)",
-       y = "Fréquence") +
+  labs(
+    title = "Corrélation entre le sentiment du titre et le succès du projet",
+    x = "Score de sentiment (méthode Syuzhet)",
+    y = "Fréquence"
+  ) +
   theme_minimal() +
   scale_fill_manual(values = c("red", "green"), labels = c("Échoué", "Réussi"))
 ```
-Ce graphique illustre la corrélation entre le sentiment des titres des projets Kickstarter (mesuré par la méthode Syuzhet, de -4 à 4) et leur succès, distinguant les projets "Échoués" (rouge) et "Réussis" (vert). On observe que la plupart des projets, qu’ils aient réussi ou échoué, ont un score de sentiment proche de 0 (neutre), avec un pic marqué à cette valeur. Les projets échoués prédominent légèrement dans les scores négatifs (<-2), tandis que les projets réussis sont un peu plus fréquents dans les scores positifs (>2). Cette analyse suggère que le sentiment du titre n’influence que marginalement le succès d’un projet, confirmant que d’autres facteurs pourraient jouer un rôle plus déterminant dans les résultats des campagnes Kickstarter.
 
-
+Ce graphique illustre la corrélation entre le sentiment des titres des projets Kickstarter (mesuré par la méthode Syuzhet, de -4 à 4) et leur succès, distinguant les projets "Échoués" (rouge) et "Réussis" (vert). On observe que la plupart des projets, qu'ils aient réussi ou échoué, ont un score de sentiment proche de 0 (neutre), avec un pic marqué à cette valeur. Les projets échoués prédominent légèrement dans les scores négatifs (<-2), tandis que les projets réussis sont un peu plus fréquents dans les scores positifs (>2). Cette analyse suggère que le sentiment du titre n'influence que marginalement le succès d'un projet, confirmant que d'autres facteurs pourraient jouer un rôle plus déterminant dans les résultats des campagnes Kickstarter.
