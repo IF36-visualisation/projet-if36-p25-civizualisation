@@ -1,6 +1,9 @@
 ---
 title: "Projet IF36 - Analyse des données de Kickstarter"
-output: html_document
+output: 
+  prettydoc::html_pretty:
+    theme: hpstr
+    highlight: github
 ---
 
 L'objectif de ce projet d'IF36 est d'analyser et de présenter des données issues d'un jeu de données de notre choix.
@@ -9,17 +12,17 @@ L'objectif de ce projet d'IF36 est d'analyser et de présenter des données issu
 
 Équipe Civizualisation :
 
-- Florian BONELLI
-- Eyvan FAURE
-- Ryan OUYED
-- Lucas SAURON
+-   Florian BONELLI
+-   Eyvan FAURE
+-   Ryan OUYED
+-   Lucas SAURON
 
 ## 📚 Sommaire
 
-- 📝 Contexte des données choisis
-- 📥 Téléchargement des données
-- 📁 Présentation des données
-- 📊 Plan d'analyse
+-   📝 Contexte des données choisis
+-   📥 Téléchargement des données
+-   📁 Présentation des données
+-   📊 Plan d'analyse
 
 ## 📝 Contexte des données choisis
 
@@ -47,13 +50,13 @@ Il faut les télécharger manuellement.
 
 Suivez les étapes ci-dessous pour récupérer les fichiers nécessaires :
 
-1. Téléchargez l'archive contenant les jeux de données.
+1.  Téléchargez l'archive contenant les jeux de données.
 
     ``` bash
     curl -L -o ./data/kickstarter-projects.zip https://www.kaggle.com/api/v1/datasets/download/kemical/kickstarter-projects
     ```
 
-2. Une fois l'archive téléchargée, extrayez les fichiers.
+2.  Une fois l'archive téléchargée, extrayez les fichiers.
 
     ``` bash
     unzip ./data/kickstarter-projects.zip -d ./data
@@ -65,7 +68,7 @@ Suivez les étapes ci-dessous pour récupérer les fichiers nécessaires :
     sudo apt-get install unzip
     ```
 
-3. (Facultatif) Après avoir extrait les fichiers, vous pouvez supprimer l'archive pour libérer de l'espace.
+3.  (Facultatif) Après avoir extrait les fichiers, vous pouvez supprimer l'archive pour libérer de l'espace.
 
     ``` bash
     rm ./data/kickstarter-projects.zip
@@ -78,7 +81,7 @@ Suivez les étapes ci-dessous pour récupérer les fichiers nécessaires :
 Ce premier jeu de données au format CSV (Comma-Separated Values) contient 321 616 individus et 17 variables.
 
 | Variable | Type de données | Description |
-|--------------|--------------|--------------------------------------------|
+|----------------|----------------|----------------------------------------|
 | `ID` | Integer | Identifiant unique du projet |
 | `name` | String | Nom du projet |
 | `category` | String | Catégorie spécifique du projet |
@@ -104,7 +107,7 @@ On remarque que les 4 dernières variables sont sans titre et sans données.
 Ce deuxième jeu de données au format CSV (Comma-Separated Values) contient 375 765 individus et 15 variables.
 
 | Variable | Type de données | Description |
-|--------------|--------------|--------------------------------------------|
+|----------------|----------------|----------------------------------------|
 | `ID` | Integer | Identifiant unique du projet |
 | `name` | String | Nom du projet |
 | `category` | String | Catégorie spécifique du projet |
@@ -135,35 +138,35 @@ L'objectif principal de notre analyse est de comprendre les dynamiques du financ
 
 ### 🔍 Questions d'analyse
 
-- Quels sont les taux de réussite des campagnes selon les catégories ?
-- Dans quelle mesure le montant de l'objectif influence-t-il la probabilité de succès d'une campagne ?
-- Existe-t-il des périodes de l'année où les campagnes ont plus de chances de réussir ?
-- Quels sont les pays où le plus de campagnes sont créées? Parmi eux, lesquels ont les meilleurs taux de réussite?
-- L'écart entre l'objectif initial et les fonds réellement collectés varie-t-il en fonction de la catégorie ou de la devise utilisée ?
-- Le choix des mots dans le titre d'une campagne a-t-il un impact sur son succès ?
-- Comment a évolué le taux de réussite et le nombre de campagne au fil des années? Les campagnes sont elles plus ambitieuses qu'avant?
+-   Quels sont les taux de réussite des campagnes selon les catégories ?
+-   Dans quelle mesure le montant de l'objectif influence-t-il la probabilité de succès d'une campagne ?
+-   Existe-t-il des périodes de l'année où les campagnes ont plus de chances de réussir ?
+-   Quels sont les pays où le plus de campagnes sont créées? Parmi eux, lesquels ont les meilleurs taux de réussite?
+-   L'écart entre l'objectif initial et les fonds réellement collectés varie-t-il en fonction de la catégorie ou de la devise utilisée ?
+-   Le choix des mots dans le titre d'une campagne a-t-il un impact sur son succès ?
+-   Comment a évolué le taux de réussite et le nombre de campagne au fil des années? Les campagnes sont elles plus ambitieuses qu'avant?
 
 ### 📈 Variables à comparer
 
 Pour répondre à nos questions d'analyse, nous comparerons les variables suivantes :
 
-- **Taux de réussite et d'échec par catégorie** : Identifier les catégories où les campagnes réussissent ou échouent le plus souvent.
-- **Taux de réussite et d'échec en fonction du montant de l'objectif** : Analyser l'impact du montant demandé sur le succès ou l'échec des campagnes.
-- **Taux de réussite et d'échec selon la période de lancement** : Étudier si certaines périodes de l'année influencent les chances de succès ou d'échec.
-- **Nombre de campagnes créées et leur taux de réussite selon le pays, sur une période donnée**: Comparer les pays où les campagnes sont les plus populaires pour observer des différences de nombres de campagnes et de taux de réussite selon les régions.
-- **Écart entre le montant collecté et l'objectif fixé** : Comparer les fonds espérés et les fonds réellement obtenus pour évaluer les écarts.
-- **Impact des mots-clés dans les titres sur le succès** : Identifier les mots les plus fréquents dans les titres des campagnes réussies et leur influence.
-- **Nombre de campagnes réussies montant moyen récolté par campagne réussie selon l'année** : Comparer le nombre de campagnes réussies et leur valeur moyenne chaque année pour dégager des tendances.
+-   **Taux de réussite et d'échec par catégorie** : Identifier les catégories où les campagnes réussissent ou échouent le plus souvent.
+-   **Taux de réussite et d'échec en fonction du montant de l'objectif** : Analyser l'impact du montant demandé sur le succès ou l'échec des campagnes.
+-   **Taux de réussite et d'échec selon la période de lancement** : Étudier si certaines périodes de l'année influencent les chances de succès ou d'échec.
+-   **Nombre de campagnes créées et leur taux de réussite selon le pays, sur une période donnée**: Comparer les pays où les campagnes sont les plus populaires pour observer des différences de nombres de campagnes et de taux de réussite selon les régions.
+-   **Écart entre le montant collecté et l'objectif fixé** : Comparer les fonds espérés et les fonds réellement obtenus pour évaluer les écarts.
+-   **Impact des mots-clés dans les titres sur le succès** : Identifier les mots les plus fréquents dans les titres des campagnes réussies et leur influence.
+-   **Nombre de campagnes réussies montant moyen récolté par campagne réussie selon l'année** : Comparer le nombre de campagnes réussies et leur valeur moyenne chaque année pour dégager des tendances.
 
 Ces comparaisons nous permettront de mieux comprendre les facteurs influençant le succès des campagnes Kickstarter.
 
 ### ⚠️ Limitations et problèmes potentiels
 
-- Certains porteurs de projets peuvent fixer des objectifs volontairement bas pour maximiser leurs chances de succès ou, au contraire, volontairement élevé par manque de sérieux, ce qui pourrait biaiser les résultats de l'analyse.
+-   Certains porteurs de projets peuvent fixer des objectifs volontairement bas pour maximiser leurs chances de succès ou, au contraire, volontairement élevé par manque de sérieux, ce qui pourrait biaiser les résultats de l'analyse.
 
-- Les taux de conversion en USD peuvent introduire des biais en fonction des fluctuations des taux de change et de l'inflation.
+-   Les taux de conversion en USD peuvent introduire des biais en fonction des fluctuations des taux de change et de l'inflation.
 
-- Des facteurs externes, tels que les tendances économiques ou médiatiques, qui ne sont pas inclus dans les données, peuvent également influencer le succès des campagnes.
+-   Des facteurs externes, tels que les tendances économiques ou médiatiques, qui ne sont pas inclus dans les données, peuvent également influencer le succès des campagnes.
 
 ## 🧭 Exploration des données
 
@@ -417,10 +420,9 @@ Ce graphique représente la quantité de projets lancés sur Kickstarter par pay
 
 On remarque une grande sur-représentation des Etats-Unis, pays de création de Kickstarter.
 
-On remarque ensuite une proéminence des pays anglo-saxons dans les pays dont le plus de projets sont validés. 
+On remarque ensuite une proéminence des pays anglo-saxons dans les pays dont le plus de projets sont validés.
 
-On peut lier cela au fait que Kickstarter a été lancé progressivement dans le monde. Pour avoir une vision qui reflète mieux la popularité de Kickstarter, on pourrait comparer les quantités de projets selon le temps dans un prochain livrable.
-On peut également expliquer cela par le fait que, dans de nombreux pays, une offre plus locale et adaptée a eu le temps de se développer, avant l'arrivée de Kickstarter ou en parallèle.
+On peut lier cela au fait que Kickstarter a été lancé progressivement dans le monde. Pour avoir une vision qui reflète mieux la popularité de Kickstarter, on pourrait comparer les quantités de projets selon le temps dans un prochain livrable. On peut également expliquer cela par le fait que, dans de nombreux pays, une offre plus locale et adaptée a eu le temps de se développer, avant l'arrivée de Kickstarter ou en parallèle.
 
 Par exemple en France, Kickstarter est rarement cité comme la meilleure plateforme de crowdfunding: <https://bpifrance-creation.fr/encyclopedie/financements/financement-participatif/sites-plateformes-crowdfunding>
 
@@ -739,9 +741,7 @@ ggplot(top_words, aes(x = reorder(word, normalized_frequency), y = normalized_fr
   theme_minimal()
 ```
 
-On voit que malgré après avoir contrebalancé l'effet de la sur-représentations de certaines catégories visible à travers le titre ne permet pas de trouver des mots particuliers présent dans le titre des projets qui réussissent ou échouent.
-En dehors des mots qui se trouvent dans les catégories les plus représenté ce graphique nous confirme que les catégories tel que le journalisme et le design ont une proportion de projet qui échouent élevé.
-Si une analyse simple des mots présent dans le titre ne montre rien peut être qu'une analyse plus poussé basé sur des mots dit expressif ou à connotation positive ou négative peut avoir un impact.
+On voit que malgré après avoir contrebalancé l'effet de la sur-représentations de certaines catégories visible à travers le titre ne permet pas de trouver des mots particuliers présent dans le titre des projets qui réussissent ou échouent. En dehors des mots qui se trouvent dans les catégories les plus représenté ce graphique nous confirme que les catégories tel que le journalisme et le design ont une proportion de projet qui échouent élevé. Si une analyse simple des mots présent dans le titre ne montre rien peut être qu'une analyse plus poussé basé sur des mots dit expressif ou à connotation positive ou négative peut avoir un impact.
 
 #### L'utilisation de mots émotionnels ou marketing dans le titre est-elle corrélée avec un meilleur taux de succès ?
 
@@ -765,4 +765,4 @@ ggplot(data_kickstarter_sentiment, aes(x = sentiment_score, fill = state)) +
   scale_fill_manual(values = c("red", "green"), labels = c("Échoué", "Réussi"))
 ```
 
-Ce graphique illustre la corrélation entre le sentiment des titres des projets Kickstarter (mesuré par la méthode Syuzhet, de -4 à 4) et leur succès, distinguant les projets "Échoués" (rouge) et "Réussis" (vert). On observe que la plupart des projets, qu'ils aient réussi ou échoué, ont un score de sentiment proche de 0 (neutre), avec un pic marqué à cette valeur. Les projets échoués prédominent légèrement dans les scores négatifs (<-2), tandis que les projets réussis sont un peu plus fréquents dans les scores positifs (>2). Cette analyse suggère que le sentiment du titre n'influence que marginalement le succès d'un projet, confirmant que d'autres facteurs pourraient jouer un rôle plus déterminant dans les résultats des campagnes Kickstarter.
+Ce graphique illustre la corrélation entre le sentiment des titres des projets Kickstarter (mesuré par la méthode Syuzhet, de -4 à 4) et leur succès, distinguant les projets "Échoués" (rouge) et "Réussis" (vert). On observe que la plupart des projets, qu'ils aient réussi ou échoué, ont un score de sentiment proche de 0 (neutre), avec un pic marqué à cette valeur. Les projets échoués prédominent légèrement dans les scores négatifs (\<-2), tandis que les projets réussis sont un peu plus fréquents dans les scores positifs (\>2). Cette analyse suggère que le sentiment du titre n'influence que marginalement le succès d'un projet, confirmant que d'autres facteurs pourraient jouer un rôle plus déterminant dans les résultats des campagnes Kickstarter.
