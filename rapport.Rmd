@@ -169,6 +169,10 @@ Ces comparaisons nous permettront de mieux comprendre les facteurs influençant 
 
 Pour effectuer notre analyse, nous utilisons les libraries suivantes :
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
 ```{r message=FALSE, warning=FALSE}
 library(ggplot2) # Pour la visualisation des données
 library(dplyr) # Pour la manipulation des données
