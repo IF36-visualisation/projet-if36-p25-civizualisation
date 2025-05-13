@@ -186,6 +186,8 @@ library(scales) # Pour passer les échelles en nombres à virgule
 library(stringr) # Pour l'analyse du texte
 library(tidytext) # Pour l'analyse du texte
 library(syuzhet) # Pour l'analyse émotionnelle du texte
+library(GGally) # Pour les matrices de données
+library(ggcorrplot) # Pour les matrices de corrélation
 ```
 
 Nous chargeons les deux fichiers de données nécessaires à notre analyse :
@@ -260,6 +262,24 @@ data_kickstarter <- data_kickstarter %>% filter(country != "N,0\"")
 ```{r}
 data_kickstarter$launched <- as.Date(data_kickstarter$launched)
 ```
+
+###Présentation du dataset
+
+Notre dataset présente l'ensemble des projets lancés sur la plateforme Kickstarter depuis son ouverture en 2013.
+
+On y trouve notamment les dates de lancement des projets, leur catégorie, leur pays d'origine, les montants demandés et récoltés par chaque projet et leur état d'avancement.
+```{r}
+head(data_kickstarter)
+```
+
+```{r}
+data_kickstarter_corr <- data_kickstarter %>% select(goal,pledged,state,backers)
+head(data_kickstarter_corr)
+ggpairs(data_kickstarter_corr, aes(colour = state), upper = list(continuous = "density", combo = "box_no_facet"),
+  lower = list(continuous = "points", combo = "dot_no_facet"))
+#,cardinality_threshold=400000
+```
+
 
 ### Quels sont les taux de réussite des campagnes en fonction des catégories ?
 
