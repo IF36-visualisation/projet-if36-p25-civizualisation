@@ -425,20 +425,17 @@ On remarque ensuite une proéminence des pays anglo-saxons dans les pays dont le
 On peut lier cela au fait que Kickstarter a été lancé progressivement dans le monde. Pour avoir une vision qui reflète mieux la popularité de Kickstarter, on pourrait comparer les quantités de projets selon le temps dans un prochain livrable. On peut également expliquer cela par le fait que, dans de nombreux pays, une offre plus locale et adaptée a eu le temps de se développer, avant l'arrivée de Kickstarter ou en parallèle.
 
 ```{r}
-#data_kickstarter_annees <- data_kickstarter%>% mutate(annee = year(launched))
-#ggplot(data_kickstarter,aes(x = year)) +
- # geom_line()
+
 
 # Create a cumulative count by event
-data_kickstarter_annees <- data_kickstarter %>%
+data_kickstarter_by_country <- data_kickstarter %>%
   group_by(country) %>%
   arrange(launched) %>%
   mutate(cumulative_count = row_number())
 
-#data_kickstarter_annees <- data_kickstarter_annees%>% mutate(annee = year(launched))
 
 # Plot the cumulative count by event
-ggplot(data_kickstarter_annees, aes(x = launched, y = cumulative_count, color = country, group = country)) +
+ggplot(data_kickstarter_by_country, aes(x = launched, y = cumulative_count, color = country, group = country)) +
   geom_line() +
   labs(title = "Cumulative Count by Event Type",
        x = "Date",
