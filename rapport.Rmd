@@ -188,7 +188,8 @@ library(tidytext) # Pour l'analyse du texte
 library(syuzhet) # Pour l'analyse émotionnelle du texte
 library(GGally) # Pour les matrices de données
 library(ggcorrplot) # Pour les matrices de corrélation
-library(countrycode) #Pour la mappemonde
+library(countrycode) #Pour les noms de pays entiers
+library(maps) #Pour la carte du monde
 ```
 
 Nous chargeons les deux fichiers de données nécessaires à notre analyse :
@@ -268,7 +269,11 @@ data_kickstarter$launched <- as.Date(data_kickstarter$launched)
 
 ```{r}
 data_kickstarter <- data_kickstarter %>% mutate(country = countrycode(country,origin = 'iso2c', destination = "country.name.en") )
+
+#Modifications de noms de pays pour les rendre compatible avec la carte du monde
 data_kickstarter$country[data_kickstarter$country == 'Hong Kong SAR China'] <- 'Hong Kong'
+data_kickstarter$country[data_kickstarter$country == 'United States'] <- 'USA'
+
 head(data_kickstarter)
 ```
 
@@ -447,8 +452,37 @@ ggplot(data_kickstarter, aes(x = reorder(country, table(country)[country]))) +
   coord_flip() +
   theme_minimal()
 ```
+
+
 ```{r}
+#On créé un dataframe avec le nombre de projets total par pays
+country_count_table <- table(data_kickstarter$country)
+country_counts <- as.data.frame(country_count_table)
+country_counts<- country_counts %>% rename(Country = Var1,
+                   Projects = Freq)
+country_counts <- as_tibble(country_counts)
+
+View(country_counts)
+#On importe une carte du monde
+
 mapdata <- map_data("world")
+
+View(mapdata)
+
+mapdata <-mapdata %>% rename(Country = region)
+
+View(mapdata)
+#On fusionne les deux tableaux selon le pays
+
+mapdata_projects <- left_join(mapdata, country_counts, by="Country")
+
+#On génère le graphique de la carte du monde
+
+graph_map <- ggplot(mapdata_projects,aes(x=long,y=lat,group=group)) +
+  geom_polygon(aes(fill = Projects), color = "black")
+
+graph_map
+
 ```
 
 Ce graphique représente la quantité de projets lancés sur Kickstarter par pays.
