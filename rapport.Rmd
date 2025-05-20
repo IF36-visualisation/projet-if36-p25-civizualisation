@@ -188,6 +188,7 @@ library(tidytext) # Pour l'analyse du texte
 library(syuzhet) # Pour l'analyse émotionnelle du texte
 library(GGally) # Pour les matrices de données
 library(ggcorrplot) # Pour les matrices de corrélation
+library(countrycode) #Pour la mappemonde
 ```
 
 Nous chargeons les deux fichiers de données nécessaires à notre analyse :
@@ -263,6 +264,15 @@ data_kickstarter <- data_kickstarter %>% filter(country != "N,0\"")
 data_kickstarter$launched <- as.Date(data_kickstarter$launched)
 ```
 
+#### Conversion des codes pays en nom de pays entier
+
+```{r}
+data_kickstarter <- data_kickstarter %>% mutate(country = countrycode(country,origin = 'iso2c', destination = "country.name.en") )
+data_kickstarter$country[data_kickstarter$country == 'Hong Kong SAR China'] <- 'Hong Kong'
+head(data_kickstarter)
+```
+
+
 ###Présentation du dataset
 
 Notre dataset présente l'ensemble des projets lancés sur la plateforme Kickstarter depuis son ouverture en 2013.
@@ -272,11 +282,13 @@ On y trouve notamment les dates de lancement des projets, leur catégorie, leur 
 head(data_kickstarter)
 ```
 
-```{r}
+```{r, CACHE = TRUE}
 data_kickstarter_corr <- data_kickstarter %>% select(goal,pledged,state,backers)
-head(data_kickstarter_corr)
-ggpairs(data_kickstarter_corr, aes(colour = state), upper = list(continuous = "density", combo = "box_no_facet"),
-  lower = list(continuous = "points", combo = "dot_no_facet"))
+ggpairs(data_kickstarter_corr, aes(colour = state), 
+  lower = list(continuous = "points", combo = "dot_no_facet")) +
+  
+  theme_minimal() +
+  theme(axis.text = element_text(size = 3))
 #,cardinality_threshold=400000
 ```
 
@@ -435,6 +447,9 @@ ggplot(data_kickstarter, aes(x = reorder(country, table(country)[country]))) +
   coord_flip() +
   theme_minimal()
 ```
+```{r}
+mapdata <- map_data("world")
+```
 
 Ce graphique représente la quantité de projets lancés sur Kickstarter par pays.
 
@@ -453,6 +468,9 @@ data_kickstarter_by_country <- data_kickstarter %>%
   arrange(launched) %>%
   mutate(cumulative_count = row_number())
 
+top_ten_countries <- c("United States","United Kingdom","Canada","Australia","Germany","France","Italy","Netherlands","Spain","Sweden")
+data_kickstarter_by_country <- data_kickstarter_by_country %>% filter(country %in% top_ten_countries)
+
 
 # Plot the cumulative count by event
 ggplot(data_kickstarter_by_country, aes(x = launched, y = cumulative_count, color = country, group = country)) +
@@ -461,6 +479,21 @@ ggplot(data_kickstarter_by_country, aes(x = launched, y = cumulative_count, colo
        x = "Date",
        y = "Cumulative Count",
        color = "Event") +
+  xlim(as.Date("2010-01-01"),as.Date("2018-12-12"))+
+  theme_minimal()
+```
+
+```{r}
+data_kickstarter_by_country <- data_kickstarter_by_country %>% filter(country!="United States")
+
+# Plot the cumulative count by event
+ggplot(data_kickstarter_by_country, aes(x = launched, y = cumulative_count, color = country, group = country)) +
+  geom_line() +
+  labs(title = "Cumulative Count by Event Type",
+       x = "Date",
+       y = "Cumulative Count",
+       color = "Event") +
+  xlim(as.Date("2013-01-01"),as.Date("2018-01-01"))+
   theme_minimal()
 ```
 
@@ -480,7 +513,8 @@ ggplot(data_kickstarter, aes(x = reorder(country, -table(country)[country]), fil
     y = "",
     fill = "Statut"
   ) +
-  theme_minimal()
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle =90, size=5))
 ```
 
 On remarque que tous les pays ont des taux d'échec et de réussite relativement similaires.
