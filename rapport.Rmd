@@ -172,7 +172,7 @@ Ces comparaisons nous permettront de mieux comprendre les facteurs influençant 
 
 Pour effectuer notre analyse, nous utilisons les libraries suivantes :
 
-```{r setup, include=FALSE, cache=TRUE, echo=FALSE}
+```{r setup, include=FALSE, cache=TRUE, echo=FALSE, warning = FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
@@ -181,7 +181,6 @@ library(ggplot2) # Pour la visualisation des données
 library(dplyr) # Pour la manipulation des données
 library(readr) # Pour la lecture des fichiers CSV
 library(tidyr) # Pour le nettoyage et la transformation des données
-library(lubridate) # Pour la gestion des dates
 library(scales) # Pour passer les échelles en nombres à virgule
 library(stringr) # Pour l'analyse du texte
 library(tidytext) # Pour l'analyse du texte
@@ -190,6 +189,8 @@ library(GGally) # Pour les matrices de données
 library(ggcorrplot) # Pour les matrices de corrélation
 library(countrycode) #Pour les noms de pays entiers
 library(maps) #Pour la carte du monde
+library(lubridate) #Pour traiter les dates
+library(ggrepel) # Pour l'espacement des légendes sur ggplot
 ```
 
 Nous chargeons les deux fichiers de données nécessaires à notre analyse :
@@ -365,18 +366,61 @@ data_kickstarter %>% ggplot(aes(x=duree_campagne))+
 
 ```
 
+### Analyses Exploratoires
 
+On cherche à étudier les possibles corrélations entre le montant demandé, le montant récolté, le nombre de backers et le résultat de la campagne:
 
 ```{r}
-#NOTE IMPORTANTE: Il faut replacer ce graphe dans une des parties
-
-data_kickstarter_corr <- data_kickstarter %>% select(goal,pledged,state,backers)
-ggpairs(data_kickstarter_corr, aes(colour = state), 
+data_kickstarter_corr_money <- data_kickstarter %>% select(usd_goal_real,usd_pledged_real,state,backers)
+ggpairs(data_kickstarter_corr_money, aes(colour = state), 
   lower = list(continuous = "points", combo = "dot_no_facet")) +
   
   theme_minimal() +
   theme(axis.text = element_text(size = 3))
 ```
+
+On observe déjà un phénomène intéressant:
+
+Les projets qui demandent un montant très élevé ont tendance à échouer ou être annulé, et n'atteignent jamais le montant demandé.
+
+A contrario, les projets qui reçoivent un montant très élevé de financement ont demandé à la base une somme beaucoup plus raisonnable.
+
+On observe ainsi une claire dichotomie dans les graphes du côté inférieur gauche, entre des projets qui reçoivent énormément de fonds avec un objectif à la base très raisonnable, et des projets demandant un montant très élevé recevant des sommes très raisonnables et donc insuffisantes.
+
+A noter: Cette analyse ne prend en compte que les projets dont le *goal* ou le *pledged* est relativement élevé. Or, comme on le voit dans les graphes de la diagonale, l'immense majorité des projets ont un *goal* et un *pledged* peu élevés qui les rend quasi invisible dans ce graphe.
+
+Refaisons la même analyse en retirant les montants très élevés.
+
+```{r}
+data_kickstarter_corr_small_money <- data_kickstarter_corr_money %>% filter(usd_goal_real<10000 & usd_pledged_real < 10000)
+
+ggpairs(data_kickstarter_corr_small_money, aes(colour = state), 
+  lower = list(continuous = "points", combo = "dot_no_facet")) +
+  
+  theme_minimal() +
+  theme(axis.text = element_text(size = 3))
+```
+
+*Pas sûr pour celle-ci*
+
+```{r}
+data_kickstarter <- data_kickstarter %>%
+  mutate(
+    duree_campagne_num =  as.numeric(duree_campagne)/86400
+  )
+
+
+data_kickstarter_corr_time <- data_kickstarter %>% select(duree_campagne_num,usd_pledged_real,backers,state)
+
+#data_kickstarter_corr_time <- data_kickstarter_corr_time %>% filter(usd_pledged_real>500)
+
+ggpairs(data_kickstarter_corr_time,columns = 1:3, aes(colour = state),
+  #upper = list(continuous = "density", combo = "ggally_box_no_facet", discrete = "count", na = "na"),
+  lower = list(continuous = "points", combo = "dot_no_facet")) +
+  theme_minimal() +
+  theme(axis.text = element_text(size = 3))
+```
+
 
 
 ### Quels sont les taux de réussite des campagnes en fonction des catégories ?
@@ -661,13 +705,24 @@ ggplot(success_rates_by_country, aes(x = reorder(country, success_rate), y = suc
 mapdata_success <- left_join(mapdata, success_rates_by_country, by="country")
 
 graph_map <- ggplot(mapdata_success,aes(x=long,y=lat,group=group)) +
-  geom_polygon(aes(fill = success_rate), color = "black")
-
+  geom_polygon(aes(fill = success_rate), color = "black") +
+  scale_fill_viridis_c(option = "viridis")
 
 graph_map
 ```
 
 On constate que les taux de réussite varient beaucoup selon le pays, de 37% à 15%. On constate que les deux pays avec le plus haut taux de réussite sont aussi ceux qui ont le plus de projets (mais ce n'est pas le cas au delà des deux premiers). Dans la suite de notre rapport, nous pourrions évaluer s'il existe une corrélation entre le nombre de projets lancés dans chaque pays et leur taux de réussite.
+
+```{r}
+success_rates_by_country_no_us <- success_rates_by_country %>% filter(country!="USA")
+success_rates_by_country_no_us %>% ggplot(aes(x=total,y=success_rate, label=country )) +
+  geom_point() +
+  geom_label_repel(min.segment.length=0,
+                   max.overlaps = Inf,
+                   size=2) +
+  theme_minimal()
+```
+Il n'y a pas de lien clair entre la quantité de projet et le taux de réussite, la majorité des pays avec des quantités de projets très similaires ont des taux de réussites très variés.
 
 ### Existe-t-il des périodes de l'année où les campagnes ont plus de chances de réussir ?
 
