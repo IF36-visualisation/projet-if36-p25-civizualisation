@@ -637,16 +637,33 @@ data_kickstarter_by_country <- data_kickstarter %>%
 top_ten_countries <- c("USA","United Kingdom","Canada","Australia","Germany","France","Italy","Netherlands","Spain","Sweden")
 data_kickstarter_top_ten_countries <- data_kickstarter_by_country %>% filter(country %in% top_ten_countries)
 
+max_cumul <- data_kickstarter_top_ten_countries%>%
+  group_by(country) %>%
+  filter(cumulative_count == max(cumulative_count))%>%
+  ungroup()
 
 # Plot the cumulative count by event
-ggplot(data_kickstarter_top_ten_countries, aes(x = launched, y = cumulative_count, color = country, group = country)) +
-  geom_line(size=1) +
-  labs(title = "Cumulative Count by Event Type",
+plot_US <- ggplot(data_kickstarter_top_ten_countries, aes(x = launched, y = cumulative_count, color = country, group = country)) +
+  geom_line(size=0.9) +
+  labs(title = "Quantité de projets au cours du temps (Top 10 pays)",
        x = "Date",
-       y = "Cumulative Count",
-       color = "Event") +
+       y = "Quantité de projets") +
   xlim(as.Date("2010-01-01"),as.Date("2018-12-12"))+
   theme_minimal()
+
+plot_US <- plot_US + geom_label_repel(data = max_cumul,
+                  aes(label = country),
+                  nudge_x = +150, direction = "y", hjust = "left",
+                  size=2,
+                  min.segment.length=0,
+                  max.overlaps = Inf,
+                  #segment.linetype = 3,
+                  #segment.curvature = -1e-20,
+                  arrow = arrow(length = unit(0.015, "npc"))) +
+  #scale_x_continuous(expand = expansion(mult = 0.1))+
+theme(legend.position = "none")
+
+plot_US
 ```
 
 On remarque que la quantité de projets des états-unis et en partie dûe à une avance accumulée: De 2009 à 2013, Kickstarter était disponible uniquement aux états-unis.
@@ -658,24 +675,22 @@ data_kickstarter_top_ten_countries_no_US <- data_kickstarter_top_ten_countries %
 
 # Plot the cumulative count by event
 plot_no_US <- ggplot(data_kickstarter_top_ten_countries_no_US, aes(x = launched, y = cumulative_count, color = country)) +
-  geom_line(size = 1.3,
+  geom_line(size = 0.9,
             aes(color=country)) +
   labs(title = "Quantité de projets au cours du temps (Hors USA)",
        x = element_blank(),
-       y = "Quantité de projets",
-       color = "Event") +
+       y = "Quantité de projets") +
   xlim(as.Date("2013-01-01"),as.Date("2018-01-03"))+
   theme_minimal()
 
-plot_no_US
 
-max_cumul <- data_kickstarter_by_country_no_US %>%
+max_cumul_no_US <- data_kickstarter_top_ten_countries_no_US %>%
   group_by(country) %>%
   filter(cumulative_count == max(cumulative_count))%>%
   ungroup()
 
 plot_no_US <- plot_no_US +
-  geom_label_repel(data = max_cumul,
+  geom_label_repel(data = max_cumul_no_US,
                   aes(label = country),
                   nudge_x = +150, direction = "y", hjust = "left",
                   size=2,
@@ -687,6 +702,7 @@ plot_no_US <- plot_no_US +
   scale_x_continuous(
   expand = expansion(mult = 0.1))+
 theme(legend.position = "none")
+
 plot_no_US
 # plot_no_US <- plot_no_US +
 #   geom_text_repel(
