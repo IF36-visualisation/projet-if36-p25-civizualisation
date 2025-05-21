@@ -81,7 +81,7 @@ Suivez les étapes ci-dessous pour récupérer les fichiers nécessaires :
 Ce premier jeu de données au format CSV (Comma-Separated Values) contient 321 616 individus et 17 variables.
 
 | Variable | Type de données | Description |
-|----------------|----------------|----------------------------------------|
+|------------------|------------------|-------------------------------------|
 | `ID` | Integer | Identifiant unique du projet |
 | `name` | String | Nom du projet |
 | `category` | String | Catégorie spécifique du projet |
@@ -107,7 +107,7 @@ On remarque que les 4 dernières variables sont sans titre et sans données.
 Ce deuxième jeu de données au format CSV (Comma-Separated Values) contient 375 765 individus et 15 variables.
 
 | Variable | Type de données | Description |
-|----------------|----------------|----------------------------------------|
+|------------------|------------------|-------------------------------------|
 | `ID` | Integer | Identifiant unique du projet |
 | `name` | String | Nom du projet |
 | `category` | String | Catégorie spécifique du projet |
@@ -278,12 +278,12 @@ data_kickstarter$country[data_kickstarter$country == 'United States'] <- 'USA'
 head(data_kickstarter)
 ```
 
-
 ### Présentation du dataset
 
 Notre dataset présente l'ensemble des projets lancés sur la plateforme Kickstarter depuis son ouverture en 2013.
 
 On y trouve notamment les dates de lancement des projets, leur catégorie, leur pays d'origine, les montants demandés et récoltés par chaque projet et leur état d'avancement.
+
 ```{r}
 head(data_kickstarter)
 ```
@@ -308,8 +308,8 @@ ggplot(campaign_counts, aes(x = reorder(main_category, total_campaigns), y = tot
   theme_minimal() +
   coord_flip()
 ```
-Tous les projets doivent définir un "Objectif" (*goal*), qui est la somme d'argent minimale pour que le projet soit considéré comme financé.
-Pendant la durée de la campagne, les utilisateurs de Kickstarter peuvent donner de l'argent au projet. La somme totale récoltée par le projet est visible dans la colonne *pledged* du dataset.
+
+Tous les projets doivent définir un "Objectif" (*goal*), qui est la somme d'argent minimale pour que le projet soit considéré comme financé. Pendant la durée de la campagne, les utilisateurs de Kickstarter peuvent donner de l'argent au projet. La somme totale récoltée par le projet est visible dans la colonne *pledged* du dataset.
 
 Cependant, ces valeurs monétaires sont données dans leur devise d'origine.
 
@@ -318,29 +318,46 @@ Pour que les comparaisons selon la devise aient plus de sens, les colonnes *usd_
 Voici les distributions des projets selon leur objectif *goal* et les sommes réellement récoltées *pledged*
 
 ```{r}
-data_kickstarter %>% ggplot(aes(x=usd_goal_real))+
-  geom_histogram(binwidth = 5000) +
+library(gridExtra)
+plot_goal <- data_kickstarter %>% ggplot(aes(x= as.integer(usd_goal_real)))+
+  geom_histogram(binwidth = 5000, fill = "steelblue") +
   xlim(0,100000)+
   ylim(0,100000) +
+  labs(
+    title = "Montants cible des campagnes Kickstarter",
+    x = "Montant cible ('Goal') en USD",
+    y = "Quantité de campagnes"
+  )+
   theme_minimal()
 
-data_kickstarter %>% ggplot(aes(x=usd_pledged_real))+
-  geom_histogram(binwidth = 5000) +
+plot_pledged <- data_kickstarter %>% ggplot(aes(x= as.integer(usd_pledged_real)))+
+  geom_histogram(binwidth = 5000, fill= "steelblue") +
   xlim(0,100000) +
   ylim(0,100000) +
-  theme_minimal()
+  theme_minimal()+
+  labs(
+    title = "Montants récoltés des campagnes Kickstarter",
+    x = "Montant récolté ('Pledged') en USD",
+    y = "Quantité de campagnes"
+  )
+
+grid.arrange(plot_goal,plot_pledged,ncol=2)
 ```
+
+Chose étrange: Il y a davantage de projets avec des petits objectifs que de projets avec peu de fonds récoltés. Cela est peu réaliste, il faut voir s'il y a un problème avec le dataset.
 
 Chaque financeur est appelé un *backer*. Le dataset associe à chaque projet la quantité de personnes qui l'ont financé:
 
 ```{r}
 data_kickstarter %>% ggplot(aes(x=backers))+
-  geom_histogram(binwidth = 500)+
+  geom_histogram(binwidth = 500, fill="steelblue")+
   xlim(0,10000)+
   ylim(0,1700)+
+  labs(title="Nombre de backers par projet",
+       x="Quantité de backers",
+       y="Quantité de projets")+
   theme_minimal()
 ```
-
 
 Chaque projet ne peut être financé que dans un temps imparti, situé entre son lancement de la campagne (*launched*) et sa clôture (*deadline*). Aucun financement supplémentaire n'est accepté au delà de la clôture de la campagne.
 
@@ -348,9 +365,13 @@ Dans les graphes suivants, nous allons voir la quantité de projets lancés chaq
 
 ```{r}
 data_kickstarter %>% ggplot(aes(x=year(launched))) +
-  geom_bar()+
+  geom_bar(fill="steelblue")+
   xlim(2009,2017)+
+  labs(title = "Quantité de projets lancés chaque année",
+        x= "Année",
+        y= "Quantité de projets") +
   theme_minimal()
+  
 
 # Calcul de la durée de la campagne et filtrage des campagnes avec durée < 5000 jours
 data_kickstarter <- data_kickstarter %>%
@@ -360,11 +381,18 @@ data_kickstarter <- data_kickstarter %>%
   filter(duree_campagne < 5000)
 
 data_kickstarter %>% ggplot(aes(x=duree_campagne))+
-  geom_histogram(binwidth = 1) +
+  geom_histogram(binwidth = 1, fill = "steelblue") +
+  labs(title = "Durée des projets Kickstarter",
+        x= "Durée en jours",
+        y= "Quantité de projets") +
   theme_minimal() +
   xlim(1,65)
 
 ```
+
+On remarque que l'immense majorité des campagnes durent 30 jours, soit 1 mois. La deuxième durée la plus populaire est 60 jours, ce qui correspond à 2 mois.
+
+On voit également des pics sur tous les multiples de 5 jours.
 
 ### Analyses Exploratoires
 
@@ -403,6 +431,8 @@ ggpairs(data_kickstarter_corr_small_money, aes(colour = state),
 
 *Pas sûr pour celle-ci*
 
+On fait la même analyse avec les durées de campagne pour voir si la durée de campagne a un lien avec la réusssite d'une campagne
+
 ```{r}
 data_kickstarter <- data_kickstarter %>%
   mutate(
@@ -420,8 +450,6 @@ ggpairs(data_kickstarter_corr_time,columns = 1:3, aes(colour = state),
   theme_minimal() +
   theme(axis.text = element_text(size = 3))
 ```
-
-
 
 ### Quels sont les taux de réussite des campagnes en fonction des catégories ?
 
@@ -561,25 +589,6 @@ ggplot(data_kickstarter, aes(x = reorder(country, table(country)[country]))) +
 ```
 
 ```{r}
-# Note de lecture: l'axe des ordonnées est logarithmique
-ggplot(data_kickstarter, aes(x = reorder(country, table(country)[country]))) +
-  geom_bar(fill = "forestgreen") +
-  scale_y_log10(
-    breaks = c(10, 100, 1000, 10000, 30000, 100000, 300000),
-    labels = scales::label_comma()
-  ) +
-  labs(
-    title = "Quantité de projets selon le pays",
-    x = "Code Pays",
-    y = "Nombre de projets",
-    caption = "Note: l'échelle est logarithmique"
-  ) +
-  coord_flip() +
-  theme_minimal()
-```
-
-
-```{r}
 #On créé un dataframe avec le nombre de projets total par pays
 country_count_table <- table(data_kickstarter$country)
 country_counts <- as.data.frame(country_count_table)
@@ -600,7 +609,8 @@ mapdata_projects <- left_join(mapdata, country_counts, by="country")
 #On génère le graphique de la carte du monde
 
 graph_map <- ggplot(mapdata_projects,aes(x=long,y=lat,group=group)) +
-  geom_polygon(aes(fill = log(projects)), color = "black")
+  geom_polygon(aes(fill = log(projects)), color = "black")+
+  scale_fill_viridis_c(option = "viridis")
 
 
 graph_map
@@ -625,12 +635,12 @@ data_kickstarter_by_country <- data_kickstarter %>%
   mutate(cumulative_count = row_number())
 
 top_ten_countries <- c("USA","United Kingdom","Canada","Australia","Germany","France","Italy","Netherlands","Spain","Sweden")
-data_kickstarter_by_country <- data_kickstarter_by_country %>% filter(country %in% top_ten_countries)
+data_kickstarter_top_ten_countries <- data_kickstarter_by_country %>% filter(country %in% top_ten_countries)
 
 
 # Plot the cumulative count by event
-ggplot(data_kickstarter_by_country, aes(x = launched, y = cumulative_count, color = country, group = country)) +
-  geom_line() +
+ggplot(data_kickstarter_top_ten_countries, aes(x = launched, y = cumulative_count, color = country, group = country)) +
+  geom_line(size=1) +
   labs(title = "Cumulative Count by Event Type",
        x = "Date",
        y = "Cumulative Count",
@@ -639,24 +649,77 @@ ggplot(data_kickstarter_by_country, aes(x = launched, y = cumulative_count, colo
   theme_minimal()
 ```
 
+On remarque que la quantité de projets des états-unis et en partie dûe à une avance accumulée: De 2009 à 2013, Kickstarter était disponible uniquement aux états-unis.
+
+Faisons un zoom sur les autres pays du Top 10 qui ne sont pas les états-unis:
+
 ```{r}
-data_kickstarter_by_country <- data_kickstarter_by_country %>% filter(country!="United States")
+data_kickstarter_top_ten_countries_no_US <- data_kickstarter_top_ten_countries %>% filter(country!="USA")
 
 # Plot the cumulative count by event
-ggplot(data_kickstarter_by_country, aes(x = launched, y = cumulative_count, color = country, group = country)) +
-  geom_line() +
-  labs(title = "Cumulative Count by Event Type",
-       x = "Date",
-       y = "Cumulative Count",
+plot_no_US <- ggplot(data_kickstarter_top_ten_countries_no_US, aes(x = launched, y = cumulative_count, color = country)) +
+  geom_line(size = 1.3,
+            aes(color=country)) +
+  labs(title = "Quantité de projets au cours du temps (Hors USA)",
+       x = element_blank(),
+       y = "Quantité de projets",
        color = "Event") +
-  xlim(as.Date("2013-01-01"),as.Date("2018-01-01"))+
+  xlim(as.Date("2013-01-01"),as.Date("2018-01-03"))+
   theme_minimal()
+
+plot_no_US
+
+max_cumul <- data_kickstarter_by_country_no_US %>%
+  group_by(country) %>%
+  filter(cumulative_count == max(cumulative_count))%>%
+  ungroup()
+
+plot_no_US <- plot_no_US +
+  geom_label_repel(data = max_cumul,
+                  aes(label = country),
+                  nudge_x = +150, direction = "y", hjust = "left",
+                  size=2,
+                  min.segment.length=0,
+                  max.overlaps = Inf,
+                  #segment.linetype = 3,
+                  #segment.curvature = -1e-20,
+                  arrow = arrow(length = unit(0.015, "npc"))) +
+  scale_x_continuous(
+  expand = expansion(mult = 0.1))+
+theme(legend.position = "none")
+plot_no_US
+# plot_no_US <- plot_no_US +
+#   geom_text_repel(
+#     aes(color = country, label = country),
+#     size = 8,
+#     direction = "y",
+#     #xlim = c(2020.8, NA),
+#     hjust = 0,
+#     segment.size = .7,
+#     segment.alpha = .5,
+#     segment.linetype = "dotted",
+#     box.padding = .4,
+#     segment.curvature = -0.1,
+#     segment.ncp = 3,
+#     segment.angle = 20
+#   )
+#   
+# 
+# plot_no_US
 ```
+
+On remarque que les pays où Kickstarter arrive plus tôt ont une croissance plus forte du nombre de projets lancés.
+
+Cela peut s'expliquer par le fait que l'implantation rapide de son service permet de se faire une meilleure place dans le marché. Passé 2014, Kickstarter s'est installé dans des pays où une offre de financement participatif concurrente s'était déjà développé avant son arrivée, ce qui n'est pas le cas aux états-unis où le concept était novateur en 2009.
 
 Par exemple en France, Kickstarter est rarement cité comme la meilleure plateforme de crowdfunding: <https://bpifrance-creation.fr/encyclopedie/financements/financement-participatif/sites-plateformes-crowdfunding>
 
+Des services plus adaptés se sont implantés avant son arrivée.
+
+Dans le graphe suivant, nous allons évaluer la répartition des projets selon leur statut dans les pays du top 10:
+
 ```{r}
-ggplot(data_kickstarter, aes(x = reorder(country, -table(country)[country]), fill = state)) +
+ggplot(data_kickstarter_top_ten_countries, aes(x = reorder(country, -table(country)[country]), fill = state)) +
   geom_bar(position = "fill") +
   scale_fill_manual(
     breaks = c("suspended", "canceled", "failed", "live", "successful"),
@@ -722,6 +785,7 @@ success_rates_by_country_no_us %>% ggplot(aes(x=total,y=success_rate, label=coun
                    size=2) +
   theme_minimal()
 ```
+
 Il n'y a pas de lien clair entre la quantité de projet et le taux de réussite, la majorité des pays avec des quantités de projets très similaires ont des taux de réussites très variés.
 
 ### Existe-t-il des périodes de l'année où les campagnes ont plus de chances de réussir ?
