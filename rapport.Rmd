@@ -516,6 +516,15 @@ En revanche, les catégories comme **Technology** et **Journalism** ont les taux
 
 Cela peut expliquer en partie les différences de taux de réussite : les catégories avec moins de projets peuvent avoir une communauté plus ciblée et engagée.
 
+```{r}
+success_rates %>% ggplot(aes(area = total, fill = success_rate, label = main_category)) +
+  geom_treemap() +
+  geom_treemap_text(fontface = "italic", colour = "white", place = "centre",
+                    grow = TRUE)+
+  scale_fill_viridis_c(option = "viridis")
+```
+
+
 #### Répartition des montants demandés par catégorie
 
 Enfin, analysons la répartition des montants demandés dans chaque catégorie possible de projets. Cela nous permettra de vérifier si certaines catégories ont des budgets aux des montants plus élevés ou plus faibles.
