@@ -355,12 +355,12 @@ Chaque financeur est appelé un *backer*. Le dataset associe à chaque projet la
 
 ```{r}
 data_kickstarter %>% ggplot(aes(x=backers))+
-  geom_histogram(binwidth = 500, fill="steelblue")+
-  xlim(0,10000)+
-  ylim(0,1700)+
+  geom_histogram(binwidth = 500,fill="steelblue", boundary=0,closed = "left")+
   labs(title="Nombre de backers par projet",
        x="Quantité de backers",
        y="Quantité de projets")+
+  scale_x_continuous(limits = c(0, 10000), breaks = seq(0,10000,1000))+
+  ylim(0,1700)+
   theme_minimal()
 ```
 
@@ -371,7 +371,7 @@ Dans les graphes suivants, nous allons voir la quantité de projets lancés chaq
 ```{r}
 data_kickstarter %>% ggplot(aes(x=year(launched))) +
   geom_bar(fill="steelblue")+
-  xlim(2009,2017)+
+  scale_x_continuous(limits = c(2009,2017),breaks = seq(2009,2017, 1))+
   labs(title = "Quantité de projets lancés chaque année",
         x= "Année",
         y= "Quantité de projets") +
@@ -390,8 +390,8 @@ data_kickstarter %>% ggplot(aes(x=duree_campagne))+
   labs(title = "Durée des projets Kickstarter",
         x= "Durée en jours",
         y= "Quantité de projets") +
-  theme_minimal() +
-  xlim(1,65)
+  scale_x_continuous(breaks = seq(0, 100, 5))+
+  theme_minimal()
 
 ```
 
@@ -728,7 +728,7 @@ plot_no_US <- ggplot(data_kickstarter_top_ten_countries_no_US, aes(x = launched,
   geom_line(linewidth = 0.9,
             aes(color=country)) +
   labs(title = "Quantité de projets au cours du temps (Hors USA)",
-       x = element_blank(),
+       x = "Date",
        y = "Quantité de projets") +
   xlim(as.Date("2013-01-01"),as.Date("2018-01-03"))+
   theme_minimal()
@@ -749,9 +749,9 @@ plot_no_US <- plot_no_US +
                   #segment.linetype = 3,
                   #segment.curvature = -1e-20,
                   arrow = arrow(length = unit(0.015, "npc"))) +
-  scale_x_continuous(
-  expand = expansion(mult = 0.1))+
-theme(legend.position = "none")
+  scale_x_continuous(expand = expansion(mult = 0.1))+
+
+  theme(legend.position = "none")
 
 plot_no_US
 # plot_no_US <- plot_no_US +
@@ -997,7 +997,7 @@ data_kickstarter_par_an <- data_kickstarter_par_an %>% gather("median_goal","med
 data_kickstarter_par_an %>% ggplot(aes(x=launch_year, y=value, color = type_stat))+
     geom_line(linewidth=1.3)+
     geom_point()+
-    xlim(2009,2017)+
+    scale_x_continuous(limits = c(2009,2017),breaks = seq(2009,2017, 1))+
  theme_minimal()
 ```
 On voit que l'objectif médian devient plus ambitieux, alors que les montants récoltés ont eux tendance à baisser depuis 2013.
