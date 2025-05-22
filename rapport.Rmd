@@ -266,6 +266,13 @@ data_kickstarter <- data_kickstarter %>% filter(country != "N,0\"")
 data_kickstarter$launched <- as.Date(data_kickstarter$launched)
 ```
 
+#### Nerttoyage des individus dont la date de lancement est incohérente
+
+```{r}
+data_kickstarter <- data_kickstarter %>% filter(year(launched)>=2009)
+```
+
+
 #### Conversion des codes pays en nom de pays entier
 
 ```{r}
@@ -274,8 +281,6 @@ data_kickstarter <- data_kickstarter %>% mutate(country = countrycode(country,or
 #Modifications de noms de pays pour les rendre compatible avec la carte du monde
 data_kickstarter$country[data_kickstarter$country == 'Hong Kong SAR China'] <- 'Hong Kong'
 data_kickstarter$country[data_kickstarter$country == 'United States'] <- 'USA'
-
-head(data_kickstarter)
 ```
 
 ### Présentation du dataset
@@ -644,7 +649,7 @@ max_cumul <- data_kickstarter_top_ten_countries%>%
 
 # Plot the cumulative count by event
 plot_US <- ggplot(data_kickstarter_top_ten_countries, aes(x = launched, y = cumulative_count, color = country, group = country)) +
-  geom_line(size=0.9) +
+  geom_line(linewidth=0.9) +
   labs(title = "Quantité de projets au cours du temps (Top 10 pays)",
        x = "Date",
        y = "Quantité de projets") +
@@ -675,7 +680,7 @@ data_kickstarter_top_ten_countries_no_US <- data_kickstarter_top_ten_countries %
 
 # Plot the cumulative count by event
 plot_no_US <- ggplot(data_kickstarter_top_ten_countries_no_US, aes(x = launched, y = cumulative_count, color = country)) +
-  geom_line(size = 0.9,
+  geom_line(linewidth = 0.9,
             aes(color=country)) +
   labs(title = "Quantité de projets au cours du temps (Hors USA)",
        x = element_blank(),
@@ -754,7 +759,7 @@ ggplot(data_kickstarter_top_ten_countries, aes(x = reorder(country, -table(count
 
 On remarque que tous les pays ont des taux d'échec et de réussite relativement similaires.
 
-On remarque une grande proportion de projets en cours au Japon. Cela s'explique par le fait que Kickstarter a été lancé en Septembre 2017 au Japon, soit un an avant la finalisation de notre base de donnée en 2018. Ainsi, il est normal d'avoir une sur-représentation de projets en cours de financement: <https://www.theverge.com/2017/8/17/16161068/kickstarter-japan-launch-september>
+On remarque une grande proportion de projets en cours au Japon. Cela s'explique par le fait que Kickstarter a été lancé en Septembre 2017 au Japon, soit un an avant la finalisation de notre base de donnée en 2018. Ainsi, il est attendu d'avoir une sur-représentation de projets en cours de financement: <https://www.theverge.com/2017/8/17/16161068/kickstarter-japan-launch-september>
 
 ```{r}
 success_rates_by_country <- data_kickstarter %>%
@@ -895,6 +900,57 @@ ggplot(data_kickstarter, aes(x = launched, y = duree_campagne)) +
 ```
 
 Ce graphique représente la durée des campagnes sur Kickstarter, exprimée en jours. On constate qu'en moyenne, une campagne dure 34 jours. Cette observation confirme l'hypothèse précédemment formulée : le décalage d'un mois observé entre les taux de réussite selon que l'on se base sur la date de lancement ou sur la date de clôture s'explique par la durée moyenne des campagnes. Ainsi, d'après nos analyses, les périodes les plus favorables au succès d'un projet se situent entre février et juin, ainsi qu'entre septembre et novembre.
+
+### Comment les montants demandés et récoltés ont-ils évolué au cours du temps?
+
+#### Evolution brute des montants
+
+Dans cette partie, nous nous intérresserons à l'évolution des montants demandés et récoltés par les campagnes kickstarter selon les époques.
+
+Tout d'abord, nous allons représenter le montant moyen demandé selon l'année
+
+```{r}
+data_kickstarter_par_an <- data_kickstarter %>%
+  mutate(launch_year=year(launched)) %>%
+  group_by(launch_year) %>%
+  summarise(mean_goal = mean(usd_goal_real),median_goal = median(usd_goal_real),mean_pledge = mean(usd_pledged_real), median_pledge = median(usd_pledged_real), na.rm = TRUE)
+
+  
+data_kickstarter_par_an <- data_kickstarter_par_an %>% gather("median_goal","median_pledge",key="type_stat",value="value")
+
+#data_kickstarter_par_an <- data_kickstarter_par_an %>% gather("mean_goal","median_goal","mean_pledge","median_pledge",key="type_stat",value="value")
+
+data_kickstarter_par_an %>% ggplot(aes(x=launch_year, y=value, color = type_stat))+
+    geom_line(linewidth=1.3)+
+    geom_point()+
+    xlim(2009,2017)+
+ theme_minimal()
+```
+On voit que l'objectif médian devient plus ambitieux, alors que les montants récoltés ont eux tendance à baisser depuis 2013.
+
+#### Quels sont les pourcentages de complétion des campagnes réussies?
+
+Nous allons étudier l'évolution des pourcentages de complétion des projets réussis
+
+```{r}
+data_kickstarter_reussis <- data_kickstarter %>%
+  filter(state=="successful") %>%
+  mutate(completion_percentage = usd_pledged_real/usd_goal_real,launch_year=as.character(year(launched)))
+
+
+
+data_kickstarter_reussis %>% ggplot(aes(x=launch_year,y=completion_percentage)) +
+  geom_boxplot()+
+  scale_y_continuous(labels = scales::percent_format(),limits = c(0,2))
+
+data_kickstarter_reussis %>% ggplot(aes(x=launch_year,y=completion_percentage)) +
+  geom_boxplot()+
+  scale_y_continuous(labels = scales::percent_format())
+  
+```
+On remarque que l'immense majorité des projets réussis dépassent de peu leur objectif, et ce peu importe l'époque.
+
+On remarque cependant qu'au fil des années de plus en plus de projets pulvérisent leur objectif, et dans des proportions de plus en plus grandes
 
 ### Le choix des mots dans le titre d'une campagne a-t-il un impact sur son succès ?
 
