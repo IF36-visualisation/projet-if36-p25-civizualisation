@@ -951,7 +951,27 @@ Ce graphique représente la durée des campagnes sur Kickstarter, exprimée en j
 Comme nous l'avons vu précédemment, la majorité des campagnes durent 30 jours. C'est la valeur par défaut de la durée dans l'interface de création de campagne, où il est aussi affirmé que les campagnes de moins de 30 jours ont plus de chances de réussir. Est-ce vrai?
 
 ```{r}
+# Calcul de la durée de la campagne et filtrage des campagnes avec durée < 5000 jours
+data_kickstarter <- data_kickstarter %>%
+  mutate(
+    duree_campagne = as.Date(deadline) - as.Date(launched)
+  ) %>%
+  filter(duree_campagne < 5000)
 
+success_rates_by_length <- data_kickstarter %>%
+  group_by(duree_campagne) %>%
+  summarise(
+    total = n(),
+    successful = sum(state == "successful"),
+    success_rate = successful / total
+  ) %>%
+  arrange(desc(success_rate))
+
+success_rates_by_length %>% ggplot(aes(x=duree_campagne,y=success_rate))+
+  geom_line()+
+  geom_smooth()+
+  scale_x_continuous(breaks = seq(0, 100, 5))+
+  theme_minimal()
 ```
 
 
