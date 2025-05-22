@@ -901,6 +901,15 @@ ggplot(data_kickstarter, aes(x = launched, y = duree_campagne)) +
 
 Ce graphique représente la durée des campagnes sur Kickstarter, exprimée en jours. On constate qu'en moyenne, une campagne dure 34 jours. Cette observation confirme l'hypothèse précédemment formulée : le décalage d'un mois observé entre les taux de réussite selon que l'on se base sur la date de lancement ou sur la date de clôture s'explique par la durée moyenne des campagnes. Ainsi, d'après nos analyses, les périodes les plus favorables au succès d'un projet se situent entre février et juin, ainsi qu'entre septembre et novembre.
 
+###Quelle est la durée idéale d'une campagne?
+
+Comme nous l'avons vu précédemment, la majorité des campagnes durent 30 jours. C'est la valeur par défaut de la durée dans l'interface de création de campagne, où il est aussi affirmé que les campagnes de moins de 30 jours ont plus de chances de réussir. Est-ce vrai?
+
+```{r}
+
+```
+
+
 ### Comment les montants demandés et récoltés ont-ils évolué au cours du temps?
 
 #### Evolution brute des montants
