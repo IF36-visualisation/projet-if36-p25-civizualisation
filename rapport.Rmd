@@ -594,6 +594,23 @@ ggplot(data_kickstarter, aes(x = reorder(country, table(country)[country]))) +
 ```
 
 ```{r}
+library(treemapify)
+
+#On créé un dataframe avec le nombre de projets total par pays
+country_count_table <- table(data_kickstarter$country)
+country_counts <- as.data.frame(country_count_table)
+country_counts<- country_counts %>% rename(country = Var1,
+                   projects = Freq)
+country_counts <- as_tibble(country_counts)
+
+country_counts %>% ggplot(aes(area = projects, fill = projects, label = country)) +
+  geom_treemap() +
+  geom_treemap_text(fontface = "italic", colour = "white", place = "centre",
+                    grow = TRUE)+
+  scale_fill_viridis_c(option = "viridis")
+```
+
+```{r}
 #On créé un dataframe avec le nombre de projets total par pays
 country_count_table <- table(data_kickstarter$country)
 country_counts <- as.data.frame(country_count_table)
