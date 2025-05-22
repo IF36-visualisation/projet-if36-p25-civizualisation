@@ -523,6 +523,25 @@ success_rates %>% ggplot(aes(area = total, fill = success_rate, label = main_cat
                     grow = TRUE)+
   scale_fill_viridis_c(option = "viridis")
 ```
+```{r}
+
+categories_for_map <- data_kickstarter %>%
+#  group_by(main_category)%>%
+  group_by(main_category,category) %>%
+  summarise(
+    total = n(),
+    successful = sum(state == "successful"),
+    success_rate = successful / total
+  ) %>%
+  arrange(desc(success_rate))
+
+ categories_for_map %>% ggplot(aes(area = total, fill = success_rate, label = category,subgroup = main_category)) +
+  geom_treemap() +
+  geom_treemap_subgroup_border() +
+  geom_treemap_subgroup_text(place = "centre", grow = T, alpha = 0.5, colour =
+                             "black", fontface = "italic", min.size = 0) +
+  geom_treemap_text(colour = "white", place = "topleft", reflow = T)
+```
 
 
 #### Répartition des montants demandés par catégorie
