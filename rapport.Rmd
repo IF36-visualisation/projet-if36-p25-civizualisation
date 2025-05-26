@@ -1,6 +1,6 @@
 ---
 title: "Projet IF36 - Analyse des données de Kickstarter"
-output: 
+output:
   prettydoc::html_pretty:
     theme: hpstr
     highlight: github
@@ -12,17 +12,17 @@ L'objectif de ce projet d'IF36 est d'analyser et de présenter des données issu
 
 Équipe Civizualisation :
 
--   Florian BONELLI
--   Eyvan FAURE
--   Ryan OUYED
--   Lucas SAURON
+- Florian BONELLI
+- Eyvan FAURE
+- Ryan OUYED
+- Lucas SAURON
 
 ## 📚 Sommaire
 
--   📝 Contexte des données choisis
--   📥 Téléchargement des données
--   📁 Présentation des données
--   📊 Plan d'analyse
+- 📝 Contexte des données choisis
+- 📥 Téléchargement des données
+- 📁 Présentation des données
+- 📊 Plan d'analyse
 
 ## 📝 Contexte des données choisis
 
@@ -50,13 +50,13 @@ Il faut les télécharger manuellement.
 
 Suivez les étapes ci-dessous pour récupérer les fichiers nécessaires :
 
-1.  Téléchargez l'archive contenant les jeux de données.
+1. Téléchargez l'archive contenant les jeux de données.
 
     ``` bash
     curl -L -o ./data/kickstarter-projects.zip https://www.kaggle.com/api/v1/datasets/download/kemical/kickstarter-projects
     ```
 
-2.  Une fois l'archive téléchargée, extrayez les fichiers.
+2. Une fois l'archive téléchargée, extrayez les fichiers.
 
     ``` bash
     unzip ./data/kickstarter-projects.zip -d ./data
@@ -68,7 +68,7 @@ Suivez les étapes ci-dessous pour récupérer les fichiers nécessaires :
     sudo apt-get install unzip
     ```
 
-3.  (Facultatif) Après avoir extrait les fichiers, vous pouvez supprimer l'archive pour libérer de l'espace.
+3. (Facultatif) Après avoir extrait les fichiers, vous pouvez supprimer l'archive pour libérer de l'espace.
 
     ``` bash
     rm ./data/kickstarter-projects.zip
@@ -81,7 +81,7 @@ Suivez les étapes ci-dessous pour récupérer les fichiers nécessaires :
 Ce premier jeu de données au format CSV (Comma-Separated Values) contient 321 616 individus et 17 variables.
 
 | Variable | Type de données | Description |
-|------------------|------------------|-------------------------------------|
+|------------------|------------------|------------------------------------|
 | `ID` | Integer | Identifiant unique du projet |
 | `name` | String | Nom du projet |
 | `category` | String | Catégorie spécifique du projet |
@@ -107,7 +107,7 @@ On remarque que les 4 dernières variables sont sans titre et sans données.
 Ce deuxième jeu de données au format CSV (Comma-Separated Values) contient 375 765 individus et 15 variables.
 
 | Variable | Type de données | Description |
-|------------------|------------------|-------------------------------------|
+|------------------|------------------|------------------------------------|
 | `ID` | Integer | Identifiant unique du projet |
 | `name` | String | Nom du projet |
 | `category` | String | Catégorie spécifique du projet |
@@ -138,35 +138,35 @@ L'objectif principal de notre analyse est de comprendre les dynamiques du financ
 
 ### 🔍 Questions d'analyse
 
--   Quels sont les taux de réussite des campagnes selon les catégories ?
--   Dans quelle mesure le montant de l'objectif influence-t-il la probabilité de succès d'une campagne ?
--   Existe-t-il des périodes de l'année où les campagnes ont plus de chances de réussir ?
--   Quels sont les pays où le plus de campagnes sont créées? Parmi eux, lesquels ont les meilleurs taux de réussite?
--   L'écart entre l'objectif initial et les fonds réellement collectés varie-t-il en fonction de la catégorie ou de la devise utilisée ?
--   Le choix des mots dans le titre d'une campagne a-t-il un impact sur son succès ?
--   Comment a évolué le taux de réussite et le nombre de campagne au fil des années? Les campagnes sont elles plus ambitieuses qu'avant?
+- Quels sont les taux de réussite des campagnes selon les catégories ?
+- Dans quelle mesure le montant de l'objectif influence-t-il la probabilité de succès d'une campagne ?
+- Existe-t-il des périodes de l'année où les campagnes ont plus de chances de réussir ?
+- Quels sont les pays où le plus de campagnes sont créées? Parmi eux, lesquels ont les meilleurs taux de réussite?
+- L'écart entre l'objectif initial et les fonds réellement collectés varie-t-il en fonction de la catégorie ou de la devise utilisée ?
+- Le choix des mots dans le titre d'une campagne a-t-il un impact sur son succès ?
+- Comment a évolué le taux de réussite et le nombre de campagne au fil des années? Les campagnes sont elles plus ambitieuses qu'avant?
 
 ### 📈 Variables à comparer
 
 Pour répondre à nos questions d'analyse, nous comparerons les variables suivantes :
 
--   **Taux de réussite et d'échec par catégorie** : Identifier les catégories où les campagnes réussissent ou échouent le plus souvent.
--   **Taux de réussite et d'échec en fonction du montant de l'objectif** : Analyser l'impact du montant demandé sur le succès ou l'échec des campagnes.
--   **Taux de réussite et d'échec selon la période de lancement** : Étudier si certaines périodes de l'année influencent les chances de succès ou d'échec.
--   **Nombre de campagnes créées et leur taux de réussite selon le pays, sur une période donnée**: Comparer les pays où les campagnes sont les plus populaires pour observer des différences de nombres de campagnes et de taux de réussite selon les régions.
--   **Écart entre le montant collecté et l'objectif fixé** : Comparer les fonds espérés et les fonds réellement obtenus pour évaluer les écarts.
--   **Impact des mots-clés dans les titres sur le succès** : Identifier les mots les plus fréquents dans les titres des campagnes réussies et leur influence.
--   **Nombre de campagnes réussies montant moyen récolté par campagne réussie selon l'année** : Comparer le nombre de campagnes réussies et leur valeur moyenne chaque année pour dégager des tendances.
+- **Taux de réussite et d'échec par catégorie** : Identifier les catégories où les campagnes réussissent ou échouent le plus souvent.
+- **Taux de réussite et d'échec en fonction du montant de l'objectif** : Analyser l'impact du montant demandé sur le succès ou l'échec des campagnes.
+- **Taux de réussite et d'échec selon la période de lancement** : Étudier si certaines périodes de l'année influencent les chances de succès ou d'échec.
+- **Nombre de campagnes créées et leur taux de réussite selon le pays, sur une période donnée**: Comparer les pays où les campagnes sont les plus populaires pour observer des différences de nombres de campagnes et de taux de réussite selon les régions.
+- **Écart entre le montant collecté et l'objectif fixé** : Comparer les fonds espérés et les fonds réellement obtenus pour évaluer les écarts.
+- **Impact des mots-clés dans les titres sur le succès** : Identifier les mots les plus fréquents dans les titres des campagnes réussies et leur influence.
+- **Nombre de campagnes réussies montant moyen récolté par campagne réussie selon l'année** : Comparer le nombre de campagnes réussies et leur valeur moyenne chaque année pour dégager des tendances.
 
 Ces comparaisons nous permettront de mieux comprendre les facteurs influençant le succès des campagnes Kickstarter.
 
 ### ⚠️ Limitations et problèmes potentiels
 
--   Certains porteurs de projets peuvent fixer des objectifs volontairement bas pour maximiser leurs chances de succès ou, au contraire, volontairement élevé par manque de sérieux, ce qui pourrait biaiser les résultats de l'analyse.
+- Certains porteurs de projets peuvent fixer des objectifs volontairement bas pour maximiser leurs chances de succès ou, au contraire, volontairement élevé par manque de sérieux, ce qui pourrait biaiser les résultats de l'analyse.
 
--   Les taux de conversion en USD peuvent introduire des biais en fonction des fluctuations des taux de change et de l'inflation.
+- Les taux de conversion en USD peuvent introduire des biais en fonction des fluctuations des taux de change et de l'inflation.
 
--   Des facteurs externes, tels que les tendances économiques ou médiatiques, qui ne sont pas inclus dans les données, peuvent également influencer le succès des campagnes.
+- Des facteurs externes, tels que les tendances économiques ou médiatiques, qui ne sont pas inclus dans les données, peuvent également influencer le succès des campagnes.
 
 ## 🧭 Exploration des données
 
@@ -187,9 +187,9 @@ library(tidytext) # Pour l'analyse du texte
 library(syuzhet) # Pour l'analyse émotionnelle du texte
 library(GGally) # Pour les matrices de données
 library(ggcorrplot) # Pour les matrices de corrélation
-library(countrycode) #Pour les noms de pays entiers
-library(maps) #Pour la carte du monde
-library(lubridate) #Pour traiter les dates
+library(countrycode) # Pour les noms de pays entiers
+library(maps) # Pour la carte du monde
+library(lubridate) # Pour traiter les dates
 library(ggrepel) # Pour l'espacement des légendes sur ggplot
 ```
 
@@ -249,15 +249,21 @@ cat(sum(rowSums(is.na(data_kickstarter)) == ncol(data_kickstarter)))
 
 ```{r}
 print(sapply(data_kickstarter, function(x) sum(is.na(x))))
-data_kickstarter <- data_kickstarter %>% drop_na()
+
+data_kickstarter <- data_kickstarter %>%
+  drop_na()
+
 print(sapply(data_kickstarter, function(x) sum(is.na(x))))
 ```
 
 #### Nettoyage des individus comportant des valeurs non valides
 
 ```{r}
-data_kickstarter <- data_kickstarter %>% filter(state != "undefined")
-data_kickstarter <- data_kickstarter %>% filter(country != "N,0\"")
+data_kickstarter <- data_kickstarter %>%
+  filter(state != "undefined")
+
+data_kickstarter <- data_kickstarter %>%
+  filter(country != "N,0\"")
 ```
 
 #### Conversion de la caractéristique "launched" en format Date
@@ -266,21 +272,29 @@ data_kickstarter <- data_kickstarter %>% filter(country != "N,0\"")
 data_kickstarter$launched <- as.Date(data_kickstarter$launched)
 ```
 
-#### Nerttoyage des individus dont la date de lancement est incohérente
+#### Nettoyage des individus dont la date de lancement est incohérente
 
 ```{r}
-data_kickstarter <- data_kickstarter %>% filter(year(launched)>=2009)
+data_kickstarter <- data_kickstarter %>%
+  filter(year(launched) >= 2009)
 ```
 
-
-#### Conversion des codes pays en nom de pays entier
+#### Conversion des codes pays en noms de pays anglais
 
 ```{r}
-data_kickstarter <- data_kickstarter %>% mutate(country = countrycode(country,origin = 'iso2c', destination = "country.name.en") )
+# Conversion des codes pays en noms de pays anglais
+data_kickstarter <- data_kickstarter %>%
+  mutate(country = countrycode(country, origin = "iso2c", destination = "country.name.en"))
 
-#Modifications de noms de pays pour les rendre compatible avec la carte du monde
-data_kickstarter$country[data_kickstarter$country == 'Hong Kong SAR China'] <- 'Hong Kong'
-data_kickstarter$country[data_kickstarter$country == 'United States'] <- 'USA'
+# Modifications des noms de pays pour les rendre compatible avec la carte du monde
+data_kickstarter <- data_kickstarter %>%
+  mutate(
+    country = case_when(
+      country == "Hong Kong SAR China" ~ "Hong Kong",
+      country == "United States" ~ "USA",
+      TRUE ~ country
+    )
+  )
 ```
 
 ### Présentation du dataset
@@ -376,7 +390,7 @@ data_kickstarter %>% ggplot(aes(x=year(launched))) +
         x= "Année",
         y= "Quantité de projets") +
   theme_minimal()
-  
+
 
 # Calcul de la durée de la campagne et filtrage des campagnes avec durée < 5000 jours
 data_kickstarter <- data_kickstarter %>%
@@ -405,9 +419,9 @@ On cherche à étudier les possibles corrélations entre le montant demandé, le
 
 ```{r}
 data_kickstarter_corr_money <- data_kickstarter %>% select(usd_goal_real,usd_pledged_real,state,backers)
-ggpairs(data_kickstarter_corr_money, aes(colour = state), 
+ggpairs(data_kickstarter_corr_money, aes(color = state),
   lower = list(continuous = "points", combo = "dot_no_facet")) +
-  
+
   theme_minimal() +
   theme(axis.text = element_text(size = 3))
 ```
@@ -427,16 +441,16 @@ Refaisons la même analyse en retirant les montants très élevés.
 ```{r}
 data_kickstarter_corr_small_money <- data_kickstarter_corr_money %>% filter(usd_goal_real<10000 & usd_pledged_real < 10000)
 
-ggpairs(data_kickstarter_corr_small_money, aes(colour = state), 
+ggpairs(data_kickstarter_corr_small_money, aes(color = state),
   lower = list(continuous = "points", combo = "dot_no_facet")) +
-  
+
   theme_minimal() +
   theme(axis.text = element_text(size = 3))
 ```
 
 *Pas sûr pour celle-ci*
 
-On fait la même analyse avec les durées de campagne pour voir si la durée de campagne a un lien avec la réusssite d'une campagne
+On fait la même analyse avec les durées de campagne pour voir si la durée de campagne a un lien avec la réussite d'une campagne
 
 ```{r}
 data_kickstarter <- data_kickstarter %>%
@@ -449,7 +463,7 @@ data_kickstarter_corr_time <- data_kickstarter %>% select(duree_campagne_num,usd
 
 #data_kickstarter_corr_time <- data_kickstarter_corr_time %>% filter(usd_pledged_real>500)
 
-ggpairs(data_kickstarter_corr_time,columns = 1:3, aes(colour = state),
+ggpairs(data_kickstarter_corr_time,columns = 1:3, aes(color = state),
   #upper = list(continuous = "density", combo = "ggally_box_no_facet", discrete = "count", na = "na"),
   lower = list(continuous = "points", combo = "dot_no_facet")) +
   theme_minimal() +
@@ -519,12 +533,12 @@ Cela peut expliquer en partie les différences de taux de réussite : les catég
 ```{r}
 success_rates %>% ggplot(aes(area = total, fill = success_rate, label = main_category)) +
   geom_treemap() +
-  geom_treemap_text(fontface = "italic", colour = "white", place = "centre",
+  geom_treemap_text(fontface = "italic", color = "white", place = "centre",
                     grow = TRUE)+
   scale_fill_viridis_c(option = "viridis")
 ```
-```{r}
 
+```{r}
 categories_for_map <- data_kickstarter %>%
 #  group_by(main_category)%>%
   group_by(main_category,category) %>%
@@ -538,11 +552,10 @@ categories_for_map <- data_kickstarter %>%
  categories_for_map %>% ggplot(aes(area = total, fill = success_rate, label = category,subgroup = main_category)) +
   geom_treemap() +
   geom_treemap_subgroup_border() +
-  geom_treemap_subgroup_text(place = "centre", grow = T, alpha = 0.5, colour =
+  geom_treemap_subgroup_text(place = "centre", grow = T, alpha = 0.5, color =
                              "black", fontface = "italic", min.size = 0) +
-  geom_treemap_text(colour = "white", place = "topleft", reflow = T)
+  geom_treemap_text(color = "white", place = "topleft", reflow = T)
 ```
-
 
 #### Répartition des montants demandés par catégorie
 
@@ -633,7 +646,7 @@ country_counts <- as_tibble(country_counts)
 
 country_counts %>% ggplot(aes(area = projects, fill = projects, label = country)) +
   geom_treemap() +
-  geom_treemap_text(fontface = "italic", colour = "white", place = "centre",
+  geom_treemap_text(fontface = "italic", color = "white", place = "centre",
                     grow = TRUE)+
   scale_fill_viridis_c(option = "viridis")
 ```
@@ -769,8 +782,8 @@ plot_no_US
 #     segment.ncp = 3,
 #     segment.angle = 20
 #   )
-#   
-# 
+#
+#
 # plot_no_US
 ```
 
@@ -946,7 +959,7 @@ ggplot(data_kickstarter, aes(x = launched, y = duree_campagne)) +
 
 Ce graphique représente la durée des campagnes sur Kickstarter, exprimée en jours. On constate qu'en moyenne, une campagne dure 34 jours. Cette observation confirme l'hypothèse précédemment formulée : le décalage d'un mois observé entre les taux de réussite selon que l'on se base sur la date de lancement ou sur la date de clôture s'explique par la durée moyenne des campagnes. Ainsi, d'après nos analyses, les périodes les plus favorables au succès d'un projet se situent entre février et juin, ainsi qu'entre septembre et novembre.
 
-###Quelle est la durée idéale d'une campagne?
+### Quelle est la durée idéale d'une campagne?
 
 Comme nous l'avons vu précédemment, la majorité des campagnes durent 30 jours. C'est la valeur par défaut de la durée dans l'interface de création de campagne, où il est aussi affirmé que les campagnes de moins de 30 jours ont plus de chances de réussir. Est-ce vrai?
 
@@ -974,7 +987,6 @@ success_rates_by_length %>% ggplot(aes(x=duree_campagne,y=success_rate))+
   theme_minimal()
 ```
 
-
 ### Comment les montants demandés et récoltés ont-ils évolué au cours du temps?
 
 #### Evolution brute des montants
@@ -989,7 +1001,6 @@ data_kickstarter_par_an <- data_kickstarter %>%
   group_by(launch_year) %>%
   summarise(mean_goal = mean(usd_goal_real),median_goal = median(usd_goal_real),mean_pledge = mean(usd_pledged_real), median_pledge = median(usd_pledged_real), na.rm = TRUE)
 
-  
 data_kickstarter_par_an <- data_kickstarter_par_an %>% gather("median_goal","median_pledge",key="type_stat",value="value")
 
 #data_kickstarter_par_an <- data_kickstarter_par_an %>% gather("mean_goal","median_goal","mean_pledge","median_pledge",key="type_stat",value="value")
@@ -1000,6 +1011,7 @@ data_kickstarter_par_an %>% ggplot(aes(x=launch_year, y=value, color = type_stat
     scale_x_continuous(limits = c(2009,2017),breaks = seq(2009,2017, 1))+
  theme_minimal()
 ```
+
 On voit que l'objectif médian devient plus ambitieux, alors que les montants récoltés ont eux tendance à baisser depuis 2013.
 
 #### Quels sont les pourcentages de complétion des campagnes réussies?
@@ -1020,8 +1032,8 @@ data_kickstarter_reussis %>% ggplot(aes(x=launch_year,y=completion_percentage)) 
 data_kickstarter_reussis %>% ggplot(aes(x=launch_year,y=completion_percentage)) +
   geom_boxplot()+
   scale_y_continuous(labels = scales::percent_format())
-  
 ```
+
 On remarque que l'immense majorité des projets réussis dépassent de peu leur objectif, et ce peu importe l'époque.
 
 On remarque cependant qu'au fil des années de plus en plus de projets pulvérisent leur objectif, et dans des proportions de plus en plus grandes

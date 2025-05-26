@@ -6,6 +6,10 @@ data/ks-projects-201801.csv
 # RStudio project files
 *.Rproj
 
+# VS Code
+.vscode/
+*.code-workspace
+
 # Created by https://www.toptal.com/developers/gitignore/api/osx,macos,windows,linux,r
 # Edit at https://www.toptal.com/developers/gitignore?templates=osx,macos,windows,linux,r
 
