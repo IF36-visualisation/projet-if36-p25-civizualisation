@@ -193,6 +193,7 @@ library(maps) # Pour la carte du monde
 library(lubridate) # Pour traiter les dates
 library(ggrepel) # Pour l'espacement des légendes sur ggplot
 library(gridExtra) # Pour afficher plusieurs graphiques côte à côte
+library(treemapify) # Pour des graphiques en treemap
 ```
 
 Nous chargeons les deux fichiers de données nécessaires à notre analyse :
@@ -505,18 +506,24 @@ On voit également des pics sur tous les multiples de 5 jours.
 
 ### Analyses Exploratoires
 
-On cherche à étudier les possibles corrélations entre le montant demandé, le montant récolté, le nombre de backers et le résultat de la campagne:
+On cherche à étudier les possibles corrélations entre le montant demandé, le montant récolté, le nombre de backers et le résultat de la campagne :
 
 ```{r}
-data_kickstarter_corr_money <- data_kickstarter %>% select(usd_goal_real,usd_pledged_real,state,backers)
-ggpairs(data_kickstarter_corr_money, aes(color = state),
-  lower = list(continuous = "points", combo = "dot_no_facet")) +
+data_kickstarter_corr_money <- data_kickstarter %>%
+  select(usd_goal_real, usd_pledged_real, state, backers)
 
-  theme_minimal() +
+data_kickstarter_corr_money %>%
+  ggpairs(
+    aes(
+      color = state,
+    ),
+    lower = list(continuous = "points", combo = "dot_no_facet"),
+  ) +
+  theme_minimal(base_size = 8) +
   theme(axis.text = element_text(size = 3))
 ```
 
-On observe déjà un phénomène intéressant:
+On observe déjà un phénomène intéressant :
 
 Les projets qui demandent un montant très élevé ont tendance à échouer ou être annulé, et n'atteignent jamais le montant demandé.
 
@@ -529,16 +536,21 @@ A noter: Cette analyse ne prend en compte que les projets dont le *goal* ou le *
 Refaisons la même analyse en retirant les montants très élevés.
 
 ```{r}
-data_kickstarter_corr_small_money <- data_kickstarter_corr_money %>% filter(usd_goal_real<10000 & usd_pledged_real < 10000)
+data_kickstarter_corr_small_money <- data_kickstarter_corr_money %>%
+  filter(usd_goal_real < 10000 & usd_pledged_real < 10000)
 
-ggpairs(data_kickstarter_corr_small_money, aes(color = state),
-  lower = list(continuous = "points", combo = "dot_no_facet")) +
-
-  theme_minimal() +
+data_kickstarter_corr_small_money %>%
+  ggpairs(
+    aes(
+      color = state,
+    ),
+    lower = list(continuous = "points", combo = "dot_no_facet")
+  ) +
+  theme_minimal(base_size = 8) +
   theme(axis.text = element_text(size = 3))
 ```
 
-*Pas sûr pour celle-ci*
+Pas sûr pour celle-ci
 
 On fait la même analyse avec les durées de campagne pour voir si la durée de campagne a un lien avec la réussite d'une campagne
 
@@ -574,14 +586,25 @@ campaign_counts <- data_kickstarter %>%
   summarise(total_campaigns = n()) %>%
   arrange(desc(total_campaigns))
 
-ggplot(campaign_counts, aes(x = reorder(main_category, total_campaigns), y = total_campaigns)) +
-  geom_col(fill = "steelblue") +
+campaign_counts %>%
+  ggplot(
+    aes(
+      x = reorder(main_category, total_campaigns),
+      y = total_campaigns,
+    )
+  ) +
+  geom_col(
+    fill = "steelblue",
+  ) +
+  scale_y_continuous(
+    breaks = seq(0, max(campaign_counts$total_campaigns), 10000),
+    labels = label_comma(big.mark = " "),
+  ) +
   labs(
     title = "Nombre total de campagnes Kickstarter par catégorie entre 2009 et 2018",
     x = "Catégorie",
-    y = "Nombre total de campagnes"
+    y = "Nombre total de campagnes",
   ) +
-  scale_y_continuous(labels = function(x) format(x, big.mark = " ", scientific = FALSE)) +
   theme_minimal() +
   coord_flip()
 ```
@@ -602,13 +625,23 @@ success_rates <- data_kickstarter %>%
   ) %>%
   arrange(desc(success_rate))
 
-ggplot(success_rates, aes(x = reorder(main_category, success_rate), y = success_rate)) +
-  geom_col(fill = "forestgreen") +
-  scale_y_continuous(labels = scales::percent_format()) +
+success_rates %>%
+  ggplot(
+    aes(
+      x = reorder(main_category, success_rate),
+      y = success_rate,
+    )
+  ) +
+  geom_col(
+    fill = "forestgreen",
+  ) +
+  scale_y_continuous(
+    labels = scales::percent_format(),
+  ) +
   labs(
     title = "Taux de réussite des campagnes Kickstarter par catégorie entre 2009 et 2018",
     x = "Catégorie",
-    y = "Taux de réussite"
+    y = "Taux de réussite",
   ) +
   theme_minimal() +
   coord_flip()
@@ -621,11 +654,22 @@ En revanche, les catégories comme **Technology** et **Journalism** ont les taux
 Cela peut expliquer en partie les différences de taux de réussite : les catégories avec moins de projets peuvent avoir une communauté plus ciblée et engagée.
 
 ```{r}
-success_rates %>% ggplot(aes(area = total, fill = success_rate, label = main_category)) +
+success_rates %>%
+  ggplot(
+    aes(
+      area = total,
+      fill = success_rate,
+      label = main_category,
+    )
+  ) +
   geom_treemap() +
-  geom_treemap_text(fontface = "italic", color = "white", place = "centre",
-                    grow = TRUE)+
-  scale_fill_viridis_c(option = "viridis")
+  geom_treemap_text(
+    place = "center",
+    color = "white",
+  ) +
+  labs(
+    title = "Taux de réussite des campagnes Kickstarter par catégorie entre 2009 et 2018",
+  )
 ```
 
 ```{r}
