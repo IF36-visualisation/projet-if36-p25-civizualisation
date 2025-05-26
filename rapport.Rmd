@@ -895,128 +895,151 @@ On remarque ensuite une proéminence des pays anglo-saxons dans les pays dont le
 On peut lier cela au fait que Kickstarter a été lancé progressivement dans le monde. Pour avoir une vision qui reflète mieux la popularité de Kickstarter, on pourrait comparer les quantités de projets selon le temps dans un prochain livrable. On peut également expliquer cela par le fait que, dans de nombreux pays, une offre plus locale et adaptée a eu le temps de se développer, avant l'arrivée de Kickstarter ou en parallèle.
 
 ```{r}
-# Create a cumulative count by event
+# Calcul du cumul des projets par pays
 data_kickstarter_by_country <- data_kickstarter %>%
   group_by(country) %>%
   arrange(launched) %>%
   mutate(cumulative_count = row_number())
 
-top_ten_countries <- c("USA","United Kingdom","Canada","Australia","Germany","France","Italy","Netherlands","Spain","Sweden")
-data_kickstarter_top_ten_countries <- data_kickstarter_by_country %>% filter(country %in% top_ten_countries)
+# Sélection des 10 pays avec le plus de projets
+top_ten_countries <- data_kickstarter %>%
+  count(country, sort = TRUE) %>%
+  slice_head(n = 10) %>%
+  pull(country)
 
-max_cumul <- data_kickstarter_top_ten_countries%>%
+data_kickstarter_top_ten_countries <- data_kickstarter_by_country %>%
+  filter(country %in% top_ten_countries)
+
+# Extraction du point maximal pour chaque pays (pour annotation)
+max_cumul <- data_kickstarter_top_ten_countries %>%
   group_by(country) %>%
-  filter(cumulative_count == max(cumulative_count))%>%
+  filter(cumulative_count == max(cumulative_count)) %>%
   ungroup()
 
-# Plot the cumulative count by event
-plot_US <- ggplot(data_kickstarter_top_ten_countries, aes(x = launched, y = cumulative_count, color = country, group = country)) +
-  geom_line(linewidth=0.9) +
-  labs(title = "Quantité de projets au cours du temps (Top 10 pays)",
-       x = "Date",
-       y = "Quantité de projets") +
-  xlim(as.Date("2010-01-01"),as.Date("2018-12-12"))+
-  theme_minimal()
-
-plot_US <- plot_US + geom_label_repel(data = max_cumul,
-                  aes(label = country),
-                  nudge_x = +150, direction = "y", hjust = "left",
-                  size=2,
-                  min.segment.length=0,
-                  max.overlaps = Inf,
-                  #segment.linetype = 3,
-                  #segment.curvature = -1e-20,
-                  arrow = arrow(length = unit(0.015, "npc"))) +
-  #scale_x_continuous(expand = expansion(mult = 0.1))+
-theme(legend.position = "none")
-
-plot_US
+# Visualisation de la croissance cumulée des projets par pays (Top 10)
+ggplot(data_kickstarter_top_ten_countries, aes(
+    x = launched,
+    y = cumulative_count,
+    color = country,
+    group = country
+  )) +
+  geom_line() +
+  geom_label_repel(
+    data = max_cumul,
+    aes(label = country),
+    nudge_x = 150,
+    direction = "y",
+    hjust = "left",
+    size = 2.5,
+    min.segment.length = 0,
+    max.overlaps = Inf,
+    arrow = arrow(length = unit(0.015, "npc"))
+  ) +
+  scale_x_date(
+    limits = c(as.Date("2010-01-01"), as.Date("2018-12-31")),
+    date_breaks = "1 year",
+    date_labels = "%Y"
+  ) +
+  scale_y_continuous(labels = label_comma(big.mark = " ")) +
+  labs(
+    title = "Croissance cumulée du nombre de projets Kickstarter (Top 10 pays)",
+    x = "Date de lancement",
+    y = "Nombre cumulé de projets"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none")
 ```
 
-On remarque que la quantité de projets des états-unis et en partie dûe à une avance accumulée: De 2009 à 2013, Kickstarter était disponible uniquement aux états-unis.
+On remarque que la quantité de projets des États-Unis et en partie dûe à une avance accumulée: De 2009 à 2013, Kickstarter était disponible uniquement aux États-unis.
 
-Faisons un zoom sur les autres pays du Top 10 qui ne sont pas les états-unis:
+Faisons un zoom sur les autres pays du Top 10 qui ne sont pas les États-Unis :
 
 ```{r}
-data_kickstarter_top_ten_countries_no_US <- data_kickstarter_top_ten_countries %>% filter(country!="USA")
+# Exclure les États-Unis pour se concentrer sur les autres pays du Top 10
+data_kickstarter_top_ten_countries_no_US <- data_kickstarter_top_ten_countries %>%
+  filter(country != "USA")
 
-# Plot the cumulative count by event
-plot_no_US <- ggplot(data_kickstarter_top_ten_countries_no_US, aes(x = launched, y = cumulative_count, color = country)) +
-  geom_line(linewidth = 0.9,
-            aes(color=country)) +
-  labs(title = "Quantité de projets au cours du temps (Hors USA)",
-       x = "Date",
-       y = "Quantité de projets") +
-  xlim(as.Date("2013-01-01"),as.Date("2018-01-03"))+
-  theme_minimal()
-
-
+# Calculer le point maximal pour chaque pays (pour annotation)
 max_cumul_no_US <- data_kickstarter_top_ten_countries_no_US %>%
   group_by(country) %>%
-  filter(cumulative_count == max(cumulative_count))%>%
+  filter(cumulative_count == max(cumulative_count)) %>%
   ungroup()
 
-plot_no_US <- plot_no_US +
-  geom_label_repel(data = max_cumul_no_US,
-                  aes(label = country),
-                  nudge_x = +150, direction = "y", hjust = "left",
-                  size=2,
-                  min.segment.length=0,
-                  max.overlaps = Inf,
-                  #segment.linetype = 3,
-                  #segment.curvature = -1e-20,
-                  arrow = arrow(length = unit(0.015, "npc"))) +
-  scale_x_continuous(expand = expansion(mult = 0.1))+
-
+# Visualisation de la croissance cumulée des projets par pays (hors USA)
+data_kickstarter_top_ten_countries_no_US %>%
+  ggplot(
+    aes(
+      x = launched,
+      y = cumulative_count,
+      color = country,
+    )
+  ) +
+  geom_line(linewidth = 1) +
+  geom_label_repel(
+    data = max_cumul_no_US,
+    aes(label = country),
+    nudge_x = 150,
+    direction = "y",
+    hjust = "left",
+    size = 2.5,
+    min.segment.length = 0,
+    max.overlaps = Inf,
+    arrow = arrow(length = unit(0.015, "npc"))
+  ) +
+  xlim(as.Date("2013-01-01"), as.Date("2018-01-03")) +
+  scale_x_date(
+    date_breaks = "1 year",
+    date_labels = "%Y",
+    expand = expansion(mult = 0.05)
+  ) +
+  scale_y_continuous(
+    labels = label_comma(big.mark = " "),
+  ) +
+  labs(
+    title = "Croissance cumulée du nombre de projets Kickstarter (Top 10 pays hors USA)",
+    x = "Date de lancement",
+    y = "Nombre cumulé de projets"
+  ) +
+  theme_minimal() +
   theme(legend.position = "none")
-
-plot_no_US
-# plot_no_US <- plot_no_US +
-#   geom_text_repel(
-#     aes(color = country, label = country),
-#     size = 8,
-#     direction = "y",
-#     #xlim = c(2020.8, NA),
-#     hjust = 0,
-#     segment.size = .7,
-#     segment.alpha = .5,
-#     segment.linetype = "dotted",
-#     box.padding = .4,
-#     segment.curvature = -0.1,
-#     segment.ncp = 3,
-#     segment.angle = 20
-#   )
-#
-#
-# plot_no_US
 ```
 
 On remarque que les pays où Kickstarter arrive plus tôt ont une croissance plus forte du nombre de projets lancés.
 
-Cela peut s'expliquer par le fait que l'implantation rapide de son service permet de se faire une meilleure place dans le marché. Passé 2014, Kickstarter s'est installé dans des pays où une offre de financement participatif concurrente s'était déjà développé avant son arrivée, ce qui n'est pas le cas aux états-unis où le concept était novateur en 2009.
+Cela peut s'expliquer par le fait que l'implantation rapide de son service permet de se faire une meilleure place dans le marché. Passé 2014, Kickstarter s'est installé dans des pays où une offre de financement participatif concurrente s'était déjà développé avant son arrivée, ce qui n'est pas le cas aux États-Unis où le concept était novateur en 2009.
 
 Par exemple en France, Kickstarter est rarement cité comme la meilleure plateforme de crowdfunding: <https://bpifrance-creation.fr/encyclopedie/financements/financement-participatif/sites-plateformes-crowdfunding>
 
 Des services plus adaptés se sont implantés avant son arrivée.
 
-Dans le graphe suivant, nous allons évaluer la répartition des projets selon leur statut dans les pays du top 10:
+Dans la visualisation suivante, nous allons évaluer la répartition des projets selon leur statut dans les pays du top 10:
 
 ```{r}
-ggplot(data_kickstarter_top_ten_countries, aes(x = reorder(country, -table(country)[country]), fill = state)) +
-  geom_bar(position = "fill") +
+data_kickstarter_top_ten_countries %>%
+  ggplot(
+    aes(
+      x = reorder(country, -table(country)[country]),
+      fill = state,
+    )
+  ) +
+  geom_bar(
+    position = "fill",
+  ) +
   scale_fill_manual(
     breaks = c("suspended", "canceled", "failed", "live", "successful"),
-    values = c("grey", "orange", "red", "blue", "green")
+    values = c("grey", "orange", "red", "blue", "green"),
   ) +
-  scale_y_continuous(labels = percent_format()) +
+  scale_y_continuous(
+    labels = percent_format(),
+  ) +
   labs(
     title = "Répartition des statuts des projets selon le pays",
     x = "Code Pays",
     y = "",
-    fill = "Statut"
+    fill = "Statut",
   ) +
   theme_minimal() +
-  theme(axis.text.x = element_text(angle =90, size=5))
+  theme(axis.text.x = element_text(angle = 30, size = 9))
 ```
 
 On remarque que tous les pays ont des taux d'échec et de réussite relativement similaires.
@@ -1033,39 +1056,85 @@ success_rates_by_country <- data_kickstarter %>%
   ) %>%
   arrange(desc(success_rate))
 
-ggplot(success_rates_by_country, aes(x = reorder(country, success_rate), y = success_rate)) +
-  geom_col(fill = "forestgreen") +
-  scale_y_continuous(labels = percent_format()) +
+success_rates_by_country %>%
+  ggplot(
+    aes(
+      x = reorder(country, success_rate),
+      y = success_rate,
+    )
+  ) +
+  geom_col(
+    fill = "forestgreen"
+  ) +
+  scale_y_continuous(
+    labels = percent_format()
+  ) +
   labs(
     title = "Taux de réussite des campagnes Kickstarter par pays",
     x = "Pays",
-    y = "Taux de réussite"
+    y = "Taux de réussite",
   ) +
   theme_minimal() +
   coord_flip()
+```
 
-#Sur une carte du monde
+```{r}
+mapdata_success <- left_join(mapdata, success_rates_by_country, by = "country")
 
-#On fusionne les deux tableaux selon le pays
-
-mapdata_success <- left_join(mapdata, success_rates_by_country, by="country")
-
-graph_map <- ggplot(mapdata_success,aes(x=long,y=lat,group=group)) +
-  geom_polygon(aes(fill = success_rate), color = "black") +
-  scale_fill_viridis_c(option = "viridis")
-
-graph_map
+mapdata_success %>%
+  ggplot(
+    aes(
+      x = long,
+      y = lat,
+      group = group,
+    )
+  ) +
+  geom_polygon(
+    aes(
+      fill = success_rate,
+    ),
+    color = "grey60",
+    linewidth = 0.2,
+  ) +
+  scale_fill_viridis_c(
+    option = "viridis",
+    na.value = "lightgrey",
+  ) +
+  labs(
+    title = "Taux de réussite des campagnes Kickstarter par pays",
+    fill = "Taux de réussite",
+  ) +
+  theme_minimal() +
+  theme(
+    axis.title = element_blank(),
+    axis.text = element_blank(),
+    axis.ticks = element_blank(),
+    panel.grid = element_blank(),
+    legend.position = "bottom",
+    legend.key.width = unit(2, "cm"),
+  )
 ```
 
 On constate que les taux de réussite varient beaucoup selon le pays, de 37% à 15%. On constate que les deux pays avec le plus haut taux de réussite sont aussi ceux qui ont le plus de projets (mais ce n'est pas le cas au delà des deux premiers). Dans la suite de notre rapport, nous pourrions évaluer s'il existe une corrélation entre le nombre de projets lancés dans chaque pays et leur taux de réussite.
 
 ```{r}
-success_rates_by_country_no_us <- success_rates_by_country %>% filter(country!="USA")
-success_rates_by_country_no_us %>% ggplot(aes(x=total,y=success_rate, label=country )) +
+success_rates_by_country_no_us <- success_rates_by_country %>%
+  filter(country != "USA")
+
+success_rates_by_country_no_us %>%
+  ggplot(
+    aes(
+      x = total,
+      y = success_rate,
+      label = country,
+    )
+  ) +
   geom_point() +
-  geom_label_repel(min.segment.length=0,
-                   max.overlaps = Inf,
-                   size=2) +
+  geom_label_repel(
+    min.segment.length = 0,
+    max.overlaps = Inf,
+    size = 2,
+  ) +
   theme_minimal()
 ```
 
