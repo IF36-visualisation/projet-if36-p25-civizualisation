@@ -560,13 +560,12 @@ data_kickstarter <- data_kickstarter %>%
     duree_campagne_num =  as.numeric(duree_campagne)/86400
   )
 
-
 data_kickstarter_corr_time <- data_kickstarter %>% select(duree_campagne_num,usd_pledged_real,backers,state)
 
-#data_kickstarter_corr_time <- data_kickstarter_corr_time %>% filter(usd_pledged_real>500)
+# data_kickstarter_corr_time <- data_kickstarter_corr_time %>% filter(usd_pledged_real>500)
 
 ggpairs(data_kickstarter_corr_time,columns = 1:3, aes(color = state),
-  #upper = list(continuous = "density", combo = "ggally_box_no_facet", discrete = "count", na = "na"),
+  # upper = list(continuous = "density", combo = "ggally_box_no_facet", discrete = "count", na = "na"),
   lower = list(continuous = "points", combo = "dot_no_facet")) +
   theme_minimal() +
   theme(axis.text = element_text(size = 3))
@@ -636,7 +635,7 @@ success_rates %>%
     fill = "forestgreen",
   ) +
   scale_y_continuous(
-    labels = scales::percent_format(),
+    labels = percent_format(),
   ) +
   labs(
     title = "Taux de réussite des campagnes Kickstarter par catégorie entre 2009 et 2018",
@@ -674,8 +673,8 @@ success_rates %>%
 
 ```{r}
 categories_for_map <- data_kickstarter %>%
-#  group_by(main_category)%>%
-  group_by(main_category,category) %>%
+#  group_by(main_category) %>%
+  group_by(main_category, category) %>%
   summarise(
     total = n(),
     successful = sum(state == "successful"),
@@ -683,12 +682,33 @@ categories_for_map <- data_kickstarter %>%
   ) %>%
   arrange(desc(success_rate))
 
- categories_for_map %>% ggplot(aes(area = total, fill = success_rate, label = category,subgroup = main_category)) +
+categories_for_map %>%
+  ggplot(
+    aes(
+      area = total,
+      fill = success_rate,
+      label = category,
+      subgroup = main_category,
+    )
+  ) +
   geom_treemap() +
   geom_treemap_subgroup_border() +
-  geom_treemap_subgroup_text(place = "centre", grow = T, alpha = 0.5, color =
-                             "black", fontface = "italic", min.size = 0) +
-  geom_treemap_text(color = "white", place = "topleft", reflow = T)
+  geom_treemap_subgroup_text(
+    place = "center",
+    color = "white",
+    alpha = 0.5,
+    fontface = "italic",
+  ) +
+  geom_treemap_text(
+    place = "center",
+    color = "white",
+    reflow = TRUE,
+  ) +
+  labs(
+    title = "Taux de réussite des campagnes Kickstarter par catégorie entre 2009 et 2018",
+    fill = "Taux de réussite",
+  ) +
+  theme(legend.position = "bottom")
 ```
 
 #### Répartition des montants demandés par catégorie
@@ -722,22 +742,39 @@ normalized_data <- data_kickstarter %>%
 
 normalized_data$goal_category <- factor(normalized_data$goal_category, levels = c("< 1k", "1k - 10k", "10k - 50k", "50k - 100k", "> 100k"))
 
-ggplot(normalized_data, aes(x = reorder(main_category, total_projects), y = normalized_count, fill = goal_category)) +
-  geom_bar(stat = "identity", position = position_stack(reverse = TRUE)) +
-  scale_y_continuous(labels = scales::percent_format()) +
+normalized_data %>%
+  ggplot(
+    aes(
+      x = reorder(main_category, total_projects),
+      y = normalized_count, fill = goal_category
+    ),
+  ) +
+  geom_bar(
+    stat = "identity",
+    position = position_stack(reverse = TRUE),
+  ) +
+  scale_y_continuous(
+    labels = percent_format(),
+  ) +
   scale_fill_manual(
-    values = c("< 1k" = "forestgreen", "1k - 10k" = "green", "10k - 50k" = "gold", "50k - 100k" = "darkorange", "> 100k" = "red")
+    values = c(
+      "< 1k" = "forestgreen",
+      "1k - 10k" = "green",
+      "10k - 50k" = "gold",
+      "50k - 100k" = "darkorange",
+      "> 100k" = "red"
+    )
   ) +
   labs(
     title = "Répartition des projets par catégorie et montant demandé entre 2009 et 2018",
     x = "Catégorie",
     y = "Répartition des projets",
-    fill = "Montant demandé (USD)"
+    fill = "Montant demandé (USD)",
   ) +
   theme_minimal() +
   theme(
     legend.position = "bottom",
-    text = element_text(size = 10)
+    text = element_text(size = 10),
   ) +
   coord_flip()
 ```
@@ -751,80 +788,113 @@ Une exception notable est la catégorie **Journalism** qui, malgré des besoins 
 ### Combien de projets sont lancés par pays ? Quelle proportion de projets réussis ?
 
 ```{r}
-# Note de lecture: l'axe des ordonnées est logarithmique
-ggplot(data_kickstarter, aes(x = reorder(country, table(country)[country]))) +
-  geom_bar(fill = "forestgreen") +
+data_kickstarter %>%
+  ggplot(
+    aes(
+      x = reorder(country, table(country)[country]),
+    )
+  ) +
+  geom_bar(
+    fill = "forestgreen",
+  ) +
   scale_y_log10(
     breaks = c(10, 100, 1000, 10000, 30000, 100000, 300000),
-    labels = scales::label_comma()
+    labels = label_comma(big.mark = " "),
   ) +
   labs(
-    title = "Quantité de projets selon le pays",
-    x = "Code Pays",
+    title = "Nombre de projets Kickstarter par pays",
+    x = "Pays",
     y = "Nombre de projets",
-    caption = "Note: l'échelle est logarithmique"
+    caption = "Note de lecture: l'axe des ordonnées est logarithmique",
   ) +
   coord_flip() +
-  theme_minimal()
+  theme_minimal(base_size = 11)
 ```
 
 ```{r}
-library(treemapify)
-
-#On créé un dataframe avec le nombre de projets total par pays
-country_count_table <- table(data_kickstarter$country)
-country_counts <- as.data.frame(country_count_table)
-country_counts<- country_counts %>% rename(country = Var1,
-                   projects = Freq)
-country_counts <- as_tibble(country_counts)
-
-country_counts %>% ggplot(aes(area = projects, fill = projects, label = country)) +
-  geom_treemap() +
-  geom_treemap_text(fontface = "italic", color = "white", place = "centre",
-                    grow = TRUE)+
-  scale_fill_viridis_c(option = "viridis")
+# Création d'un dataframe avec le nombre total de projets par pays
+country_counts <- data_kickstarter %>%
+  count(country, name = "projects") %>%
+  as_tibble()
 ```
 
 ```{r}
-#On créé un dataframe avec le nombre de projets total par pays
-country_count_table <- table(data_kickstarter$country)
-country_counts <- as.data.frame(country_count_table)
-country_counts<- country_counts %>% rename(country = Var1,
-                   projects = Freq)
-country_counts <- as_tibble(country_counts)
+country_counts %>%
+  ggplot(
+    aes(
+      area = projects,
+      fill = projects,
+      label = country,
+    )
+  ) +
+  geom_treemap(show.legend = FALSE) +
+  geom_treemap_text(
+    place = "center",
+    color = "white",
+    grow = TRUE,
+  ) +
+  labs(
+    title = "Répartition des projets Kickstarter par pays",
+    subtitle = "Surface proportionnelle au nombre de projets",
+  )
+```
 
-#On importe une carte du monde
+```{r}
+# Importation de la carte du monde
+mapdata <- map_data("world") %>%
+  rename(country = region)
 
-mapdata <- map_data("world")
+# Fusion des données des projets avec la carte du monde
+mapdata_projects <- left_join(mapdata, country_counts, by = "country")
 
-mapdata <-mapdata %>% rename(country = region)
-
-#On fusionne les deux tableaux selon le pays
-
-mapdata_projects <- left_join(mapdata, country_counts, by="country")
-
-#On génère le graphique de la carte du monde
-
-graph_map <- ggplot(mapdata_projects,aes(x=long,y=lat,group=group)) +
-  geom_polygon(aes(fill = log(projects)), color = "black")+
-  scale_fill_viridis_c(option = "viridis")
-
-
-graph_map
-
+# Génération de la visualisation de la carte du monde
+mapdata_projects %>%
+  ggplot(
+    aes(
+      x = long,
+      y = lat,
+      group = group,
+    )
+  ) +
+  geom_polygon(
+    aes(
+      fill = projects,
+    ),
+    color = "grey60",
+    linewidth = 0.2,
+  ) +
+  scale_fill_viridis_c(
+    option = "viridis",
+    na.value = "lightgrey",
+    trans = "log10",
+    breaks = c(1, 10, 100, 1000, 10000, 100000),
+    labels = label_comma(big.mark = " "),
+  ) +
+  labs(
+    title = "Nombre de projets Kickstarter par pays",
+    fill = "Nombre de projets",
+    caption = "Les pays sans données sont affichés en gris clair",
+  ) +
+  theme_minimal() +
+  theme(
+    axis.title = element_blank(),
+    axis.text = element_blank(),
+    axis.ticks = element_blank(),
+    panel.grid = element_blank(),
+    legend.position = "bottom",
+    legend.key.width = unit(2, "cm"),
+  )
 ```
 
 Ce graphique représente la quantité de projets lancés sur Kickstarter par pays.
 
-On remarque une grande sur-représentation des Etats-Unis, pays de création de Kickstarter.
+On remarque une grande sur-représentation des États-Unis, pays de création de Kickstarter.
 
 On remarque ensuite une proéminence des pays anglo-saxons dans les pays dont le plus de projets sont validés.
 
 On peut lier cela au fait que Kickstarter a été lancé progressivement dans le monde. Pour avoir une vision qui reflète mieux la popularité de Kickstarter, on pourrait comparer les quantités de projets selon le temps dans un prochain livrable. On peut également expliquer cela par le fait que, dans de nombreux pays, une offre plus locale et adaptée a eu le temps de se développer, avant l'arrivée de Kickstarter ou en parallèle.
 
 ```{r}
-
-
 # Create a cumulative count by event
 data_kickstarter_by_country <- data_kickstarter %>%
   group_by(country) %>%
@@ -938,7 +1008,7 @@ ggplot(data_kickstarter_top_ten_countries, aes(x = reorder(country, -table(count
     breaks = c("suspended", "canceled", "failed", "live", "successful"),
     values = c("grey", "orange", "red", "blue", "green")
   ) +
-  scale_y_continuous(labels = scales::percent_format()) +
+  scale_y_continuous(labels = percent_format()) +
   labs(
     title = "Répartition des statuts des projets selon le pays",
     x = "Code Pays",
@@ -965,7 +1035,7 @@ success_rates_by_country <- data_kickstarter %>%
 
 ggplot(success_rates_by_country, aes(x = reorder(country, success_rate), y = success_rate)) +
   geom_col(fill = "forestgreen") +
-  scale_y_continuous(labels = scales::percent_format()) +
+  scale_y_continuous(labels = percent_format()) +
   labs(
     title = "Taux de réussite des campagnes Kickstarter par pays",
     x = "Pays",
@@ -1161,11 +1231,11 @@ data_kickstarter_reussis <- data_kickstarter %>%
 
 data_kickstarter_reussis %>% ggplot(aes(x=launch_year,y=completion_percentage)) +
   geom_boxplot()+
-  scale_y_continuous(labels = scales::percent_format(),limits = c(0,2))
+  scale_y_continuous(labels = percent_format(),limits = c(0,2))
 
 data_kickstarter_reussis %>% ggplot(aes(x=launch_year,y=completion_percentage)) +
   geom_boxplot()+
-  scale_y_continuous(labels = scales::percent_format())
+  scale_y_continuous(labels = percent_format())
 ```
 
 On remarque que l'immense majorité des projets réussis dépassent de peu leur objectif, et ce peu importe l'époque.
