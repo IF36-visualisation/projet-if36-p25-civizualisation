@@ -6,6 +6,9 @@ data/ks-projects-201801.csv
 # RStudio project files
 *.Rproj
 
+# RStudio temp file
+.RDataTmp
+
 # VS Code
 .vscode/
 *.code-workspace
@@ -140,7 +143,3 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/osx,macos,windows,linux,r
-test_graph_ryan.Rmd
-rapport.html
-rapport.html
-rapportPourPDF.Rmd

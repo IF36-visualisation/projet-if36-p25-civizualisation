@@ -23,6 +23,7 @@ L'objectif de ce projet d'IF36 est d'analyser et de présenter des données issu
 - 📥 Téléchargement des données
 - 📁 Présentation des données
 - 📊 Plan d'analyse
+- 🧭 Exploration des données
 
 ## 📝 Contexte des données choisis
 
@@ -52,25 +53,25 @@ Suivez les étapes ci-dessous pour récupérer les fichiers nécessaires :
 
 1. Téléchargez l'archive contenant les jeux de données.
 
-    ``` bash
+    ```bash
     curl -L -o ./data/kickstarter-projects.zip https://www.kaggle.com/api/v1/datasets/download/kemical/kickstarter-projects
     ```
 
 2. Une fois l'archive téléchargée, extrayez les fichiers.
 
-    ``` bash
+    ```bash
     unzip ./data/kickstarter-projects.zip -d ./data
     ```
 
     Si `unzip` n'est pas installé, vous pouvez l'installer avec la commande suivante
 
-    ``` bash
+    ```bash
     sudo apt-get install unzip
     ```
 
 3. (Facultatif) Après avoir extrait les fichiers, vous pouvez supprimer l'archive pour libérer de l'espace.
 
-    ``` bash
+    ```bash
     rm ./data/kickstarter-projects.zip
     ```
 
@@ -80,25 +81,25 @@ Suivez les étapes ci-dessous pour récupérer les fichiers nécessaires :
 
 Ce premier jeu de données au format CSV (Comma-Separated Values) contient 321 616 individus et 17 variables.
 
-| Variable | Type de données | Description |
-|------------------|------------------|------------------------------------|
-| `ID` | Integer | Identifiant unique du projet |
-| `name` | String | Nom du projet |
-| `category` | String | Catégorie spécifique du projet |
-| `main_category` | String | Catégorie principale du projet |
-| `currency` | String | Devise utilisée pour le financement |
-| `deadline` | Date | Date limite pour la collecte des fonds |
-| `goal` | Float | Montant que le projet espère récolter |
-| `launched` | Date and time | Date et heure de lancement du projet |
-| `pledged` | Float | Somme totale engagée par les contributeurs |
-| `state` | String | État de la campagne (ex : "failed", "successful") |
-| `backers` | Integer | Nombre de contributeurs |
-| `country` | String | Pays où le projet est lancé (ISO 3166) |
-| `usd pledged` | Float | Montant collecté en USD (conversion réalisée par Kickstarter) |
-| NA | NA | NA |
-| NA | NA | NA |
-| NA | NA | NA |
-| NA | NA | NA |
+| Variable           | Type de données | Description                                                                            |
+|--------------------|-----------------|----------------------------------------------------------------------------------------|
+| `ID`               | Integer         | Identifiant unique du projet                                                           |
+| `name`             | String          | Nom du projet                                                                          |
+| `category`         | String          | Catégorie spécifique du projet                                                         |
+| `main_category`    | String          | Catégorie principale du projet                                                         |
+| `currency`         | String          | Devise utilisée pour le financement                                                    |
+| `deadline`         | Date            | Date limite pour la collecte des fonds                                                 |
+| `goal`             | Float           | Montant que le projet espère récolter                                                  |
+| `launched`         | Date and time   | Date et heure de lancement du projet                                                   |
+| `pledged`          | Float           | Somme totale engagée par les contributeurs                                             |
+| `state`            | String          | État de la campagne (ex : "failed", "successful")                                      |
+| `backers`          | Integer         | Nombre de contributeurs                                                                |
+| `country`          | String          | Pays où le projet est lancé (ISO 3166)                                                 |
+| `usd pledged`      | Float           | Montant collecté en USD (conversion réalisée par Kickstarter)                          |
+| NA                 | NA              | NA                                                                                     |
+| NA                 | NA              | NA                                                                                     |
+| NA                 | NA              | NA                                                                                     |
+| NA                 | NA              | NA                                                                                     |
 
 On remarque que les 4 dernières variables sont sans titre et sans données.
 
@@ -106,23 +107,23 @@ On remarque que les 4 dernières variables sont sans titre et sans données.
 
 Ce deuxième jeu de données au format CSV (Comma-Separated Values) contient 375 765 individus et 15 variables.
 
-| Variable | Type de données | Description |
-|------------------|------------------|------------------------------------|
-| `ID` | Integer | Identifiant unique du projet |
-| `name` | String | Nom du projet |
-| `category` | String | Catégorie spécifique du projet |
-| `main_category` | String | Catégorie principale du projet |
-| `currency` | String | Devise utilisée pour le financement |
-| `deadline` | Date | Date limite pour la collecte des fonds |
-| `goal` | Float | Montant que le projet espère récolter |
-| `launched` | Date and time | Date et heure de lancement du projet |
-| `pledged` | Float | Somme totale engagée par les contributeurs |
-| `state` | String | État de la campagne (ex : "failed", "successful") |
-| `backers` | Integer | Nombre de contributeurs |
-| `country` | String | Pays où le projet est lancé (ISO 3166) |
-| `usd pledged` | Float | Montant collecté en USD (conversion réalisée par Kickstarter) |
-| `usd_pledged_real` | Float | Montant collecté en USD (conversion réalisée par l'API fixer.io) |
-| `usd_goal_real` | Float | Montant que le projet espère collecter en USD (conversion réalisée par l'API fixer.io) |
+| Variable           | Type de données | Description                                                                            |
+|------------------- |-----------------|----------------------------------------------------------------------------------------|
+| `ID`               | Integer         | Identifiant unique du projet                                                           |
+| `name`             | String          | Nom du projet                                                                          |
+| `category`         | String          | Catégorie spécifique du projet                                                         |
+| `main_category`    | String          | Catégorie principale du projet                                                         |
+| `currency`         | String          | Devise utilisée pour le financement                                                    |
+| `deadline`         | Date            | Date limite pour la collecte des fonds                                                 |
+| `goal`             | Float           | Montant que le projet espère récolter                                                  |
+| `launched`         | Date and time   | Date et heure de lancement du projet                                                   |
+| `pledged`          | Float           | Somme totale engagée par les contributeurs                                             |
+| `state`            | String          | État de la campagne (ex : "failed", "successful")                                      |
+| `backers`          | Integer         | Nombre de contributeurs                                                                |
+| `country`          | String          | Pays où le projet est lancé (ISO 3166)                                                 |
+| `usd pledged`      | Float           | Montant collecté en USD (conversion réalisée par Kickstarter)                          |
+| `usd_pledged_real` | Float           | Montant collecté en USD (conversion réalisée par l'API fixer.io)                       |
+| `usd_goal_real`    | Float           | Montant que le projet espère collecter en USD (conversion réalisée par l'API fixer.io) |
 
 Ce fichier contient plus d'individus que le premier, exclut les variables inutiles et ajoute deux variables supplémentaires par rapport au premier fichier.
 
@@ -172,7 +173,7 @@ Ces comparaisons nous permettront de mieux comprendre les facteurs influençant 
 
 Pour effectuer notre analyse, nous utilisons les libraries suivantes :
 
-```{r setup, include=FALSE, cache=TRUE, echo=FALSE, warning = FALSE}
+```{r echo=FALSE, warning=FALSE, cache=TRUE, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
@@ -191,6 +192,7 @@ library(countrycode) # Pour les noms de pays entiers
 library(maps) # Pour la carte du monde
 library(lubridate) # Pour traiter les dates
 library(ggrepel) # Pour l'espacement des légendes sur ggplot
+library(gridExtra) # Pour afficher plusieurs graphiques côte à côte
 ```
 
 Nous chargeons les deux fichiers de données nécessaires à notre analyse :
@@ -200,7 +202,7 @@ data2016 <- read_csv("./data/ks-projects-201612.csv", show_col_types = FALSE)
 data2018 <- read_csv("./data/ks-projects-201801.csv", show_col_types = FALSE)
 ```
 
-### 🧹 Nettoyage des données
+### Nettoyage des données
 
 Assurons nous que nos données ne contiennent aucun individus doublon Pour cela nous allons utiliser la variable ID qui se veut unique pour chaque individu
 
@@ -304,109 +306,197 @@ Notre dataset présente l'ensemble des projets lancés sur la plateforme Kicksta
 On y trouve notamment les dates de lancement des projets, leur catégorie, leur pays d'origine, les montants demandés et récoltés par chaque projet et leur état d'avancement.
 
 ```{r}
-head(data_kickstarter)
+glimpse(data_kickstarter)
 ```
 
-Les projets Kickstarter sont de différentes natures, on y trouve majoritairement des projets culturels et artistiques mais également des projets technologiques ou de financement de petites entreprises. Voyons les catégories les plus populaires du dataset:
+Les projets Kickstarter sont de différentes natures, on y trouve majoritairement des projets culturels et artistiques mais également des projets technologiques ou de financement de petites entreprises. Voyons les catégories les plus populaires du dataset :
 
 ```{r}
-#NOTE: DUPLICATA du graphique dans la question associée
+# NOTE: DUPLICATA du graphique dans la question associée
 campaign_counts <- data_kickstarter %>%
   group_by(main_category) %>%
   summarise(total_campaigns = n()) %>%
   arrange(desc(total_campaigns))
 
-ggplot(campaign_counts, aes(x = reorder(main_category, total_campaigns), y = total_campaigns)) +
-  geom_col(fill = "steelblue") +
+campaign_counts %>%
+  ggplot(
+    aes(
+      x = reorder(main_category, total_campaigns),
+      y = total_campaigns,
+    )
+  ) +
+  geom_col(
+    fill = "steelblue",
+  ) +
+  scale_y_continuous(
+    labels = label_comma(big.mark = " "),
+  ) +
   labs(
     title = "Nombre total de campagnes Kickstarter par catégorie entre 2009 et 2018",
     x = "Catégorie",
-    y = "Nombre total de campagnes"
+    y = "Nombre total de campagnes",
   ) +
-  scale_y_continuous(labels = function(x) format(x, big.mark = " ", scientific = FALSE)) +
   theme_minimal() +
   coord_flip()
 ```
 
-Tous les projets doivent définir un "Objectif" (*goal*), qui est la somme d'argent minimale pour que le projet soit considéré comme financé. Pendant la durée de la campagne, les utilisateurs de Kickstarter peuvent donner de l'argent au projet. La somme totale récoltée par le projet est visible dans la colonne *pledged* du dataset.
+Tous les projets doivent définir un "Objectif" (`goal`), qui est la somme d'argent minimale pour que le projet soit considéré comme financé. Pendant la durée de la campagne, les utilisateurs de Kickstarter peuvent donner de l'argent au projet. La somme totale récoltée par le projet est visible dans la colonne `pledged` du dataset.
 
 Cependant, ces valeurs monétaires sont données dans leur devise d'origine.
 
-Pour que les comparaisons selon la devise aient plus de sens, les colonnes *usd_goal_real* et *usd_pledged_real* font la conversion des sommes en dollar étasunien (USD)
+Pour que les comparaisons selon la devise aient plus de sens, les colonnes `usd_goal_real` et `usd_pledged_real` font la conversion des sommes en dollar étasunien (USD)
 
-Voici les distributions des projets selon leur objectif *goal* et les sommes réellement récoltées *pledged*
+Voici les distributions des projets selon leur objectif `goal` et les sommes réellement récoltées `pledged`
 
 ```{r}
-library(gridExtra)
-plot_goal <- data_kickstarter %>% ggplot(aes(x= as.integer(usd_goal_real)))+
-  geom_histogram(binwidth = 5000, fill = "steelblue") +
-  xlim(0,100000)+
-  ylim(0,100000) +
+# Histogramme du montant cible (goal)
+hist_goal <- data_kickstarter %>%
+  ggplot(
+    aes(
+      x = usd_goal_real,
+    )
+  ) +
+  geom_histogram(
+    binwidth = 5000,
+    fill = "steelblue",
+    color = "white",
+    boundary = 0,
+    closed = "left",
+  ) +
+  scale_x_continuous(
+    limits = c(0, 100000),
+    breaks = seq(0, 100000, 20000),
+    labels = label_comma(big.mark = " "),
+  ) +
+  scale_y_continuous(
+    labels = label_comma(big.mark = " "),
+  ) +
   labs(
-    title = "Montants cible des campagnes Kickstarter",
+    title = "Montants cibles des campagnes Kickstarter",
     x = "Montant cible ('Goal') en USD",
-    y = "Quantité de campagnes"
-  )+
+    y = "Nombre de campagnes",
+  ) +
   theme_minimal()
 
-plot_pledged <- data_kickstarter %>% ggplot(aes(x= as.integer(usd_pledged_real)))+
-  geom_histogram(binwidth = 5000, fill= "steelblue") +
-  xlim(0,100000) +
-  ylim(0,100000) +
-  theme_minimal()+
+# Histogramme du montant récolté (pledged)
+hist_pledged <- data_kickstarter %>%
+  ggplot(
+    aes(
+      x = usd_pledged_real
+    )
+  ) +
+  geom_histogram(
+    binwidth = 5000,
+    fill = "#228B22",
+    color = "white",
+    boundary = 0,
+    closed = "left",
+  ) +
+  scale_x_continuous(
+    limits = c(0, 100000),
+    breaks = seq(0, 100000, 20000),
+    labels = label_comma(big.mark = " "),
+  ) +
+  scale_y_continuous(
+    labels = label_comma(big.mark = " "),
+  ) +
   labs(
     title = "Montants récoltés des campagnes Kickstarter",
     x = "Montant récolté ('Pledged') en USD",
-    y = "Quantité de campagnes"
-  )
+    y = "Nombre de campagnes",
+  ) +
+  theme_minimal()
 
-grid.arrange(plot_goal,plot_pledged,ncol=2)
+grid.arrange(hist_goal, hist_pledged, ncol = 2)
 ```
 
-Chose étrange: Il y a davantage de projets avec des petits objectifs que de projets avec peu de fonds récoltés. Cela est peu réaliste, il faut voir s'il y a un problème avec le dataset.
+Chose étrange : Il y a davantage de projets avec des petits objectifs que de projets avec peu de fonds récoltés. Cela est peu réaliste, il faut voir s'il y a un problème avec le dataset.
 
-Chaque financeur est appelé un *backer*. Le dataset associe à chaque projet la quantité de personnes qui l'ont financé:
+Chaque financeur est appelé un `backer`. Le dataset associe à chaque projet la quantité de personnes qui l'ont financé :
 
 ```{r}
-data_kickstarter %>% ggplot(aes(x=backers))+
-  geom_histogram(binwidth = 500,fill="steelblue", boundary=0,closed = "left")+
-  labs(title="Nombre de backers par projet",
-       x="Quantité de backers",
-       y="Quantité de projets")+
-  scale_x_continuous(limits = c(0, 10000), breaks = seq(0,10000,1000))+
-  ylim(0,1700)+
+data_kickstarter %>%
+  ggplot(aes(x = backers)) +
+  geom_histogram(
+    binwidth = 500,
+    fill = "steelblue",
+    color = "white",
+    boundary = 0,
+    closed = "left",
+  ) +
+  scale_x_continuous(
+    limits = c(0, 10000),
+    breaks = seq(0, 10000, 1000),
+    labels = label_comma(big.mark = " "),
+  ) +
+  scale_y_continuous(
+    limits = c(0, 1200),
+    breaks = seq(0, 1200, 200),
+    labels = label_comma(big.mark = " "),
+  ) +
+  labs(
+    title = "Distribution du nombre de backers par projet",
+    x = "Nombre de backers",
+    y = "Nombre de projets",
+  ) +
   theme_minimal()
 ```
 
-Chaque projet ne peut être financé que dans un temps imparti, situé entre son lancement de la campagne (*launched*) et sa clôture (*deadline*). Aucun financement supplémentaire n'est accepté au delà de la clôture de la campagne.
+Chaque projet ne peut être financé que dans un temps imparti, situé entre le lancement de la campagne (`launched`) et sa clôture (`deadline`). Aucun financement supplémentaire n'est accepté au delà de la clôture de la campagne.
 
-Dans les graphes suivants, nous allons voir la quantité de projets lancés chaque année et les durées des campagnes de notre dataset.
+Dans les visualisations suivantes, nous allons voir la quantité de projets lancés chaque année et les durées des campagnes de notre dataset.
 
 ```{r}
-data_kickstarter %>% ggplot(aes(x=year(launched))) +
-  geom_bar(fill="steelblue")+
-  scale_x_continuous(limits = c(2009,2017),breaks = seq(2009,2017, 1))+
-  labs(title = "Quantité de projets lancés chaque année",
-        x= "Année",
-        y= "Quantité de projets") +
+data_kickstarter %>%
+  ggplot(aes(x = year(launched))) +
+  geom_bar(
+    fill = "steelblue",
+  ) +
+  scale_x_continuous(
+    limits = c(2009, 2017),
+    breaks = seq(2009, 2017, 1),
+  ) +
+  scale_y_continuous(
+    labels = label_comma(big.mark = " "),
+  ) +
+  labs(
+    title = "Nombre de projets lancés chaque année",
+    x = "Année",
+    y = "Nombre de projets",
+  ) +
   theme_minimal()
+```
 
-
-# Calcul de la durée de la campagne et filtrage des campagnes avec durée < 5000 jours
+```{r}
+# Calcul et visualisation de la durée des campagnes avec filtrage des campagnes avec durée < 5000 jours
 data_kickstarter <- data_kickstarter %>%
   mutate(
-    duree_campagne = as.Date(deadline) - as.Date(launched)
+    duree_campagne = as.numeric(as.Date(deadline) - as.Date(launched))
   ) %>%
   filter(duree_campagne < 5000)
 
-data_kickstarter %>% ggplot(aes(x=duree_campagne))+
-  geom_histogram(binwidth = 1, fill = "steelblue") +
-  labs(title = "Durée des projets Kickstarter",
-        x= "Durée en jours",
-        y= "Quantité de projets") +
-  scale_x_continuous(breaks = seq(0, 100, 5))+
+data_kickstarter %>%
+  ggplot(
+    aes(
+      x = duree_campagne
+    )
+  ) +
+  geom_histogram(
+    binwidth = 1,
+    fill = "steelblue",
+  ) +
+  scale_x_continuous(
+    breaks = seq(0, 100, 5),
+  ) +
+  scale_y_continuous(
+    labels = label_comma(big.mark = " "),
+  ) +
+  labs(
+    title = "Distribution de la durée des campagnes Kickstarter",
+    x = "Durée (jours)",
+    y = "Nombre de projets",
+  ) +
   theme_minimal()
-
 ```
 
 On remarque que l'immense majorité des campagnes durent 30 jours, soit 1 mois. La deuxième durée la plus populaire est 60 jours, ce qui correspond à 2 mois.
