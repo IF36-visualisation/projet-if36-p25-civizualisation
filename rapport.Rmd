@@ -313,23 +313,19 @@ glimpse(data_kickstarter)
 Les projets Kickstarter sont de différentes natures, on y trouve majoritairement des projets culturels et artistiques mais également des projets technologiques ou de financement de petites entreprises. Voyons les catégories les plus populaires du dataset :
 
 ```{r}
-# NOTE: DUPLICATA du graphique dans la question associée
-campaign_counts <- data_kickstarter %>%
-  group_by(main_category) %>%
-  summarise(total_campaigns = n()) %>%
-  arrange(desc(total_campaigns))
-
-campaign_counts %>%
+data_kickstarter %>%
+  count(main_category, name = "total") %>%
   ggplot(
     aes(
-      x = reorder(main_category, total_campaigns),
-      y = total_campaigns,
+      x = reorder(main_category, total),
+      y = total,
     )
   ) +
   geom_col(
     fill = "steelblue",
   ) +
   scale_y_continuous(
+    breaks = seq(0, 70000, 10000),
     labels = label_comma(big.mark = " "),
   ) +
   labs(
@@ -350,65 +346,64 @@ Pour que les comparaisons selon la devise aient plus de sens, les colonnes `usd_
 Voici les distributions des projets selon leur objectif `goal` et les sommes réellement récoltées `pledged`
 
 ```{r}
-# Histogramme du montant cible (goal)
-hist_goal <- data_kickstarter %>%
-  ggplot(
-    aes(
-      x = usd_goal_real,
-    )
-  ) +
-  geom_histogram(
-    binwidth = 5000,
-    fill = "steelblue",
-    color = "white",
-    boundary = 0,
-    closed = "left",
-  ) +
-  scale_x_continuous(
-    limits = c(0, 100000),
-    breaks = seq(0, 100000, 20000),
-    labels = label_comma(big.mark = " "),
-  ) +
-  scale_y_continuous(
-    labels = label_comma(big.mark = " "),
-  ) +
-  labs(
-    title = "Montants cibles des campagnes Kickstarter",
-    x = "Montant cible ('goal') en USD",
-    y = "Nombre de campagnes",
-  ) +
-  theme_minimal()
-
-# Histogramme du montant récolté (pledged)
-hist_pledged <- data_kickstarter %>%
-  ggplot(
-    aes(
-      x = usd_pledged_real
-    )
-  ) +
-  geom_histogram(
-    binwidth = 5000,
-    fill = "forestgreen",
-    color = "white",
-    boundary = 0,
-    closed = "left",
-  ) +
-  scale_x_continuous(
-    limits = c(0, 100000),
-    breaks = seq(0, 100000, 20000),
-    labels = label_comma(big.mark = " "),
-  ) +
-  scale_y_continuous(
-    labels = label_comma(big.mark = " "),
-  ) +
-  labs(
-    title = "Montants récoltés des campagnes Kickstarter",
-    x = "Montant récolté ('pledged') en USD",
-    y = "Nombre de campagnes",
-  ) +
-  theme_minimal()
-
-grid.arrange(hist_goal, hist_pledged, ncol = 2)
+grid.arrange(
+  # Histogramme du montant cible (goal)
+  data_kickstarter %>%
+    ggplot(
+      aes(
+        x = usd_goal_real,
+      )
+    ) +
+    geom_histogram(
+      binwidth = 5000,
+      fill = "steelblue",
+      color = "white",
+      boundary = 0,
+      closed = "left",
+    ) +
+    scale_x_continuous(
+      limits = c(0, 100000),
+      breaks = seq(0, 100000, 20000),
+      labels = label_comma(big.mark = " "),
+    ) +
+    scale_y_continuous(
+      labels = label_comma(big.mark = " "),
+    ) +
+    labs(
+      title = "Montants cibles des campagnes Kickstarter",
+      x = "Montant cible ('goal') en USD",
+      y = "Nombre de campagnes",
+    ) +
+    theme_minimal(),
+  # Histogramme du montant récolté (pledged)
+  data_kickstarter %>%
+    ggplot(
+      aes(
+        x = usd_pledged_real,
+      )
+    ) +
+    geom_histogram(
+      binwidth = 5000,
+      fill = "forestgreen",
+      color = "white",
+      boundary = 0,
+      closed = "left",
+    ) +
+    scale_x_continuous(
+      limits = c(0, 100000),
+      breaks = seq(0, 100000, 20000),
+      labels = label_comma(big.mark = " "),
+    ) +
+    scale_y_continuous(
+      labels = label_comma(big.mark = " "),
+    ) +
+    labs(
+      title = "Montants récoltés des campagnes Kickstarter",
+      x = "Montant récolté ('pledged') en USD",
+      y = "Nombre de campagnes",
+    ) +
+    theme_minimal(),
+ncol = 2)
 ```
 
 Chose étrange : Il y a davantage de projets avec des petits objectifs que de projets avec peu de fonds récoltés. Cela est peu réaliste, il faut voir s'il y a un problème avec le dataset.
@@ -449,15 +444,26 @@ Dans les visualisations suivantes, nous allons voir la quantité de projets lanc
 
 ```{r}
 data_kickstarter %>%
-  ggplot(aes(x = year(launched))) +
-  geom_bar(
+  mutate(year_launched = year(launched)) %>%
+  count(year_launched, name = "total") %>%
+  ggplot(
+    aes(
+      x = as.factor(year_launched),
+      y = total,
+      label = total,
+    )
+  ) +
+  geom_col(
     fill = "steelblue",
   ) +
-  scale_x_continuous(
-    limits = c(2009, 2017),
-    breaks = seq(2009, 2017, 1),
+  geom_text(
+    aes(label = comma(total, big.mark = " ")),
+    vjust = -0.3,
+    size = 3,
   ) +
   scale_y_continuous(
+    limits = c(0, 80000),
+    breaks = c(seq(0, 80000, 20000)),
     labels = label_comma(big.mark = " "),
   ) +
   labs(
@@ -465,11 +471,14 @@ data_kickstarter %>%
     x = "Année",
     y = "Nombre de projets",
   ) +
-  theme_minimal()
+  theme_minimal() +
+  theme(
+    panel.grid.minor = element_blank(),
+  )
 ```
 
 ```{r}
-# Calcul et visualisation de la durée des campagnes avec filtrage des campagnes avec durée < 5000 jours
+# Calcul et visualisation de la durée des campagnes avec durée < 5000 jours
 data_kickstarter <- data_kickstarter %>%
   mutate(
     duree_campagne = as.numeric(as.Date(deadline) - as.Date(launched))
@@ -613,65 +622,6 @@ category_data <- data_kickstarter %>%
 main_category_data %>%
   ggplot(
     aes(
-      x = reorder(main_category, total),
-      y = total,
-    )
-  ) +
-  geom_col(
-    fill = "steelblue",
-  ) +
-  scale_y_continuous(
-    breaks = seq(0, max(main_category_data$total), 10000),
-    labels = label_comma(big.mark = " "),
-  ) +
-  labs(
-    title = "Nombre total de campagnes Kickstarter par catégorie entre 2009 et 2018",
-    x = "Catégorie",
-    y = "Nombre total de campagnes",
-  ) +
-  theme_minimal() +
-  coord_flip()
-```
-
-Cette visualisation montre que certaines catégories, comme **Film & Video** et **Music**, ont un nombre très élevé de campagnes, tandis que d'autres, comme **Dance**, en ont beaucoup moins. On observe aussi un écart significatif entre **Film & Video** et **Dance**.
-
-#### Taux de réussite des campagnes Kickstarter par catégorie
-
-Examinons maintenant le taux de réussite pour chaque catégorie. Pour cela, nous allons regarder le pourcentage de projets réussis dans une catégorie.
-
-```{r}
-main_category_data %>%
-  ggplot(
-    aes(
-      x = reorder(main_category, success_rate),
-      y = success_rate,
-    )
-  ) +
-  geom_col(
-    fill = "forestgreen",
-  ) +
-  scale_y_continuous(
-    labels = percent_format(),
-  ) +
-  labs(
-    title = "Taux de réussite des campagnes Kickstarter par catégorie entre 2009 et 2018",
-    x = "Catégorie",
-    y = "Taux de réussite",
-  ) +
-  theme_minimal() +
-  coord_flip()
-```
-
-Dans cette visualisation, nous observons que les catégories **Dance**, **Theater** et **Comics** affichent les taux de réussite les plus élevés, avec notamment près de **60%** de réussite pour ces deux catégories. Cela peut s'expliquer par une communauté plus engagée ou des projets bien ciblés dans ces domaines.
-
-En revanche, les catégories comme **Technology** et **Journalism** ont les taux de réussite les plus faibles, autour de **20%**. Cela peut être dû à des projets plus complexes avec des coûts beaucoup plus élevés.
-
-Cela peut expliquer en partie les différences de taux de réussite : les catégories avec moins de projets peuvent avoir une communauté plus ciblée et engagée.
-
-```{r}
-main_category_data %>%
-  ggplot(
-    aes(
       area = total,
       fill = success_rate,
       label = main_category,
@@ -683,6 +633,8 @@ main_category_data %>%
     color = "white",
   ) +
   scale_fill_continuous(
+    limits = c(0, 1),
+    breaks = seq(0, 1, 0.25),
     labels = percent_format(),
   ) +
   labs(
@@ -692,7 +644,7 @@ main_category_data %>%
   theme(
     legend.position = "bottom",
     legend.title.position = "top",
-    legend.key.width = unit(2, "cm"),
+    legend.key.width = unit(1, "cm"),
   )
 ```
 
@@ -731,9 +683,44 @@ category_data %>%
   theme(
     legend.position = "bottom",
     legend.title.position = "top",
-    legend.key.width = unit(2, "cm"),
+    legend.key.width = unit(1, "cm"),
   )
 ```
+
+Cette visualisation montre que certaines catégories, comme **Film & Video** et **Music**, ont un nombre très élevé de campagnes, tandis que d'autres, comme **Dance**, en ont beaucoup moins. On observe aussi un écart significatif entre **Film & Video** et **Dance**.
+
+#### Taux de réussite des campagnes Kickstarter par catégorie
+
+Examinons maintenant le taux de réussite pour chaque catégorie. Pour cela, nous allons regarder le pourcentage de projets réussis dans une catégorie.
+
+```{r}
+main_category_data %>%
+  ggplot(
+    aes(
+      x = reorder(main_category, success_rate),
+      y = success_rate,
+    )
+  ) +
+  geom_col(
+    fill = "forestgreen",
+  ) +
+  scale_y_continuous(
+    labels = percent_format(),
+  ) +
+  labs(
+    title = "Taux de réussite des campagnes Kickstarter par catégorie entre 2009 et 2018",
+    x = "Catégorie",
+    y = "Taux de réussite",
+  ) +
+  theme_minimal() +
+  coord_flip()
+```
+
+Dans cette visualisation, nous observons que les catégories **Dance**, **Theater** et **Comics** affichent les taux de réussite les plus élevés, avec notamment près de **60%** de réussite pour ces deux catégories. Cela peut s'expliquer par une communauté plus engagée ou des projets bien ciblés dans ces domaines.
+
+En revanche, les catégories comme **Technology** et **Journalism** ont les taux de réussite les plus faibles, autour de **20%**. Cela peut être dû à des projets plus complexes avec des coûts beaucoup plus élevés.
+
+Cela peut expliquer en partie les différences de taux de réussite : les catégories avec moins de projets peuvent avoir une communauté plus ciblée et engagée.
 
 #### Répartition des montants demandés par catégorie
 
