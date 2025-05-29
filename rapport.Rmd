@@ -82,7 +82,7 @@ Suivez les étapes ci-dessous pour récupérer les fichiers nécessaires :
 Ce premier jeu de données au format CSV (Comma-Separated Values) contient 321 616 individus et 17 variables.
 
 | Variable | Type de données | Description |
-|--------------|--------------|---------------------------------------------|
+|-----------------|-----------------|--------------------------------------|
 | `ID` | Integer | Identifiant unique du projet |
 | `name` | String | Nom du projet |
 | `category` | String | Catégorie spécifique du projet |
@@ -108,7 +108,7 @@ On remarque que les 4 dernières variables sont sans titre et sans données.
 Ce deuxième jeu de données au format CSV (Comma-Separated Values) contient 375 765 individus et 15 variables.
 
 | Variable | Type de données | Description |
-|--------------|--------------|---------------------------------------------|
+|-----------------|-----------------|--------------------------------------|
 | `ID` | Integer | Identifiant unique du projet |
 | `name` | String | Nom du projet |
 | `category` | String | Catégorie spécifique du projet |
@@ -1551,3 +1551,22 @@ ggplot(data_kickstarter_sentiment, aes(x = sentiment_score, fill = state)) +
 ```
 
 Ce graphique illustre la corrélation entre le sentiment des titres des projets Kickstarter (mesuré par la méthode Syuzhet, de -4 à 4) et leur succès, distinguant les projets "Échoués" (rouge) et "Réussis" (vert). On observe que la plupart des projets, qu'ils aient réussi ou échoué, ont un score de sentiment proche de 0 (neutre), avec un pic marqué à cette valeur. Les projets échoués prédominent légèrement dans les scores négatifs (\<-2), tandis que les projets réussis sont un peu plus fréquents dans les scores positifs (\>2). Cette analyse suggère que le sentiment du titre n'influence que marginalement le succès d'un projet, confirmant que d'autres facteurs pourraient jouer un rôle plus déterminant dans les résultats des campagnes Kickstarter.
+
+### Dans quelle mesure le montant de l'objectif influence-t-il la probabilité de succès d'une campagne ?
+
+On se demande si le montant demandé lors d'une campagne influence la réussite. On peut se demander si un projet qui demande une somme importante a peu de chance de réussir et inversement si un projet qui demande un budget faible a plus de chance de réussir.
+
+```{r}
+data_kickstarter_successful <- data_kickstarter_successful %>%
+  mutate(goal_binned = cut(goal, breaks = c(0, 5000, 10000, 50000, 100000, Inf),
+                           labels = c("0-5k", "5k-10k", "10k-50k", "50k-100k", "100k+")))
+
+ggplot(data_kickstarter_successful, aes(x = goal_binned, fill = state)) +
+  geom_bar(position = "dodge") +
+  labs(title = "Répartition des campagnes réussie par objectif",
+       x = "Objectif de financement (catégorisé)",
+       y = "Nombre de campagnes") +
+  theme_minimal()
+```
+
+On observe que les campagnes ayant le plus de chances de réussir sont celles dont l’objectif se situe entre 0 et 5 000. Ensuite, entre 5 000 et 50 000, le taux de réussite diminue, bien qu’un certain nombre de campagnes parviennent tout de même à atteindre leur objectif. En revanche, au-delà de 50 000, très peu de campagnes atteignent le montant souhaité. L’hypothèse formulée se vérifie donc : plus la somme demandée est faible, plus le taux de réussite est élevé, et inversement, plus le montant demandé est élevé, moins les chances de réussite sont grandes.
