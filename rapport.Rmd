@@ -12,18 +12,18 @@ L'objectif de ce projet d'IF36 est d'analyser et de présenter des données issu
 
 Équipe Civizualisation :
 
--   Florian BONELLI
--   Eyvan FAURE
--   Ryan OUYED
--   Lucas SAURON
+- Florian BONELLI
+- Eyvan FAURE
+- Ryan OUYED
+- Lucas SAURON
 
 ## 📚 Sommaire
 
--   📝 Contexte des données choisis
--   📥 Téléchargement des données
--   📁 Présentation des données
--   📊 Plan d'analyse
--   🧭 Exploration des données
+- 📝 Contexte des données choisis
+- 📥 Téléchargement des données
+- 📁 Présentation des données
+- 📊 Plan d'analyse
+- 🧭 Exploration des données
 
 ## 📝 Contexte des données choisis
 
@@ -51,13 +51,13 @@ Il faut les télécharger manuellement.
 
 Suivez les étapes ci-dessous pour récupérer les fichiers nécessaires :
 
-1.  Téléchargez l'archive contenant les jeux de données.
+1. Téléchargez l'archive contenant les jeux de données.
 
     ``` bash
     curl -L -o ./data/kickstarter-projects.zip https://www.kaggle.com/api/v1/datasets/download/kemical/kickstarter-projects
     ```
 
-2.  Une fois l'archive téléchargée, extrayez les fichiers.
+2. Une fois l'archive téléchargée, extrayez les fichiers.
 
     ``` bash
     unzip ./data/kickstarter-projects.zip -d ./data
@@ -69,7 +69,7 @@ Suivez les étapes ci-dessous pour récupérer les fichiers nécessaires :
     sudo apt-get install unzip
     ```
 
-3.  (Facultatif) Après avoir extrait les fichiers, vous pouvez supprimer l'archive pour libérer de l'espace.
+3. (Facultatif) Après avoir extrait les fichiers, vous pouvez supprimer l'archive pour libérer de l'espace.
 
     ``` bash
     rm ./data/kickstarter-projects.zip
@@ -139,35 +139,35 @@ L'objectif principal de notre analyse est de comprendre les dynamiques du financ
 
 ### 🔍 Questions d'analyse
 
--   Quels sont les taux de réussite des campagnes selon les catégories ?
--   Dans quelle mesure le montant de l'objectif influence-t-il la probabilité de succès d'une campagne ?
--   Existe-t-il des périodes de l'année où les campagnes ont plus de chances de réussir ?
--   Quels sont les pays où le plus de campagnes sont créées? Parmi eux, lesquels ont les meilleurs taux de réussite?
--   L'écart entre l'objectif initial et les fonds réellement collectés varie-t-il en fonction de la catégorie ou de la devise utilisée ?
--   Le choix des mots dans le titre d'une campagne a-t-il un impact sur son succès ?
--   Comment a évolué le taux de réussite et le nombre de campagne au fil des années? Les campagnes sont elles plus ambitieuses qu'avant?
+- Quels sont les taux de réussite des campagnes selon les catégories ?
+- Dans quelle mesure le montant de l'objectif influence-t-il la probabilité de succès d'une campagne ?
+- Existe-t-il des périodes de l'année où les campagnes ont plus de chances de réussir ?
+- Quels sont les pays où le plus de campagnes sont créées? Parmi eux, lesquels ont les meilleurs taux de réussite?
+- L'écart entre l'objectif initial et les fonds réellement collectés varie-t-il en fonction de la catégorie ou de la devise utilisée ?
+- Le choix des mots dans le titre d'une campagne a-t-il un impact sur son succès ?
+- Comment a évolué le taux de réussite et le nombre de campagne au fil des années? Les campagnes sont elles plus ambitieuses qu'avant?
 
 ### 📈 Variables à comparer
 
 Pour répondre à nos questions d'analyse, nous comparerons les variables suivantes :
 
--   **Taux de réussite et d'échec par catégorie** : Identifier les catégories où les campagnes réussissent ou échouent le plus souvent.
--   **Taux de réussite et d'échec en fonction du montant de l'objectif** : Analyser l'impact du montant demandé sur le succès ou l'échec des campagnes.
--   **Taux de réussite et d'échec selon la période de lancement** : Étudier si certaines périodes de l'année influencent les chances de succès ou d'échec.
--   **Nombre de campagnes créées et leur taux de réussite selon le pays**: Comparer les pays où les campagnes sont les plus populaires pour observer des différences de nombres de campagnes et de taux de réussite selon les régions.
--   **Écart entre le montant collecté et l'objectif fixé** : Comparer les fonds espérés et les fonds réellement obtenus pour évaluer les écarts.
--   **Impact des mots-clés dans les titres sur le succès** : Identifier les mots les plus fréquents dans les titres des campagnes réussies et leur influence.
--   **Nombre de campagnes réussies montant moyen récolté par campagne réussie selon l'année** : Comparer le nombre de campagnes réussies et leur valeur moyenne chaque année pour dégager des tendances.
+- **Taux de réussite et d'échec par catégorie** : Identifier les catégories où les campagnes réussissent ou échouent le plus souvent.
+- **Taux de réussite et d'échec en fonction du montant de l'objectif** : Analyser l'impact du montant demandé sur le succès ou l'échec des campagnes.
+- **Taux de réussite et d'échec selon la période de lancement** : Étudier si certaines périodes de l'année influencent les chances de succès ou d'échec.
+- **Nombre de campagnes créées et leur taux de réussite selon le pays**: Comparer les pays où les campagnes sont les plus populaires pour observer des différences de nombres de campagnes et de taux de réussite selon les régions.
+- **Écart entre le montant collecté et l'objectif fixé** : Comparer les fonds espérés et les fonds réellement obtenus pour évaluer les écarts.
+- **Impact des mots-clés dans les titres sur le succès** : Identifier les mots les plus fréquents dans les titres des campagnes réussies et leur influence.
+- **Nombre de campagnes réussies montant moyen récolté par campagne réussie selon l'année** : Comparer le nombre de campagnes réussies et leur valeur moyenne chaque année pour dégager des tendances.
 
 Ces comparaisons nous permettront de mieux comprendre les facteurs influençant le succès des campagnes Kickstarter.
 
 ### ⚠️ Limitations et problèmes potentiels
 
--   Certains porteurs de projets peuvent fixer des objectifs volontairement bas pour maximiser leurs chances de succès ou, au contraire, volontairement élevé par manque de sérieux, ce qui pourrait biaiser les résultats de l'analyse.
+- Certains porteurs de projets peuvent fixer des objectifs volontairement bas pour maximiser leurs chances de succès ou, au contraire, volontairement élevé par manque de sérieux, ce qui pourrait biaiser les résultats de l'analyse.
 
--   Les taux de conversion en USD peuvent introduire des biais en fonction des fluctuations des taux de change et de l'inflation.
+- Les taux de conversion en USD peuvent introduire des biais en fonction des fluctuations des taux de change et de l'inflation.
 
--   Des facteurs externes, tels que les tendances économiques ou médiatiques, qui ne sont pas inclus dans les données, peuvent également influencer le succès des campagnes.
+- Des facteurs externes, tels que les tendances économiques ou médiatiques, qui ne sont pas inclus dans les données, peuvent également influencer le succès des campagnes.
 
 ## 🧭 Exploration des données
 
@@ -1226,9 +1226,6 @@ Ce graphique illustre le taux de réussite mensuel des campagnes Kickstarter en 
 Pour vérifier si cela est possible, il faut qu'on observe la durée des campagnes ?
 
 ```{r}
-library(dplyr)
-library(ggplot2)
-
 # Préparation des données
 data_kickstarter <- data_kickstarter %>%
   mutate(
@@ -1295,7 +1292,7 @@ success_rates_by_length %>% ggplot(aes(x=duree_campagne,y=success_rate))+
   theme_minimal()
 ```
 
-On peut observer qu'une campagne inférieur a 40 jours à un taux de réussite de 40% à 50% alors qu'ensuite, le taux chute jusqu’à 30%. On en déduis donc qu'une durée idéale de campagne est de 20 à 25 jours avec un taux de réussite à 50%.
+On peut observer qu'une campagne inférieur a 40 jours à un taux de réussite de 40% à 50% alors qu'ensuite, le taux chute jusqu'à 30%. On en déduis donc qu'une durée idéale de campagne est de 20 à 25 jours avec un taux de réussite à 50%.
 
 ### Comment les montants demandés et récoltés ont-ils évolué au cours du temps?
 
@@ -1569,4 +1566,4 @@ ggplot(data_kickstarter_successful, aes(x = goal_binned, fill = state)) +
   theme_minimal()
 ```
 
-On observe que les campagnes ayant le plus de chances de réussir sont celles dont l’objectif se situe entre 0 et 5 000. Ensuite, entre 5 000 et 50 000, le taux de réussite diminue, bien qu’un certain nombre de campagnes parviennent tout de même à atteindre leur objectif. En revanche, au-delà de 50 000, très peu de campagnes atteignent le montant souhaité. L’hypothèse formulée se vérifie donc : plus la somme demandée est faible, plus le taux de réussite est élevé, et inversement, plus le montant demandé est élevé, moins les chances de réussite sont grandes.
+On observe que les campagnes ayant le plus de chances de réussir sont celles dont l'objectif se situe entre 0 et 5 000. Ensuite, entre 5 000 et 50 000, le taux de réussite diminue, bien qu'un certain nombre de campagnes parviennent tout de même à atteindre leur objectif. En revanche, au-delà de 50 000, très peu de campagnes atteignent le montant souhaité. L'hypothèse formulée se vérifie donc : plus la somme demandée est faible, plus le taux de réussite est élevé, et inversement, plus le montant demandé est élevé, moins les chances de réussite sont grandes.
