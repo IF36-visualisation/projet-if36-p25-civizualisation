@@ -4,7 +4,6 @@ output:
   prettydoc::html_pretty:
     theme: hpstr
     highlight: github
----gi
 ---
 
 L'objectif de ce projet d'IF36 est d'analyser et de présenter des données issues d'un jeu de données de notre choix.
@@ -195,6 +194,7 @@ library(lubridate) # Pour traiter les dates
 library(ggrepel) # Pour l'espacement des légendes sur ggplot
 library(gridExtra) # Pour afficher plusieurs graphiques côte à côte
 library(treemapify) # Pour des graphiques en treemap
+library(forcats) # Pour des les chats
 
 ```
 
@@ -1571,8 +1571,12 @@ data_pyramid <- data_pyramid %>%
 ```
 ```{r}
 # 🔍 Étape intermédiaire : Retirer les bins proches de zéro
+# Convertir en facteur ordonné selon la valeur numérique
 data_pyramid <- data_pyramid %>%
-  filter(!sentiment_bin_upper %in% c("0"))
+  filter(!sentiment_bin_upper %in% c(NA)) %>%
+  mutate(
+    sentiment_bin_upper = fct_reorder(sentiment_bin_upper, as.numeric(as.character(sentiment_bin_upper)))
+  )
 # Étape 4 : Création du graphique en pyramide
 ggplot(data_pyramid, aes(x = n, y = sentiment_bin_upper, fill = state)) +
   geom_col(width = 0.9) +
@@ -1586,7 +1590,49 @@ ggplot(data_pyramid, aes(x = n, y = sentiment_bin_upper, fill = state)) +
   ) +
   theme_minimal()
 ```
-Ce graphique illustre la corrélation entre le sentiment des titres des projets Kickstarter (mesuré par la méthode Syuzhet, de -4 à 4) et leur succès, distinguant les projets "Échoués" (rouge) et "Réussis" (vert). On observe que la plupart des projets, qu'ils aient réussi ou échoué, ont un score de sentiment proche de 0 (neutre), avec un pic marqué à cette valeur. Les projets échoués prédominent légèrement dans les scores négatifs (\<-2), tandis que les projets réussis sont un peu plus fréquents dans les scores positifs (\>2). Cette analyse suggère que le sentiment du titre n'influence que marginalement le succès d'un projet, confirmant que d'autres facteurs pourraient jouer un rôle plus déterminant dans les résultats des campagnes Kickstarter.
+Une grand majorité des projets n'ont pas de titre avec une valeur émotionelle , pour y voir plus clair nous alons les retirer du graphique.
+```{r}
+# 🔍 Étape intermédiaire : Retirer les bins proches de zéro
+# Convertir en facteur ordonné selon la valeur numérique
+data_pyramid <- data_pyramid %>%
+  filter(!sentiment_bin_upper %in% c(0))
+# Étape 4 : Création du graphique en pyramide
+ggplot(data_pyramid, aes(x = n, y = sentiment_bin_upper, fill = state)) +
+  geom_col(width = 0.9) +
+  scale_fill_manual(values = c("failed" = "red", "successful" = "green")) +
+  scale_x_continuous(labels = abs) +
+  labs(
+    title = "Pyramide : Score de sentiment vs. succès du projet",
+    x = "Nombre de projets",
+    y = "Borne supérieure du score de sentiment",
+    fill = "État du projet"
+  ) +
+  theme_minimal()
+```
+Ce graphique illustre la corrélation entre le sentiment des titres des projets Kickstarter (mesuré par la méthode Syuzhet, de -2 à 2) et leur succès, distinguant les projets "Échoués" (rouge) et "Réussis" (vert).
+```{r}
+# Étape 1 : Préparation des données : tableau avec nb de projets par bin et par état
+data_success_rate <- data_pyramid %>%
+  mutate(n_abs = abs(n)) %>%
+  group_by(sentiment_bin_upper, state) %>%
+  summarise(n = sum(n_abs), .groups = "drop") %>%
+  pivot_wider(names_from = state, values_from = n, values_fill = 0) %>%
+  mutate(
+    total = successful + failed,
+    success_rate = successful / total * 100
+  )
+
+# Étape 2 : Graphique du pourcentage de réussite
+ggplot(data_success_rate, aes(x = sentiment_bin_upper, y = success_rate)) +
+  geom_col(fill = "blue") +
+  labs(
+    title = "Pourcentage de projets réussis par niveau de sentiment",
+    x = "Borne supérieure du score de sentiment",
+    y = "Pourcentage de projets réussis"
+  ) +
+  theme_minimal()
+```
+On observe que la plupart des projets, qu'ils aient réussi ou échoué, ont un score de sentiment proche de 0 (neutre), avec un pic marqué à cette valeur. Cette analyse suggère que le sentiment du titre n'influence que marginalement le succès d'un projet, confirmant que d'autres facteurs pourraient jouer un rôle plus déterminant dans les résultats des campagnes Kickstarter.
 
 ### Dans quelle mesure le montant de l'objectif influence-t-il la probabilité de succès d'une campagne ?
 
