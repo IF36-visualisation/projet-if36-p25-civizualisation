@@ -195,6 +195,7 @@ library(lubridate) # Pour traiter les dates
 library(ggrepel) # Pour l'espacement des légendes sur ggplot
 library(gridExtra) # Pour afficher plusieurs graphiques côte à côte
 library(treemapify) # Pour des graphiques en treemap
+
 ```
 
 Nous chargeons les deux fichiers de données nécessaires à notre analyse :
@@ -1539,18 +1540,52 @@ data_kickstarter_sentiment <- data_kickstarter %>%
     sentiment_score = get_sentiment(name, method = "syuzhet")
   )
 
-# Créer un graphique pour voir si le score de sentiment est corrélé au succès
-ggplot(data_kickstarter_sentiment, aes(x = sentiment_score, fill = state)) +
-  geom_histogram(position = "dodge", binwidth = 0.1, alpha = 0.7) +
-  labs(
-    title = "Corrélation entre le sentiment du titre et le succès du projet",
-    x = "Score de sentiment (méthode Syuzhet)",
-    y = "Fréquence"
-  ) +
-  theme_minimal() +
-  scale_fill_manual(values = c("red", "green"), labels = c("Échoué", "Réussi"))
 ```
+```{r}
 
+# Étape 1 : Discrétiser les scores en classes (bins)
+# Étape 1 : Discrétiser les scores en classes (bins)
+breaks <- seq(-2, 2, by = 0.1)
+
+data_binned <- data_kickstarter_sentiment %>%
+  mutate(
+    sentiment_bin = cut(sentiment_score, breaks = breaks, include.lowest = TRUE),
+    # Extraire la borne supérieure de chaque bin
+    sentiment_bin_upper = factor(sapply(strsplit(as.character(sentiment_bin), ","), function(x) {
+      # Enlève le crochet droit et convertit en numérique
+      upper <- gsub("]", "", x[2])
+      trimws(upper)
+    }))
+  )
+
+# Étape 2 : Comptage par bin et par state
+data_pyramid <- data_binned %>%
+  count(state, sentiment_bin_upper)
+
+# Étape 3 : Inverser les valeurs pour 'Échoué' pour créer la pyramide
+data_pyramid <- data_pyramid %>%
+  mutate(
+    n = ifelse(state == "failed", -n, n),
+    sentiment_bin_upper = as_factor(sentiment_bin_upper)
+  )
+```
+```{r}
+# 🔍 Étape intermédiaire : Retirer les bins proches de zéro
+data_pyramid <- data_pyramid %>%
+  filter(!sentiment_bin_upper %in% c("0"))
+# Étape 4 : Création du graphique en pyramide
+ggplot(data_pyramid, aes(x = n, y = sentiment_bin_upper, fill = state)) +
+  geom_col(width = 0.9) +
+  scale_fill_manual(values = c("failed" = "red", "successful" = "green")) +
+  scale_x_continuous(labels = abs) +
+  labs(
+    title = "Pyramide : Score de sentiment vs. succès du projet",
+    x = "Nombre de projets",
+    y = "Borne supérieure du score de sentiment",
+    fill = "État du projet"
+  ) +
+  theme_minimal()
+```
 Ce graphique illustre la corrélation entre le sentiment des titres des projets Kickstarter (mesuré par la méthode Syuzhet, de -4 à 4) et leur succès, distinguant les projets "Échoués" (rouge) et "Réussis" (vert). On observe que la plupart des projets, qu'ils aient réussi ou échoué, ont un score de sentiment proche de 0 (neutre), avec un pic marqué à cette valeur. Les projets échoués prédominent légèrement dans les scores négatifs (\<-2), tandis que les projets réussis sont un peu plus fréquents dans les scores positifs (\>2). Cette analyse suggère que le sentiment du titre n'influence que marginalement le succès d'un projet, confirmant que d'autres facteurs pourraient jouer un rôle plus déterminant dans les résultats des campagnes Kickstarter.
 
 ### Dans quelle mesure le montant de l'objectif influence-t-il la probabilité de succès d'une campagne ?
