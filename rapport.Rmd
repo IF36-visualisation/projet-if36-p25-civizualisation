@@ -82,7 +82,7 @@ Suivez les étapes ci-dessous pour récupérer les fichiers nécessaires :
 Ce premier jeu de données au format CSV (Comma-Separated Values) contient 321 616 individus et 17 variables.
 
 | Variable | Type de données | Description |
-|------------------|------------------|-------------------------------------|
+|------------------|------------------|------------------------------------|
 | `ID` | Integer | Identifiant unique du projet |
 | `name` | String | Nom du projet |
 | `category` | String | Catégorie spécifique du projet |
@@ -108,7 +108,7 @@ On remarque que les 4 dernières variables sont sans titre et sans données.
 Ce deuxième jeu de données au format CSV (Comma-Separated Values) contient 375 765 individus et 15 variables.
 
 | Variable | Type de données | Description |
-|------------------|------------------|-------------------------------------|
+|------------------|------------------|------------------------------------|
 | `ID` | Integer | Identifiant unique du projet |
 | `name` | String | Nom du projet |
 | `category` | String | Catégorie spécifique du projet |
@@ -1541,6 +1541,7 @@ data_kickstarter_sentiment <- data_kickstarter %>%
   )
 
 ```
+
 ```{r}
 
 # Étape 1 : Discrétiser les scores en classes (bins)
@@ -1569,6 +1570,7 @@ data_pyramid <- data_pyramid %>%
     sentiment_bin_upper = as_factor(sentiment_bin_upper)
   )
 ```
+
 ```{r}
 # 🔍 Étape intermédiaire : Retirer les bins proches de zéro
 # Convertir en facteur ordonné selon la valeur numérique
@@ -1590,7 +1592,9 @@ ggplot(data_pyramid, aes(x = n, y = sentiment_bin_upper, fill = state)) +
   ) +
   theme_minimal()
 ```
+
 Une grand majorité des projets n'ont pas de titre avec une valeur émotionelle , pour y voir plus clair nous alons les retirer du graphique.
+
 ```{r}
 # 🔍 Étape intermédiaire : Retirer les bins proches de zéro
 # Convertir en facteur ordonné selon la valeur numérique
@@ -1609,7 +1613,9 @@ ggplot(data_pyramid, aes(x = n, y = sentiment_bin_upper, fill = state)) +
   ) +
   theme_minimal()
 ```
+
 Ce graphique illustre la corrélation entre le sentiment des titres des projets Kickstarter (mesuré par la méthode Syuzhet, de -2 à 2) et leur succès, distinguant les projets "Échoués" (rouge) et "Réussis" (vert).
+
 ```{r}
 # Étape 1 : Préparation des données : tableau avec nb de projets par bin et par état
 data_success_rate <- data_pyramid %>%
@@ -1632,6 +1638,7 @@ ggplot(data_success_rate, aes(x = sentiment_bin_upper, y = success_rate)) +
   ) +
   theme_minimal()
 ```
+
 On observe que la plupart des projets, qu'ils aient réussi ou échoué, ont un score de sentiment proche de 0 (neutre), avec un pic marqué à cette valeur. Cette analyse suggère que le sentiment du titre n'influence que marginalement le succès d'un projet, confirmant que d'autres facteurs pourraient jouer un rôle plus déterminant dans les résultats des campagnes Kickstarter.
 
 ### Dans quelle mesure le montant de l'objectif influence-t-il la probabilité de succès d'une campagne ?
@@ -1659,7 +1666,7 @@ Il y a plus de chance de réussir un projet avec une somme inférieur a 5 000 es
 library(dplyr)
 
 # On crée les catégories d'objectif
-data_kickstarter_successful2 <- data_kickstarter_successful %>%
+data_kickstarter_successful2 <- data_kickstarter %>%
   mutate(goal_binned = cut(goal, breaks = c(0, 5000, 10000, 50000, 100000, Inf),
                            labels = c("0-5k", "5k-10k", "10k-50k", "50k-100k", "100k+")))
 
