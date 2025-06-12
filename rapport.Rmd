@@ -12,18 +12,18 @@ L'objectif de ce projet d'IF36 est d'analyser et de présenter des données issu
 
 Équipe Civizualisation :
 
--   Florian BONELLI
--   Eyvan FAURE
--   Ryan OUYED
--   Lucas SAURON
+- Florian BONELLI
+- Eyvan FAURE
+- Ryan OUYED
+- Lucas SAURON
 
 ## 📚 Sommaire
 
--   📝 Contexte des données choisis
--   📥 Téléchargement des données
--   📁 Présentation des données
--   📊 Plan d'analyse
--   🧭 Exploration des données
+- 📝 Contexte des données choisis
+- 📥 Téléchargement des données
+- 📁 Présentation des données
+- 📊 Plan d'analyse
+- 🧭 Exploration des données
 
 ## 📝 Contexte des données choisis
 
@@ -51,13 +51,13 @@ Il faut les télécharger manuellement.
 
 Suivez les étapes ci-dessous pour récupérer les fichiers nécessaires :
 
-1.  Téléchargez l'archive contenant les jeux de données.
+1. Téléchargez l'archive contenant les jeux de données.
 
     ``` bash
     curl -L -o ./data/kickstarter-projects.zip https://www.kaggle.com/api/v1/datasets/download/kemical/kickstarter-projects
     ```
 
-2.  Une fois l'archive téléchargée, extrayez les fichiers.
+2. Une fois l'archive téléchargée, extrayez les fichiers.
 
     ``` bash
     unzip ./data/kickstarter-projects.zip -d ./data
@@ -69,7 +69,7 @@ Suivez les étapes ci-dessous pour récupérer les fichiers nécessaires :
     sudo apt-get install unzip
     ```
 
-3.  (Facultatif) Après avoir extrait les fichiers, vous pouvez supprimer l'archive pour libérer de l'espace.
+3. (Facultatif) Après avoir extrait les fichiers, vous pouvez supprimer l'archive pour libérer de l'espace.
 
     ``` bash
     rm ./data/kickstarter-projects.zip
@@ -139,35 +139,35 @@ L'objectif principal de notre analyse est de comprendre les dynamiques du financ
 
 ### 🔍 Questions d'analyse
 
--   Quels sont les taux de réussite des campagnes selon les catégories ?
--   Dans quelle mesure le montant de l'objectif influence-t-il la probabilité de succès d'une campagne ?
--   Existe-t-il des périodes de l'année où les campagnes ont plus de chances de réussir ?
--   Quels sont les pays où le plus de campagnes sont créées? Parmi eux, lesquels ont les meilleurs taux de réussite?
--   L'écart entre l'objectif initial et les fonds réellement collectés varie-t-il en fonction de la catégorie ou de la devise utilisée ?
--   Le choix des mots dans le titre d'une campagne a-t-il un impact sur son succès ?
--   Comment a évolué le taux de réussite et le nombre de campagne au fil des années? Les campagnes sont elles plus ambitieuses qu'avant?
+- Quels sont les taux de réussite des campagnes selon les catégories ?
+- Dans quelle mesure le montant de l'objectif influence-t-il la probabilité de succès d'une campagne ?
+- Existe-t-il des périodes de l'année où les campagnes ont plus de chances de réussir ?
+- Quels sont les pays où le plus de campagnes sont créées? Parmi eux, lesquels ont les meilleurs taux de réussite?
+- L'écart entre l'objectif initial et les fonds réellement collectés varie-t-il en fonction de la catégorie ou de la devise utilisée ?
+- Le choix des mots dans le titre d'une campagne a-t-il un impact sur son succès ?
+- Comment a évolué le taux de réussite et le nombre de campagne au fil des années? Les campagnes sont elles plus ambitieuses qu'avant?
 
 ### 📈 Variables à comparer
 
 Pour répondre à nos questions d'analyse, nous comparerons les variables suivantes :
 
--   **Taux de réussite et d'échec par catégorie** : Identifier les catégories où les campagnes réussissent ou échouent le plus souvent.
--   **Taux de réussite et d'échec en fonction du montant de l'objectif** : Analyser l'impact du montant demandé sur le succès ou l'échec des campagnes.
--   **Taux de réussite et d'échec selon la période de lancement** : Étudier si certaines périodes de l'année influencent les chances de succès ou d'échec.
--   **Nombre de campagnes créées et leur taux de réussite selon le pays**: Comparer les pays où les campagnes sont les plus populaires pour observer des différences de nombres de campagnes et de taux de réussite selon les régions.
--   **Écart entre le montant collecté et l'objectif fixé** : Comparer les fonds espérés et les fonds réellement obtenus pour évaluer les écarts.
--   **Impact des mots-clés dans les titres sur le succès** : Identifier les mots les plus fréquents dans les titres des campagnes réussies et leur influence.
--   **Nombre de campagnes réussies montant moyen récolté par campagne réussie selon l'année** : Comparer le nombre de campagnes réussies et leur valeur moyenne chaque année pour dégager des tendances.
+- **Taux de réussite et d'échec par catégorie** : Identifier les catégories où les campagnes réussissent ou échouent le plus souvent.
+- **Taux de réussite et d'échec en fonction du montant de l'objectif** : Analyser l'impact du montant demandé sur le succès ou l'échec des campagnes.
+- **Taux de réussite et d'échec selon la période de lancement** : Étudier si certaines périodes de l'année influencent les chances de succès ou d'échec.
+- **Nombre de campagnes créées et leur taux de réussite selon le pays**: Comparer les pays où les campagnes sont les plus populaires pour observer des différences de nombres de campagnes et de taux de réussite selon les régions.
+- **Écart entre le montant collecté et l'objectif fixé** : Comparer les fonds espérés et les fonds réellement obtenus pour évaluer les écarts.
+- **Impact des mots-clés dans les titres sur le succès** : Identifier les mots les plus fréquents dans les titres des campagnes réussies et leur influence.
+- **Nombre de campagnes réussies montant moyen récolté par campagne réussie selon l'année** : Comparer le nombre de campagnes réussies et leur valeur moyenne chaque année pour dégager des tendances.
 
 Ces comparaisons nous permettront de mieux comprendre les facteurs influençant le succès des campagnes Kickstarter.
 
 ### ⚠️ Limitations et problèmes potentiels
 
--   Certains porteurs de projets peuvent fixer des objectifs volontairement bas pour maximiser leurs chances de succès ou, au contraire, volontairement élevé par manque de sérieux, ce qui pourrait biaiser les résultats de l'analyse.
+- Certains porteurs de projets peuvent fixer des objectifs volontairement bas pour maximiser leurs chances de succès ou, au contraire, volontairement élevé par manque de sérieux, ce qui pourrait biaiser les résultats de l'analyse.
 
--   Les taux de conversion en USD peuvent introduire des biais en fonction des fluctuations des taux de change et de l'inflation.
+- Les taux de conversion en USD peuvent introduire des biais en fonction des fluctuations des taux de change et de l'inflation.
 
--   Des facteurs externes, tels que les tendances économiques ou médiatiques, qui ne sont pas inclus dans les données, peuvent également influencer le succès des campagnes.
+- Des facteurs externes, tels que les tendances économiques ou médiatiques, qui ne sont pas inclus dans les données, peuvent également influencer le succès des campagnes.
 
 ## 🧭 Exploration des données
 
@@ -195,10 +195,9 @@ library(ggrepel) # Pour l'espacement des légendes sur ggplot
 library(gridExtra) # Pour afficher plusieurs graphiques côte à côte
 library(treemapify) # Pour des graphiques en treemap
 library(forcats) # Pour des les chats
-
 ```
 
-Nous chargeons les deux fichiers de données nécessaires à notre analyse :
+Nous chargeons les deux fichiers de données à notre disposition pour notre analyse :
 
 ```{r message=FALSE, warning=FALSE}
 data2016 <- read_csv("./data/ks-projects-201612.csv", show_col_types = FALSE)
@@ -215,13 +214,13 @@ Pour vérifier le nombre d'IDs uniques et les doublons dans les fichiers `ks-pro
 
 Nous comptons le nombre total d'IDs, le nombre d'IDs uniques, et calculons le nombre d'IDs en doublon en soustrayant les IDs uniques des IDs totaux.
 
-```{r}
+```{r echo=FALSE}
 cat("Nombre d'IDs uniques dans ks-projects-201612.csv :", length(unique(data2016$ID)), "\n")
 cat("Nombre d'IDs dans ks-projects-201612.csv :", length(data2016$ID), "\n")
 cat("Nombre d'IDs doublon dans ks-projects-201612.csv :", length(data2016$ID) - length(unique(data2016$ID)), "\n")
 ```
 
-```{r}
+```{r echo=FALSE}
 cat("Nombre d'IDs uniques dans ks-projects-201801.csv :", length(unique(data2018$ID)), "\n")
 cat("Nombre d'IDs dans ks-projects-201801.csv :", length(data2018$ID), "\n")
 cat("Nombre d'IDs doublon dans ks-projects-201801.csv :", length(data2018$ID) - length(unique(data2018$ID)), "\n")
@@ -238,7 +237,7 @@ cat("IDs uniquement présents dans ks-projects-201801.csv :", length(setdiff(dat
 
 On peut observer que le nombre d'id dans data2016 qui ne se trouvent pas dans data2018 est égal à 0. Autrement dit, toutes les individus du fichier data2016 se trouvent dans data2018.
 
-Pour conclure, nous pouvons donc utiliser le fichier `ks-projects-201801.csv` seulement sans utiliser le fichier ks-projects-201612.csv pour éviter les doublons et avoir plus de données.
+Nous décidons donc d'utiliser uniquement le fichier `ks-projects-201801.csv`, car il contient davantage de données et contient déjà les données présentes dans le fichier `ks-projects-201612.csv`.
 
 ```{r}
 data_kickstarter <- data2018
@@ -284,21 +283,32 @@ data_kickstarter <- data_kickstarter %>%
   filter(year(launched) >= 2009)
 ```
 
+#### Ajout du jour et du mois de la date de lancement et de la deadline
+
+```{r}
+data_kickstarter <- data_kickstarter %>%
+  mutate(
+    launch_day = day(launched),
+    launch_month = month(launched, label = TRUE, abbr = FALSE),
+    launch_year = as.character(year(launched)),
+    deadline_day = day(deadline),
+    deadline_month = month(deadline, label = TRUE, abbr = FALSE),
+    deadline_year = as.character(year(deadline)),
+    duree_campagne = as.numeric(as.Date(deadline) - as.Date(launched)),
+  )
+```
+
 #### Conversion des codes pays en noms de pays anglais
 
 ```{r}
-# Conversion des codes pays en noms de pays anglais
-data_kickstarter <- data_kickstarter %>%
-  mutate(country = countrycode(country, origin = "iso2c", destination = "country.name.en"))
-
-# Modifications des noms de pays pour les rendre compatible avec la carte du monde
 data_kickstarter <- data_kickstarter %>%
   mutate(
+    country = countrycode(country, origin = "iso2c", destination = "country.name.en"),
     country = case_when(
       country == "Hong Kong SAR China" ~ "Hong Kong",
       country == "United States" ~ "USA",
       TRUE ~ country
-    )
+    ),
   )
 ```
 
@@ -414,7 +424,11 @@ Chaque financeur est appelé un `backer`. Le dataset associe à chaque projet la
 
 ```{r}
 data_kickstarter %>%
-  ggplot(aes(x = backers)) +
+  ggplot(
+    aes(
+      x = backers,
+    )
+  ) +
   geom_histogram(
     binwidth = 500,
     fill = "steelblue",
@@ -446,11 +460,10 @@ Dans les visualisations suivantes, nous allons voir la quantité de projets lanc
 
 ```{r}
 data_kickstarter %>%
-  mutate(year_launched = year(launched)) %>%
-  count(year_launched, name = "total") %>%
+  count(launch_year, name = "total") %>%
   ggplot(
     aes(
-      x = as.factor(year_launched),
+      x = as.factor(launch_year),
       y = total,
       label = total,
     )
@@ -480,17 +493,10 @@ data_kickstarter %>%
 ```
 
 ```{r}
-# Calcul et visualisation de la durée des campagnes avec durée < 5000 jours
-data_kickstarter <- data_kickstarter %>%
-  mutate(
-    duree_campagne = as.numeric(as.Date(deadline) - as.Date(launched))
-  ) %>%
-  filter(duree_campagne < 5000)
-
 data_kickstarter %>%
   ggplot(
     aes(
-      x = duree_campagne
+      x = duree_campagne,
     )
   ) +
   geom_histogram(
@@ -501,7 +507,7 @@ data_kickstarter %>%
     breaks = seq(0, 100, 5),
   ) +
   scale_y_continuous(
-    labels = label_comma(big.mark = " "),
+    labels = label_number(scale_cut = cut_short_scale()),
   ) +
   labs(
     title = "Distribution de la durée des campagnes Kickstarter",
@@ -607,6 +613,7 @@ main_category_data <- data_kickstarter %>%
     total = n(),
     successful = sum(state == "successful"),
     success_rate = successful / total,
+    .groups = "drop",
   ) %>%
   arrange(desc(success_rate))
 
@@ -615,7 +622,8 @@ category_data <- data_kickstarter %>%
   summarise(
     total = n(),
     successful = sum(state == "successful"),
-    success_rate = successful / total
+    success_rate = successful / total,
+    .groups = "drop",
   ) %>%
   arrange(main_category, desc(success_rate))
 ```
@@ -640,7 +648,7 @@ main_category_data %>%
     labels = percent_format(),
   ) +
   labs(
-    title = "Taux de réussite des campagnes Kickstarter par catégorie entre 2009 et 2018",
+    title = "Répartition des campagnes Kickstarter par catégorie et leur taux de réussite",
     fill = "Taux de réussite",
   ) +
   theme(
@@ -679,7 +687,7 @@ category_data %>%
     labels = percent_format(),
   ) +
   labs(
-    title = "Taux de réussite des campagnes Kickstarter par catégorie entre 2009 et 2018",
+    title = "Répartition des campagnes Kickstarter par sous-catégorie et leur taux de réussite",
     fill = "Taux de réussite",
   ) +
   theme(
@@ -729,7 +737,7 @@ Cela peut expliquer en partie les différences de taux de réussite : les catég
 Enfin, analysons la répartition des montants demandés dans chaque catégorie possible de projets. Cela nous permettra de vérifier si certaines catégories ont des budgets aux des montants plus élevés ou plus faibles.
 
 ```{r}
-data_kickstarter <- data_kickstarter %>%
+data_kickstarter %>%
   mutate(
     goal_category = case_when(
       goal < 1000 ~ "< 1k",
@@ -738,9 +746,7 @@ data_kickstarter <- data_kickstarter %>%
       goal < 100000 ~ "50k - 100k",
       TRUE ~ "> 100k"
     )
-  )
-
-normalized_data <- data_kickstarter %>%
+  ) %>%
   group_by(main_category) %>%
   mutate(total_projects = n()) %>%
   ungroup() %>%
@@ -751,11 +757,8 @@ normalized_data <- data_kickstarter %>%
     normalized_count = (project_count / total_projects),
     .groups = "drop"
   ) %>%
-  ungroup()
-
-normalized_data$goal_category <- factor(normalized_data$goal_category, levels = c("< 1k", "1k - 10k", "10k - 50k", "50k - 100k", "> 100k"))
-
-normalized_data %>%
+  ungroup() %>%
+  mutate(goal_category = factor(goal_category, levels = c("< 1k", "1k - 10k", "10k - 50k", "50k - 100k", "> 100k"))) %>%
   ggplot(
     aes(
       x = reorder(main_category, total_projects),
@@ -809,11 +812,11 @@ data_kickstarter %>%
     )
   ) +
   geom_bar(
-    fill = "forestgreen",
+    fill = "steelblue",
   ) +
   scale_y_log10(
     breaks = c(10, 100, 1000, 10000, 30000, 100000, 300000),
-    labels = label_comma(big.mark = " "),
+    labels = label_number(scale_cut = cut_short_scale()),
   ) +
   labs(
     title = "Nombre de projets Kickstarter par pays",
@@ -827,13 +830,9 @@ data_kickstarter %>%
 
 ```{r}
 # Création d'un dataframe avec le nombre total de projets par pays
-country_counts <- data_kickstarter %>%
+data_kickstarter %>%
   count(country, name = "projects") %>%
-  as_tibble()
-```
-
-```{r}
-country_counts %>%
+  as_tibble() %>%
   ggplot(
     aes(
       area = projects,
@@ -841,7 +840,9 @@ country_counts %>%
       label = country,
     )
   ) +
-  geom_treemap(show.legend = FALSE) +
+  geom_treemap(
+    show.legend = FALSE,
+  ) +
   geom_treemap_text(
     place = "center",
     color = "white",
@@ -855,15 +856,16 @@ country_counts %>%
 ```
 
 ```{r}
-# Importation de la carte du monde
+# Préparation de la visualisation de la carte du monde
 mapdata <- map_data("world") %>%
   rename(country = region)
 
-# Fusion des données des projets avec la carte du monde
-mapdata_projects <- left_join(mapdata, country_counts, by = "country")
-
 # Génération de la visualisation de la carte du monde
-mapdata_projects %>%
+mapdata_projects <- left_join(
+  mapdata,
+  data_kickstarter %>% count(country, name = "projects"),
+  by = "country"
+) %>%
   ggplot(
     aes(
       x = long,
@@ -878,8 +880,9 @@ mapdata_projects %>%
     color = "grey60",
     linewidth = 0.2,
   ) +
-  scale_fill_viridis_c(
-    option = "viridis",
+  scale_fill_gradient(
+    low = "lightblue",
+    high = "steelblue",
     na.value = "lightgrey",
     trans = "log10",
     breaks = c(1, 10, 100, 1000, 10000, 100000),
@@ -910,19 +913,17 @@ On remarque ensuite une proéminence des pays anglo-saxons dans les pays dont le
 On peut lier cela au fait que Kickstarter a été lancé progressivement dans le monde. Pour avoir une vision qui reflète mieux la popularité de Kickstarter, on pourrait comparer les quantités de projets selon le temps dans un prochain livrable. On peut également expliquer cela par le fait que, dans de nombreux pays, une offre plus locale et adaptée a eu le temps de se développer, avant l'arrivée de Kickstarter ou en parallèle.
 
 ```{r}
-# Calcul du cumul des projets par pays
-data_kickstarter_by_country <- data_kickstarter %>%
-  group_by(country) %>%
-  arrange(launched) %>%
-  mutate(cumulative_count = row_number())
-
 # Sélection des 10 pays avec le plus de projets
 top_ten_countries <- data_kickstarter %>%
   count(country, sort = TRUE) %>%
   slice_head(n = 10) %>%
   pull(country)
 
-data_kickstarter_top_ten_countries <- data_kickstarter_by_country %>%
+# Calcul du cumul des projets par pays
+data_kickstarter_top_ten_countries <- data_kickstarter %>%
+  group_by(country) %>%
+  arrange(launched) %>%
+  mutate(cumulative_count = row_number()) %>%
   filter(country %in% top_ten_countries)
 
 # Extraction du point maximal pour chaque pays (pour annotation)
@@ -951,11 +952,13 @@ ggplot(data_kickstarter_top_ten_countries, aes(
     arrow = arrow(length = unit(0.015, "npc"))
   ) +
   scale_x_date(
-    limits = c(as.Date("2010-01-01"), as.Date("2018-12-31")),
+    limits = c(as.Date("2009-01-01"), as.Date("2018-12-31")),
     date_breaks = "1 year",
     date_labels = "%Y"
   ) +
-  scale_y_continuous(labels = label_comma(big.mark = " ")) +
+  scale_y_continuous(
+    labels = label_number(scale_cut = cut_short_scale()),
+  ) +
   labs(
     title = "Croissance cumulée du nombre de projets Kickstarter (Top 10 pays)",
     x = "Date de lancement",
@@ -1008,7 +1011,7 @@ data_kickstarter_top_ten_countries_no_US %>%
     expand = expansion(mult = 0.05)
   ) +
   scale_y_continuous(
-    labels = label_comma(big.mark = " "),
+    labels = label_number(scale_cut = cut_short_scale()),
   ) +
   labs(
     title = "Croissance cumulée du nombre de projets Kickstarter (Top 10 pays hors USA)",
@@ -1094,9 +1097,10 @@ success_rates_by_country %>%
 ```
 
 ```{r}
-mapdata_success <- left_join(mapdata, success_rates_by_country, by = "country")
-
-mapdata_success %>%
+mapdata %>% left_join(
+  success_rates_by_country,
+  by = "country"
+) %>%
   ggplot(
     aes(
       x = long,
@@ -1111,9 +1115,11 @@ mapdata_success %>%
     color = "grey60",
     linewidth = 0.2,
   ) +
-  scale_fill_viridis_c(
-    option = "viridis",
+  scale_fill_gradient(
+    low = "lightgreen",
+    high = "darkgreen",
     na.value = "lightgrey",
+    labels = percent_format(),
   ) +
   labs(
     title = "Taux de réussite des campagnes Kickstarter par pays",
@@ -1126,17 +1132,15 @@ mapdata_success %>%
     axis.ticks = element_blank(),
     panel.grid = element_blank(),
     legend.position = "bottom",
-    legend.key.width = unit(2, "cm"),
+    legend.key.width = unit(1, "cm"),
   )
 ```
 
 On constate que les taux de réussite varient beaucoup selon le pays, de 37% à 15%. On constate que les deux pays avec le plus haut taux de réussite sont aussi ceux qui ont le plus de projets (mais ce n'est pas le cas au delà des deux premiers). Dans la suite de notre rapport, nous pourrions évaluer s'il existe une corrélation entre le nombre de projets lancés dans chaque pays et leur taux de réussite.
 
 ```{r}
-success_rates_by_country_no_us <- success_rates_by_country %>%
-  filter(country != "USA")
-
-success_rates_by_country_no_us %>%
+success_rates_by_country %>%
+  filter(country != "USA") %>%
   ggplot(
     aes(
       x = total,
@@ -1150,6 +1154,18 @@ success_rates_by_country_no_us %>%
     max.overlaps = Inf,
     size = 2,
   ) +
+  scale_x_continuous(
+    labels = label_number(scale_cut = cut_short_scale()),
+  ) +
+  scale_y_continuous(
+    labels = percent_format(),
+  ) +
+  labs(
+    title = "Corrélation entre le nombre de projets et le taux de réussite (hors USA)",
+    x = "Nombre total de projets",
+    y = "Taux de réussite",
+    caption = "Les points représentent les pays hors USA",
+  ) +
   theme_minimal()
 ```
 
@@ -1158,32 +1174,34 @@ Il n'y a pas de lien clair entre la quantité de projet et le taux de réussite,
 ### Existe-t-il des périodes de l'année où les campagnes ont plus de chances de réussir ?
 
 ```{r}
-# Ajout du mois et du jour de la launched
-data_kickstarter2 <- data_kickstarter %>%
-  mutate(
-    mois = month(launched, label = TRUE, abbr = FALSE),
-    jour = day(launched)
-  )
-
-# Calcul du taux de réussite par jour
-daily_success_rate <- data_kickstarter2 %>%
-  group_by(mois, jour) %>%
+data_kickstarter %>%
+  group_by(launch_month, launch_day) %>%
   summarise(
     total = n(),
     success = sum(state == "successful"),
     success_rate = success / total,
-    .groups = "drop"
-  )
-
-# Visualisation : boxplot
-ggplot(daily_success_rate, aes(x = mois, y = success_rate)) +
-  geom_boxplot(fill = "skyblue", color = "darkblue") +
+    .groups = "drop",
+  ) %>%
+  ggplot(
+    aes(
+      x = launch_month,
+      y = success_rate,
+    )
+  ) +
+  geom_boxplot(
+    fill = "skyblue",
+    color = "darkblue",
+  ) +
+  scale_y_continuous(
+    labels = percent_format(),
+  ) +
   labs(
     title = "Distribution quotidienne du taux de réussite par mois",
     x = "Mois",
-    y = "Taux de réussite journalier"
+    y = "Taux de réussite journalier",
   ) +
-  theme_minimal()
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 30))
 ```
 
 Ce graphique illustre le taux de réussite mensuel des campagnes Kickstarter selon la date de lancement. On observe que ce taux fluctue dans une plage relativement étroite, comprise entre 0,29 et 0,38. Bien que les taux de réussite semblent similaires, des tendances notables se dégagent, qui peuvent être expliquées par des facteurs contextuels.
@@ -1195,32 +1213,29 @@ Par ailleurs, une tendance saisonnière apparaît durant l'été, période de va
 On peut se demander si la corrélation se poursuit au niveau de la cloture des campagnes ?
 
 ```{r}
-# Ajout du mois et du jour de la deadline
-data_kickstarter2 <- data_kickstarter %>%
-  mutate(
-    mois = month(deadline, label = TRUE, abbr = FALSE),
-    jour = day(deadline)
-  )
-
-# Calcul du taux de réussite par jour
-daily_success_rate <- data_kickstarter2 %>%
-  group_by(mois, jour) %>%
+data_kickstarter %>%
+  group_by(deadline_month, deadline_day) %>%
   summarise(
     total = n(),
     success = sum(state == "successful"),
     success_rate = success / total,
-    .groups = "drop"
-  )
-
-# Visualisation : boxplot
-ggplot(daily_success_rate, aes(x = mois, y = success_rate)) +
-  geom_boxplot(fill = "skyblue", color = "darkblue") +
+    .groups = "drop",
+  ) %>%
+  ggplot(aes(x = deadline_month, y = success_rate)) +
+  geom_boxplot(
+    fill = "skyblue",
+    color = "darkblue",
+  ) +
+  scale_y_continuous(
+    labels = percent_format(),
+  ) +
   labs(
     title = "Distribution quotidienne du taux de réussite par mois",
     x = "Mois",
-    y = "Taux de réussite journalier"
+    y = "Taux de réussite journalier",
   ) +
-  theme_minimal()
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 30))
 ```
 
 Ce graphique illustre le taux de réussite mensuel des campagnes Kickstarter en fonction de leur date de clôture. On observe que les taux sont similaires à ceux basés sur la date de lancement, mais décalés d'un mois.
@@ -1228,78 +1243,88 @@ Ce graphique illustre le taux de réussite mensuel des campagnes Kickstarter en 
 Pour vérifier si cela est possible, il faut qu'on observe la durée des campagnes ?
 
 ```{r}
-library(dplyr)
-library(ggplot2)
-
-# Préparation des données
-data_kickstarter <- data_kickstarter %>%
-  mutate(
-    duree_campagne = as.Date(deadline) - as.Date(launched),
-    annee_lancement = format(as.Date(launched), "%Y")  # extraire l'année
-  ) %>%
-  filter(duree_campagne < 5000)
-
 # Trouver la dernière année
-derniere_annee <- max(data_kickstarter$annee_lancement, na.rm = TRUE)
+derniere_annee <- max(data_kickstarter$launch_year, na.rm = TRUE)
 
 # Calcul de la moyenne uniquement pour la dernière année
 moyenne_duree_derniere_annee <- data_kickstarter %>%
-  filter(annee_lancement == derniere_annee) %>%
+  filter(launch_year == derniere_annee) %>%
   summarise(moyenne = mean(duree_campagne, na.rm = TRUE)) %>%
   pull(moyenne)
 
-# Visualisation
-ggplot(data_kickstarter, aes(x = annee_lancement, y = duree_campagne)) +
-  geom_boxplot(fill = "skyblue", color = "darkblue") +
-  geom_hline(yintercept = moyenne_duree_derniere_annee, linetype = "dashed", color = "red") +
+data_kickstarter %>%
+  ggplot(
+    aes(
+      x = launch_year,
+      y = duree_campagne,
+    )
+  ) +
+  geom_boxplot(
+    fill = "skyblue",
+    color = "darkblue",
+  ) +
+  geom_hline(
+    yintercept = moyenne_duree_derniere_annee,
+    linetype = "dashed",
+    color = "red",
+  ) +
+  annotate(
+    geom = "text",
+    x = derniere_annee,
+    y = moyenne_duree_derniere_annee + 50,
+    label = paste("Moyenne en", derniere_annee, "=", round(moyenne_duree_derniere_annee, 1), "jours"),
+    color = "red",
+    hjust = 1,
+    size = 4,
+    fontface = "italic",
+  ) +
   labs(
-    title = "Durée des campagnes Kickstarter par année",
+    title = "Évolution de la durée des campagnes Kickstarter par année",
     x = "Année de lancement",
-    y = "Durée de la campagne (jours)"
+    y = "Durée de la campagne (jours)",
   ) +
   theme_minimal() +
-  annotate(
-    "text",
-    x = derniere_annee, y = moyenne_duree_derniere_annee + 100,
-    label = paste("Moyenne en", derniere_annee, "=", round(moyenne_duree_derniere_annee, 1), "jours"),
-    color = "red", hjust = 1
+  theme(
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(face = "bold"),
   )
-
 ```
 
 Ce graphique représente la durée des campagnes sur Kickstarter, exprimée en jours. On peut observer que la durée des campagnes diminue depuis 2009 pour passer d'environ 2 mois a 1 mois en moyenne. Cette observation confirme l'hypothèse précédemment formulée : le décalage d'un mois observé entre les taux de réussite selon que l'on se base sur la date de lancement ou sur la date de clôture s'explique par la durée moyenne des campagnes. Ainsi, d'après nos analyses, les périodes les plus favorables au succès d'un projet se situent entre février et juin, ainsi qu'entre septembre et novembre.
 
-### Quelle est la durée idéale d'une campagne?
+### Quelle est la durée idéale d'une campagne ?
 
 Comme nous l'avons vu précédemment, la majorité des campagnes durent 30 jours. C'est la valeur par défaut de la durée dans l'interface de création de campagne, où il est aussi affirmé que les campagnes de moins de 30 jours ont plus de chances de réussir. Est-ce vrai?
 
 ```{r}
-# Calcul de la durée de la campagne et filtrage des campagnes avec durée < 5000 jours
-data_kickstarter <- data_kickstarter %>%
-  mutate(
-    duree_campagne = as.Date(deadline) - as.Date(launched)
-  ) %>%
-  filter(duree_campagne < 5000)
-
-success_rates_by_length <- data_kickstarter %>%
+data_kickstarter %>%
   group_by(duree_campagne) %>%
   summarise(
     total = n(),
     successful = sum(state == "successful"),
-    success_rate = successful / total
+    success_rate = successful / total,
   ) %>%
-  arrange(desc(success_rate))
-
-success_rates_by_length %>% ggplot(aes(x=duree_campagne,y=success_rate))+
-  geom_line()+
-  geom_smooth()+
-  scale_x_continuous(breaks = seq(0, 100, 5))+
+  arrange(desc(success_rate)) %>%
+  ggplot(
+    aes(
+      x = duree_campagne,
+      y = success_rate,
+    )
+  ) +
+  geom_line() +
+  geom_smooth() +
+  scale_x_continuous(
+    breaks = seq(0, 100, 10),
+  ) +
+  scale_y_continuous(
+    labels = percent_format(),
+  ) +
   theme_minimal()
 ```
 
-On peut observer qu'une campagne inférieur a 40 jours à un taux de réussite de 40% à 50% alors qu'ensuite, le taux chute jusqu’à 30%. On en déduis donc qu'une durée idéale de campagne est de 20 à 25 jours avec un taux de réussite à 50%.
+On peut observer qu'une campagne inférieur a 40 jours à un taux de réussite de 40% à 50% alors qu'ensuite, le taux chute jusqu'à 30%. On en déduis donc qu'une durée idéale de campagne est de 20 à 25 jours avec un taux de réussite à 50%.
 
-### Comment les montants demandés et récoltés ont-ils évolué au cours du temps?
+### Comment les montants demandés et récoltés ont-ils évolué au cours du temps ?
 
 #### Evolution brute des montants
 
@@ -1308,20 +1333,57 @@ Dans cette partie, nous nous intérresserons à l'évolution des montants demand
 Tout d'abord, nous allons représenter le montant moyen demandé selon l'année
 
 ```{r}
-data_kickstarter_par_an <- data_kickstarter %>%
-  mutate(launch_year=year(launched)) %>%
+data_kickstarter %>%
+  mutate(
+    launch_year = year(launched)
+  ) %>%
   group_by(launch_year) %>%
-  summarise(mean_goal = mean(usd_goal_real),median_goal = median(usd_goal_real),mean_pledge = mean(usd_pledged_real), median_pledge = median(usd_pledged_real), na.rm = TRUE)
-
-data_kickstarter_par_an <- data_kickstarter_par_an %>% gather("median_goal","median_pledge",key="type_stat",value="value")
-
-#data_kickstarter_par_an <- data_kickstarter_par_an %>% gather("mean_goal","median_goal","mean_pledge","median_pledge",key="type_stat",value="value")
-
-data_kickstarter_par_an %>% ggplot(aes(x=launch_year, y=value, color = type_stat))+
-    geom_line(linewidth=1.3)+
-    geom_point()+
-    scale_x_continuous(limits = c(2009,2017),breaks = seq(2009,2017, 1))+
- theme_minimal()
+  summarise(
+    mean_goal = mean(usd_goal_real, na.rm = TRUE),
+    median_goal = median(usd_goal_real, na.rm = TRUE),
+    mean_pledge = mean(usd_pledged_real, na.rm = TRUE),
+    median_pledge = median(usd_pledged_real, na.rm = TRUE),
+  ) %>%
+  gather("type_stat", "value", -launch_year,) %>%
+  ggplot(
+    aes(
+      x = launch_year,
+      y = value,
+      color = type_stat,
+    )
+  ) +
+  geom_line(
+    linewidth = 1.3,
+  ) +
+  geom_point() +
+  scale_x_continuous(
+    limits = c(2009, 2017),
+    breaks = seq(2009, 2017, 1),
+  ) +
+  scale_y_continuous(
+    labels = label_number(scale_cut = cut_short_scale()),
+  ) +
+  scale_color_manual(
+    values = c(
+      "mean_goal" = "blue",
+      "median_goal" = "darkblue",
+      "mean_pledge" = "green",
+      "median_pledge" = "darkgreen"
+    ),
+    labels = c(
+      "mean_goal" = "Montant moyen demandé",
+      "median_goal" = "Montant médian demandé",
+      "mean_pledge" = "Montant moyen récolté",
+      "median_pledge" = "Montant médian récolté"
+    )
+  ) +
+  labs(
+    title = "Évolution des montants demandés et récoltés par année",
+    x = "Année de lancement",
+    y = "Montant (USD)",
+    color = "Statistiques",
+  ) +
+  theme_minimal()
 ```
 
 On voit que l'objectif médian devient plus ambitieux, alors que les montants récoltés ont eux tendance à baisser depuis 2013.
@@ -1331,19 +1393,42 @@ On voit que l'objectif médian devient plus ambitieux, alors que les montants r�
 Nous allons étudier l'évolution des pourcentages de complétion des projets réussis
 
 ```{r}
-data_kickstarter_reussis <- data_kickstarter %>%
-  filter(state=="successful") %>%
-  mutate(completion_percentage = usd_pledged_real/usd_goal_real,launch_year=as.character(year(launched)))
+data_kickstarter %>%
+  filter(state == "successful") %>%
+  mutate(
+    completion_percentage = usd_pledged_real / usd_goal_real,
+  ) %>%
+  ggplot(
+    aes(
+      x = launch_year,
+      y = completion_percentage,
+    )
+  ) +
+  geom_boxplot() +
+  scale_y_continuous(
+    labels = percent_format(),
+    limits = c(0.75, 2),
+  ) +
+  theme_minimal()
+```
 
-
-
-data_kickstarter_reussis %>% ggplot(aes(x=launch_year,y=completion_percentage)) +
-  geom_boxplot()+
-  scale_y_continuous(labels = percent_format(),limits = c(0,2))
-
-data_kickstarter_reussis %>% ggplot(aes(x=launch_year,y=completion_percentage)) +
-  geom_boxplot()+
-  scale_y_continuous(labels = percent_format())
+```{r}
+data_kickstarter %>%
+  filter(state == "successful") %>%
+  mutate(
+    completion_percentage = usd_pledged_real / usd_goal_real,
+  ) %>%
+  ggplot(
+    aes(
+      x = launch_year,
+      y = completion_percentage,
+    )
+  ) +
+  geom_boxplot() +
+  scale_y_continuous(
+    labels = percent_format()
+  ) +
+  theme_minimal()
 ```
 
 On remarque que l'immense majorité des projets réussis dépassent de peu leur objectif, et ce peu importe l'époque.
@@ -1355,21 +1440,31 @@ On remarque cependant qu'au fil des années de plus en plus de projets pulvéris
 #### La longueur du titre influence-t-elle le taux de succès d'une campagne ?
 
 ```{r}
-data_kickstarter <- data_kickstarter %>%
-  mutate(title_length_words = nchar(name))
-
-# Calculer la moyenne de la longueur des titres par état
-mean_title_length <- data_kickstarter %>%
+data_kickstarter %>%
+  mutate(
+    title_length_words = nchar(name)
+  ) %>%
   group_by(state) %>%
-  summarise(mean_length = mean(title_length_words, na.rm = TRUE))
-
-# Tracer un graphique à barres
-ggplot(mean_title_length, aes(x = state, y = mean_length, fill = state)) +
+  summarise(
+    mean_length = mean(title_length_words, na.rm = TRUE)
+  ) %>%
+  ggplot(
+    aes(
+      x = state,
+      y = mean_length,
+      fill = state,
+    )
+  ) +
   geom_col() +
+  geom_text(
+    aes(label = comma(mean_length, big.mark = " ")),
+    vjust = -0.3,
+    size = 3,
+  ) +
   labs(
-    title = "Moyenne de la longueur des titres par succès/échec",
+    title = "Comparaison du nombre moyen de mots dans les titres selon l'état du projet",
     x = "État du projet",
-    y = "Longueur moyenne du titre (nombre de mots)"
+    y = "Nombre moyen de mots",
   ) +
   theme_minimal()
 ```
@@ -1379,30 +1474,32 @@ D'après ce graphique nous pouvons observer qu'il semble y avoir une relation en
 #### Certains mots dans le titre sont-ils plus fréquents dans les campagnes réussies que dans les campagnes échouées ?
 
 ```{r}
-data_kickstarter_successful <- data_kickstarter %>%
-  filter(state == "successful")
-
-words <- data_kickstarter_successful %>%
-  select(name) %>%
-  unnest_tokens(word, name)
-
 # Enlever les mots très courants ("stop words") si besoin
 data("stop_words") # du package tidytext
-words_clean <- words %>%
-  anti_join(stop_words, by = "word")
+```
 
-# Compter les mots les plus fréquents
-word_counts <- words_clean %>%
-  count(word, sort = TRUE)
-top_words <- word_counts %>%
-  slice_max(n, n = 20)
-
-ggplot(top_words, aes(x = reorder(word, n), y = n)) +
-  geom_col(fill = "steelblue") +
+```{r}
+data_kickstarter %>%
+  filter(state == "successful") %>%
+  select(name) %>%
+  unnest_tokens(word, name) %>%
+  anti_join(stop_words, by = "word") %>%
+  count(word, sort = TRUE) %>%
+  slice_max(n, n = 20) %>%
+  ggplot(
+    aes(
+      x = reorder(word, n),
+      y = n,
+    )
+  ) +
+  geom_col(
+    fill = "forestgreen",
+  ) +
   coord_flip() +
   labs(
     title = "Mots les plus fréquents dans les projets Kickstarter réussis",
-    x = "Mot", y = "Fréquence"
+    x = "Mot",
+    y = "Fréquence",
   ) +
   theme_minimal()
 ```
@@ -1410,43 +1507,94 @@ ggplot(top_words, aes(x = reorder(word, n), y = n)) +
 Qu'en est il pour les campagnes non réussie ?
 
 ```{r}
-data_kickstarter_failed <- data_kickstarter %>%
-  filter(state == "failed")
-
-words <- data_kickstarter_failed %>%
+data_kickstarter %>%
+  filter(state == "failed") %>%
   select(name) %>%
-  unnest_tokens(word, name)
-
-# Enlever les mots très courants ("stop words") si besoin
-data("stop_words") # du package tidytext
-words_clean <- words %>%
-  anti_join(stop_words, by = "word")
-
-# Compter les mots les plus fréquents
-word_counts <- words_clean %>%
-  count(word, sort = TRUE)
-top_words <- word_counts %>%
-  slice_max(n, n = 20)
-
-ggplot(top_words, aes(x = reorder(word, n), y = n)) +
-  geom_col(fill = "steelblue") +
+  unnest_tokens(word, name) %>%
+  anti_join(stop_words, by = "word") %>%
+  count(word, sort = TRUE) %>%
+  slice_max(n, n = 20) %>%
+  ggplot(
+    aes(
+      x = reorder(word, n),
+      y = n,
+    )
+  ) +
+  geom_col(
+    fill = "darkred",
+  ) +
   coord_flip() +
   labs(
     title = "Mots les plus fréquents dans les projets Kickstarter qui ont échoué",
-    x = "Mot", y = "Fréquence"
+    x = "Mot",
+    y = "Fréquence",
   ) +
   theme_minimal()
 ```
 
-On s'aperçoit rapidement que les mots les plus utilisés n'ont pas de lien avec la réussite ou non d'un projet mais plutôt avec les catégories les plus représentés, biaisant ainsi l'analyse des mots fréquents dans les titres. Pour corriger ce biais, nous allons normaliser la fréquence des mots en tenant compte de la proportion de chaque catégorie, en multipliant la fréquence brute d'un mot par l'inverse de la proportion de sa catégorie.
+On s'aperçoit rapidement que les mots les plus utilisés n'ont pas de lien avec la réussite ou non d'un projet mais plutôt avec les catégories les plus représentés, biaisant ainsi l'analyse des mots fréquents dans les titres.
+
+Pour corriger ce biais, nous allons normaliser la fréquence des mots en tenant compte de la proportion de chaque catégorie, en multipliant la fréquence brute d'un mot par l'inverse de la proportion de sa catégorie.
 
 ```{r}
-words <- data_kickstarter_successful %>%
+words <- data_kickstarter %>%
+  filter(state == "successful") %>%
   select(name, main_category) %>%
   unnest_tokens(word, name)
 
-# Enlever les mots très courants ("stop words") si besoin
-data("stop_words") # du package tidytext
+words_clean <- words %>%
+  anti_join(stop_words, by = "word")
+
+# Calculer la proportion de chaque catégorie
+category_proportions <- data_kickstarter %>%
+  group_by(main_category) %>%
+  summarise(category_count = n()) %>%
+  mutate(category_proportion = category_count / sum(category_count))
+
+# Compter les mots les plus fréquents par catégorie
+word_counts <- words_clean %>%
+  group_by(word, main_category) %>%
+  count() %>%
+  left_join(category_proportions, by = "main_category")
+
+# Normaliser la fréquence des mots par l'inverse de la proportion de la catégorie
+word_counts <- word_counts %>%
+  mutate(normalized_frequency = (n / category_proportion))
+
+top_words <- word_counts %>%
+  arrange(desc(normalized_frequency)) %>%
+  slice_head(n = 20)
+
+top_words <- word_counts %>%
+  ungroup() %>%
+  arrange(desc(normalized_frequency)) %>%
+  slice_head(n = 20)
+
+top_words %>%
+  ggplot(
+    aes(
+      x = reorder(word, normalized_frequency),
+      y = normalized_frequency,
+    )
+  ) +
+  geom_col(
+    fill = "forestgreen",
+  ) +
+  coord_flip() +
+  labs(
+    title = "Mots les plus fréquents dans les projets Kickstarter réussis (fréquence normalisée)",
+    x = "Mot",
+    y = "Fréquence normalisée",
+  ) +
+  theme_minimal()
+```
+
+```{r}
+words <- data_kickstarter %>%
+  filter(state == "failed") %>%
+  select(name, main_category) %>%
+  unnest_tokens(word, name)
+
 words_clean <- words %>%
   anti_join(stop_words, by = "word")
 
@@ -1474,56 +1622,21 @@ top_words <- word_counts %>%
   arrange(desc(normalized_frequency)) %>%
   slice_head(n = 20)
 
-ggplot(top_words, aes(x = reorder(word, normalized_frequency), y = normalized_frequency)) +
-  geom_col(fill = "steelblue") +
-  coord_flip() +
-  labs(
-    title = "Mots les plus fréquents dans les projets Kickstarter échoués (fréquence normalisée)",
-    x = "Mot", y = "Fréquence normalisée"
+top_words %>%
+  ggplot(
+    aes(
+      x = reorder(word, normalized_frequency),
+      y = normalized_frequency,
+    )
   ) +
-  theme_minimal()
-```
-
-```{r}
-words <- data_kickstarter_failed %>%
-  select(name, main_category) %>%
-  unnest_tokens(word, name)
-
-# Enlever les mots très courants ("stop words") si besoin
-data("stop_words") # du package tidytext
-words_clean <- words %>%
-  anti_join(stop_words, by = "word")
-
-# Calculer la proportion de chaque catégorie
-category_proportions <- data_kickstarter %>%
-  group_by(main_category) %>%
-  summarise(category_count = n()) %>%
-  mutate(category_proportion = category_count / sum(category_count))
-
-# Compter les mots les plus fréquents par catégorie
-word_counts <- words_clean %>%
-  group_by(word, main_category) %>%
-  count() %>%
-  left_join(category_proportions, by = "main_category")
-
-# Normaliser la fréquence des mots par l'inverse de la proportion de la catégorie
-word_counts <- word_counts %>%
-  mutate(normalized_frequency = (n / category_proportion))
-top_words <- word_counts %>%
-  arrange(desc(normalized_frequency)) %>%
-  slice_head(n = 20)
-
-top_words <- word_counts %>%
-  ungroup() %>%
-  arrange(desc(normalized_frequency)) %>%
-  slice_head(n = 20)
-
-ggplot(top_words, aes(x = reorder(word, normalized_frequency), y = normalized_frequency)) +
-  geom_col(fill = "steelblue") +
+  geom_col(
+    fill = "darkred",
+  ) +
   coord_flip() +
   labs(
     title = "Mots les plus fréquents dans les projets Kickstarter échoués (fréquence normalisée)",
-    x = "Mot", y = "Fréquence normalisée"
+    x = "Mot",
+    y = "Fréquence normalisée",
   ) +
   theme_minimal()
 ```
@@ -1533,22 +1646,15 @@ On voit que malgré après avoir contrebalancé l'effet de la sur-représentatio
 #### L'utilisation de mots émotionnels ou marketing dans le titre est-elle corrélée avec un meilleur taux de succès ?
 
 ```{r}
-# Calculer le score de sentiment pour chaque titre
-data_kickstarter_sentiment <- data_kickstarter %>%
-  filter(state == "successful" | state == "failed") %>%
-  mutate(
-    sentiment_score = get_sentiment(name, method = "syuzhet")
-  )
-
-```
-
-```{r}
-
-# Étape 1 : Discrétiser les scores en classes (bins)
 # Étape 1 : Discrétiser les scores en classes (bins)
 breaks <- seq(-2, 2, by = 0.1)
 
-data_binned <- data_kickstarter_sentiment %>%
+# Calculer le score de sentiment pour chaque titre
+data_binned <- data_kickstarter %>%
+  filter(state == "successful" | state == "failed") %>%
+  mutate(
+    sentiment_score = get_sentiment(name, method = "syuzhet")
+  ) %>%
   mutate(
     sentiment_bin = cut(sentiment_score, breaks = breaks, include.lowest = TRUE),
     # Extraire la borne supérieure de chaque bin
@@ -1572,23 +1678,37 @@ data_pyramid <- data_pyramid %>%
 ```
 
 ```{r}
-# 🔍 Étape intermédiaire : Retirer les bins proches de zéro
+# Étape intermédiaire : Retirer les bins proches de zéro
 # Convertir en facteur ordonné selon la valeur numérique
 data_pyramid <- data_pyramid %>%
   filter(!sentiment_bin_upper %in% c(NA)) %>%
   mutate(
     sentiment_bin_upper = fct_reorder(sentiment_bin_upper, as.numeric(as.character(sentiment_bin_upper)))
   )
+
 # Étape 4 : Création du graphique en pyramide
-ggplot(data_pyramid, aes(x = n, y = sentiment_bin_upper, fill = state)) +
-  geom_col(width = 0.9) +
-  scale_fill_manual(values = c("failed" = "red", "successful" = "green")) +
-  scale_x_continuous(labels = abs) +
+data_pyramid %>%
+  ggplot(
+    aes(
+      x = n,
+      y = sentiment_bin_upper,
+      fill = state
+    )
+  ) +
+  geom_col(
+    width = 0.9,
+  ) +
+  scale_fill_manual(
+    values = c("failed" = "red", "successful" = "green"),
+  ) +
+  scale_x_continuous(
+    labels = abs,
+  ) +
   labs(
     title = "Pyramide : Score de sentiment vs. succès du projet",
     x = "Nombre de projets",
     y = "Borne supérieure du score de sentiment",
-    fill = "État du projet"
+    fill = "État du projet",
   ) +
   theme_minimal()
 ```
@@ -1596,20 +1716,34 @@ ggplot(data_pyramid, aes(x = n, y = sentiment_bin_upper, fill = state)) +
 Une grand majorité des projets n'ont pas de titre avec une valeur émotionelle , pour y voir plus clair nous alons les retirer du graphique.
 
 ```{r}
-# 🔍 Étape intermédiaire : Retirer les bins proches de zéro
+# Étape intermédiaire : Retirer les bins proches de zéro
 # Convertir en facteur ordonné selon la valeur numérique
 data_pyramid <- data_pyramid %>%
   filter(!sentiment_bin_upper %in% c(0))
+
 # Étape 4 : Création du graphique en pyramide
-ggplot(data_pyramid, aes(x = n, y = sentiment_bin_upper, fill = state)) +
-  geom_col(width = 0.9) +
-  scale_fill_manual(values = c("failed" = "red", "successful" = "green")) +
-  scale_x_continuous(labels = abs) +
+data_pyramid %>%
+  ggplot(
+    aes(
+      x = n,
+      y = sentiment_bin_upper,
+      fill = state
+    )
+  ) +
+  geom_col(
+    width = 0.9,
+  ) +
+  scale_fill_manual(
+    values = c("failed" = "red", "successful" = "green"),
+  ) +
+  scale_x_continuous(
+    labels = abs,
+  ) +
   labs(
     title = "Pyramide : Score de sentiment vs. succès du projet",
     x = "Nombre de projets",
     y = "Borne supérieure du score de sentiment",
-    fill = "État du projet"
+    fill = "État du projet",
   ) +
   theme_minimal()
 ```
@@ -1629,12 +1763,20 @@ data_success_rate <- data_pyramid %>%
   )
 
 # Étape 2 : Graphique du pourcentage de réussite
-ggplot(data_success_rate, aes(x = sentiment_bin_upper, y = success_rate)) +
-  geom_col(fill = "blue") +
+data_success_rate %>%
+  ggplot(
+    aes(
+      x = sentiment_bin_upper,
+      y = success_rate
+    )
+  ) +
+  geom_col(
+    fill = "blue",
+  ) +
   labs(
     title = "Pourcentage de projets réussis par niveau de sentiment",
     x = "Borne supérieure du score de sentiment",
-    y = "Pourcentage de projets réussis"
+    y = "Pourcentage de projets réussis",
   ) +
   theme_minimal()
 ```
@@ -1646,46 +1788,72 @@ On observe que la plupart des projets, qu'ils aient réussi ou échoué, ont un 
 On se demande si le montant demandé lors d'une campagne influence la réussite. On peut se demander si un projet qui demande une somme importante a peu de chance de réussir et inversement si un projet qui demande un budget faible a plus de chance de réussir.
 
 ```{r}
-data_kickstarter_successful2 <- data_kickstarter_successful %>%
-  mutate(goal_binned = cut(goal, breaks = c(0, 5000, 10000, 50000, 100000, Inf),
-                           labels = c("0-5k", "5k-10k", "10k-50k", "50k-100k", "100k+")))
+data_kickstarter_successful <- data_kickstarter %>%
+  filter(state == "successful") %>%
+  mutate(
+    goal_binned = cut(
+      usd_goal_real,
+      breaks = c(0, 5000, 10000, 50000, 100000, Inf),
+      labels = c("0-5k", "5k-10k", "10k-50k", "50k-100k", "100k+"),
+    )
+  )
 
-ggplot(data_kickstarter_successful2, aes(x = goal_binned, fill = state)) +
-  geom_bar(position = "dodge") +
-  labs(title = "Répartition des campagnes réussie par objectif",
-       x = "Objectif de financement (catégorisé)",
-       y = "Nombre de campagnes") +
+data_kickstarter_successful %>%
+  ggplot(
+    aes(
+      x = goal_binned,
+      fill = state,
+    )
+  ) +
+  geom_bar(
+    position = "dodge",
+  ) +
+  labs(
+    title = "Répartition des campagnes réussie par objectif",
+    x = "Objectif de financement (catégorisé)",
+    y = "Nombre de campagnes",
+  ) +
   theme_minimal()
 ```
 
-On observe que les campagnes ayant le plus de chances de réussir sont celles dont l’objectif se situe entre 0 et 5 000. Ensuite, entre 5 000 et 50 000, le taux de réussite diminue, bien qu’un certain nombre de campagnes parviennent tout de même à atteindre leur objectif. En revanche, au-delà de 50 000, très peu de campagnes atteignent le montant souhaité. L’hypothèse formulée se vérifie donc : plus la somme demandée est faible, plus le taux de réussite est élevé, et inversement, plus le montant demandé est élevé, moins les chances de réussite sont grandes.
+On observe que les campagnes ayant le plus de chances de réussir sont celles dont l'objectif se situe entre 0 et 5 000. Ensuite, entre 5 000 et 50 000, le taux de réussite diminue, bien qu'un certain nombre de campagnes parviennent tout de même à atteindre leur objectif. En revanche, au-delà de 50 000, très peu de campagnes atteignent le montant souhaité. L'hypothèse formulée se vérifie donc : plus la somme demandée est faible, plus le taux de réussite est élevé, et inversement, plus le montant demandé est élevé, moins les chances de réussite sont grandes.
 
 Il y a plus de chance de réussir un projet avec une somme inférieur a 5 000 est du au nombre de projet qui sont plus nombreux dans ces tranches ? On va donc regarder le taux de réussite par tranche de somme.
 
 ```{r}
-library(dplyr)
-
 # On crée les catégories d'objectif
-data_kickstarter_successful2 <- data_kickstarter %>%
-  mutate(goal_binned = cut(goal, breaks = c(0, 5000, 10000, 50000, 100000, Inf),
-                           labels = c("0-5k", "5k-10k", "10k-50k", "50k-100k", "100k+")))
-
+data_kickstarter_successful <- data_kickstarter %>%
+  mutate(
+    goal_binned = cut(
+      usd_goal_real,
+      breaks = c(0, 5000, 10000, 50000, 100000, Inf),
+      labels = c("0-5k", "5k-10k", "10k-50k", "50k-100k", "100k+"),
+    )
+  )
 
 # On calcule le taux de succès par catégorie
-taux_succes <- data_kickstarter_successful2 %>%
+taux_succes <- data_kickstarter_successful %>%
   group_by(goal_binned) %>%
   summarise(
     total = n(),
     succes = sum(state == "successful"),
-    taux_succes = round((succes / total) * 100, 2)
+    taux_succes = round((succes / total) * 100, 2),
   )
 
-ggplot(taux_succes, aes(x = goal_binned, y = taux_succes)) +
-  geom_col(fill = "steelblue") +
-  labs(title = "Taux de succès des campagnes par objectif",
-       x = "Objectif de financement (catégorisé)",
-       y = "Taux de succès (%)") +
+taux_succes %>%
+  ggplot(
+    aes(
+      x = goal_binned,
+      y = taux_succes,
+    ),
+  ) +
+  geom_col(
+    fill = "steelblue",
+  ) +
+  labs(
+    title = "Taux de succès des campagnes par objectif",
+    x = "Objectif de financement (catégorisé)",
+    y = "Taux de succès (%)",
+  ) +
   theme_minimal()
-
-
 ```
