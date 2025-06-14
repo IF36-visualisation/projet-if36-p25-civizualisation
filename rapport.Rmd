@@ -314,7 +314,7 @@ data_kickstarter <- data_kickstarter %>%
 
 ### Présentation du dataset
 
-Notre dataset présente l'ensemble des projets lancés sur la plateforme Kickstarter depuis son ouverture en 2013.
+Notre dataset présente l'ensemble des projets lancés sur la plateforme Kickstarter depuis son ouverture en avril 2009 jusqu'au 2 janvier 2018.
 
 On y trouve notamment les dates de lancement des projets, leur catégorie, leur pays d'origine, les montants demandés et récoltés par chaque projet et leur état d'avancement.
 
@@ -646,6 +646,8 @@ main_category_data %>%
     limits = c(0, 1),
     breaks = seq(0, 1, 0.25),
     labels = percent_format(),
+    low = "#001900",
+    high = "#4dff4d",
   ) +
   labs(
     title = "Répartition des campagnes Kickstarter par catégorie et leur taux de réussite",
@@ -685,6 +687,8 @@ category_data %>%
     limits = c(0, 1),
     breaks = seq(0, 1, 0.25),
     labels = percent_format(),
+    low = "#001900",
+    high = "#4dff4d",
   ) +
   labs(
     title = "Répartition des campagnes Kickstarter par sous-catégorie et leur taux de réussite",
@@ -718,7 +722,7 @@ main_category_data %>%
     labels = percent_format(),
   ) +
   labs(
-    title = "Taux de réussite des campagnes Kickstarter par catégorie entre 2009 et 2018",
+    title = "Taux de réussite des campagnes Kickstarter par catégorie",
     x = "Catégorie",
     y = "Taux de réussite",
   ) +
@@ -782,7 +786,7 @@ data_kickstarter %>%
     )
   ) +
   labs(
-    title = "Répartition des projets par catégorie et montant demandé entre 2009 et 2018",
+    title = "Répartition des projets par catégorie et montant demandé",
     x = "Catégorie",
     y = "Répartition des projets",
     fill = "Montant demandé (USD)",
