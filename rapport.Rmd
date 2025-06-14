@@ -822,10 +822,10 @@ data_kickstarter %>%
   geom_bar(
     fill = "steelblue",
   ) +
-  scale_y_log10(
-    breaks = c(10, 100, 1000, 10000, 30000, 100000, 300000),
-    labels = label_number(scale_cut = cut_short_scale()),
-  ) +
+ scale_y_log10(
+  breaks = c(10, 100, 1000, 10000, 30000, 100000, 300000),
+  labels = scales::comma_format()
+) +
   labs(
     title = "Nombre de projets Kickstarter par pays",
     x = "Pays",
