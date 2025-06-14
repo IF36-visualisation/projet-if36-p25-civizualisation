@@ -12,18 +12,18 @@ L'objectif de ce projet d'IF36 est d'analyser et de présenter des données issu
 
 Équipe Civizualisation :
 
-- Florian BONELLI
-- Eyvan FAURE
-- Ryan OUYED
-- Lucas SAURON
+-   Florian BONELLI
+-   Eyvan FAURE
+-   Ryan OUYED
+-   Lucas SAURON
 
 ## 📚 Sommaire
 
-- 📝 Contexte des données choisis
-- 📥 Téléchargement des données
-- 📁 Présentation des données
-- 📊 Plan d'analyse
-- 🧭 Exploration des données
+-   📝 Contexte des données choisis
+-   📥 Téléchargement des données
+-   📁 Présentation des données
+-   📊 Plan d'analyse
+-   🧭 Exploration des données
 
 ## 📝 Contexte des données choisis
 
@@ -51,13 +51,13 @@ Il faut les télécharger manuellement.
 
 Suivez les étapes ci-dessous pour récupérer les fichiers nécessaires :
 
-1. Téléchargez l'archive contenant les jeux de données.
+1.  Téléchargez l'archive contenant les jeux de données.
 
     ``` bash
     curl -L -o ./data/kickstarter-projects.zip https://www.kaggle.com/api/v1/datasets/download/kemical/kickstarter-projects
     ```
 
-2. Une fois l'archive téléchargée, extrayez les fichiers.
+2.  Une fois l'archive téléchargée, extrayez les fichiers.
 
     ``` bash
     unzip ./data/kickstarter-projects.zip -d ./data
@@ -69,7 +69,7 @@ Suivez les étapes ci-dessous pour récupérer les fichiers nécessaires :
     sudo apt-get install unzip
     ```
 
-3. (Facultatif) Après avoir extrait les fichiers, vous pouvez supprimer l'archive pour libérer de l'espace.
+3.  (Facultatif) Après avoir extrait les fichiers, vous pouvez supprimer l'archive pour libérer de l'espace.
 
     ``` bash
     rm ./data/kickstarter-projects.zip
@@ -82,7 +82,7 @@ Suivez les étapes ci-dessous pour récupérer les fichiers nécessaires :
 Ce premier jeu de données au format CSV (Comma-Separated Values) contient 321 616 individus et 17 variables.
 
 | Variable | Type de données | Description |
-|------------------|------------------|------------------------------------|
+|-------------------|-------------------|----------------------------------|
 | `ID` | Integer | Identifiant unique du projet |
 | `name` | String | Nom du projet |
 | `category` | String | Catégorie spécifique du projet |
@@ -108,7 +108,7 @@ On remarque que les 4 dernières variables sont sans titre et sans données.
 Ce deuxième jeu de données au format CSV (Comma-Separated Values) contient 375 765 individus et 15 variables.
 
 | Variable | Type de données | Description |
-|------------------|------------------|------------------------------------|
+|-------------------|-------------------|----------------------------------|
 | `ID` | Integer | Identifiant unique du projet |
 | `name` | String | Nom du projet |
 | `category` | String | Catégorie spécifique du projet |
@@ -139,35 +139,35 @@ L'objectif principal de notre analyse est de comprendre les dynamiques du financ
 
 ### 🔍 Questions d'analyse
 
-- Quels sont les taux de réussite des campagnes selon les catégories ?
-- Dans quelle mesure le montant de l'objectif influence-t-il la probabilité de succès d'une campagne ?
-- Existe-t-il des périodes de l'année où les campagnes ont plus de chances de réussir ?
-- Quels sont les pays où le plus de campagnes sont créées? Parmi eux, lesquels ont les meilleurs taux de réussite?
-- L'écart entre l'objectif initial et les fonds réellement collectés varie-t-il en fonction de la catégorie ou de la devise utilisée ?
-- Le choix des mots dans le titre d'une campagne a-t-il un impact sur son succès ?
-- Comment a évolué le taux de réussite et le nombre de campagne au fil des années? Les campagnes sont elles plus ambitieuses qu'avant?
+-   Quels sont les taux de réussite des campagnes selon les catégories ?
+-   Dans quelle mesure le montant de l'objectif influence-t-il la probabilité de succès d'une campagne ?
+-   Existe-t-il des périodes de l'année où les campagnes ont plus de chances de réussir ?
+-   Quels sont les pays où le plus de campagnes sont créées? Parmi eux, lesquels ont les meilleurs taux de réussite?
+-   L'écart entre l'objectif initial et les fonds réellement collectés varie-t-il en fonction de la catégorie ou de la devise utilisée ?
+-   Le choix des mots dans le titre d'une campagne a-t-il un impact sur son succès ?
+-   Comment a évolué le taux de réussite et le nombre de campagne au fil des années? Les campagnes sont elles plus ambitieuses qu'avant?
 
 ### 📈 Variables à comparer
 
 Pour répondre à nos questions d'analyse, nous comparerons les variables suivantes :
 
-- **Taux de réussite et d'échec par catégorie** : Identifier les catégories où les campagnes réussissent ou échouent le plus souvent.
-- **Taux de réussite et d'échec en fonction du montant de l'objectif** : Analyser l'impact du montant demandé sur le succès ou l'échec des campagnes.
-- **Taux de réussite et d'échec selon la période de lancement** : Étudier si certaines périodes de l'année influencent les chances de succès ou d'échec.
-- **Nombre de campagnes créées et leur taux de réussite selon le pays**: Comparer les pays où les campagnes sont les plus populaires pour observer des différences de nombres de campagnes et de taux de réussite selon les régions.
-- **Écart entre le montant collecté et l'objectif fixé** : Comparer les fonds espérés et les fonds réellement obtenus pour évaluer les écarts.
-- **Impact des mots-clés dans les titres sur le succès** : Identifier les mots les plus fréquents dans les titres des campagnes réussies et leur influence.
-- **Nombre de campagnes réussies montant moyen récolté par campagne réussie selon l'année** : Comparer le nombre de campagnes réussies et leur valeur moyenne chaque année pour dégager des tendances.
+-   **Taux de réussite et d'échec par catégorie** : Identifier les catégories où les campagnes réussissent ou échouent le plus souvent.
+-   **Taux de réussite et d'échec en fonction du montant de l'objectif** : Analyser l'impact du montant demandé sur le succès ou l'échec des campagnes.
+-   **Taux de réussite et d'échec selon la période de lancement** : Étudier si certaines périodes de l'année influencent les chances de succès ou d'échec.
+-   **Nombre de campagnes créées et leur taux de réussite selon le pays**: Comparer les pays où les campagnes sont les plus populaires pour observer des différences de nombres de campagnes et de taux de réussite selon les régions.
+-   **Écart entre le montant collecté et l'objectif fixé** : Comparer les fonds espérés et les fonds réellement obtenus pour évaluer les écarts.
+-   **Impact des mots-clés dans les titres sur le succès** : Identifier les mots les plus fréquents dans les titres des campagnes réussies et leur influence.
+-   **Nombre de campagnes réussies montant moyen récolté par campagne réussie selon l'année** : Comparer le nombre de campagnes réussies et leur valeur moyenne chaque année pour dégager des tendances.
 
 Ces comparaisons nous permettront de mieux comprendre les facteurs influençant le succès des campagnes Kickstarter.
 
 ### ⚠️ Limitations et problèmes potentiels
 
-- Certains porteurs de projets peuvent fixer des objectifs volontairement bas pour maximiser leurs chances de succès ou, au contraire, volontairement élevé par manque de sérieux, ce qui pourrait biaiser les résultats de l'analyse.
+-   Certains porteurs de projets peuvent fixer des objectifs volontairement bas pour maximiser leurs chances de succès ou, au contraire, volontairement élevé par manque de sérieux, ce qui pourrait biaiser les résultats de l'analyse.
 
-- Les taux de conversion en USD peuvent introduire des biais en fonction des fluctuations des taux de change et de l'inflation.
+-   Les taux de conversion en USD peuvent introduire des biais en fonction des fluctuations des taux de change et de l'inflation.
 
-- Des facteurs externes, tels que les tendances économiques ou médiatiques, qui ne sont pas inclus dans les données, peuvent également influencer le succès des campagnes.
+-   Des facteurs externes, tels que les tendances économiques ou médiatiques, qui ne sont pas inclus dans les données, peuvent également influencer le succès des campagnes.
 
 ## 🧭 Exploration des données
 
@@ -204,7 +204,7 @@ data2016 <- read_csv("./data/ks-projects-201612.csv", show_col_types = FALSE)
 data2018 <- read_csv("./data/ks-projects-201801.csv", show_col_types = FALSE)
 ```
 
-### Nettoyage des données
+### I. Nettoyage des données
 
 Assurons nous que nos données ne contiennent aucun individus doublon Pour cela nous allons utiliser la variable ID qui se veut unique pour chaque individu
 
@@ -243,13 +243,13 @@ Nous décidons donc d'utiliser uniquement le fichier `ks-projects-201801.csv`, c
 data_kickstarter <- data2018
 ```
 
-#### Vérifions s'il y a des lignes entièrement vides
+#### a) Vérifions s'il y a des lignes entièrement vides
 
 ```{r}
 cat(sum(rowSums(is.na(data_kickstarter)) == ncol(data_kickstarter)))
 ```
 
-#### Nettoyage des individus comportant des valeurs NA
+#### b) Nettoyage des individus comportant des valeurs NA
 
 ```{r}
 print(sapply(data_kickstarter, function(x) sum(is.na(x))))
@@ -260,7 +260,7 @@ data_kickstarter <- data_kickstarter %>%
 print(sapply(data_kickstarter, function(x) sum(is.na(x))))
 ```
 
-#### Nettoyage des individus comportant des valeurs non valides
+#### c) Nettoyage des individus comportant des valeurs non valides
 
 ```{r}
 data_kickstarter <- data_kickstarter %>%
@@ -270,20 +270,20 @@ data_kickstarter <- data_kickstarter %>%
   filter(country != "N,0\"")
 ```
 
-#### Conversion de la caractéristique "launched" en format Date
+#### d) Conversion de la caractéristique "launched" en format Date
 
 ```{r}
 data_kickstarter$launched <- as.Date(data_kickstarter$launched)
 ```
 
-#### Nettoyage des individus dont la date de lancement est incohérente
+#### e) Nettoyage des individus dont la date de lancement est incohérente
 
 ```{r}
 data_kickstarter <- data_kickstarter %>%
   filter(year(launched) >= 2009)
 ```
 
-#### Ajout du jour et du mois de la date de lancement et de la deadline
+f)  Ajout du jour et du mois de la date de lancement et de la deadline
 
 ```{r}
 data_kickstarter <- data_kickstarter %>%
@@ -298,7 +298,7 @@ data_kickstarter <- data_kickstarter %>%
   )
 ```
 
-#### Conversion des codes pays en noms de pays anglais
+#### g) Conversion des codes pays en noms de pays anglais
 
 ```{r}
 data_kickstarter <- data_kickstarter %>%
@@ -312,7 +312,7 @@ data_kickstarter <- data_kickstarter %>%
   )
 ```
 
-### Présentation du dataset
+###II. Présentation du dataset
 
 Notre dataset présente l'ensemble des projets lancés sur la plateforme Kickstarter depuis son ouverture en avril 2009 jusqu'au 2 janvier 2018.
 
@@ -521,7 +521,7 @@ On remarque que l'immense majorité des campagnes durent 30 jours, soit 1 mois. 
 
 On voit également des pics sur tous les multiples de 5 jours.
 
-### Analyses Exploratoires
+### III. Analyses Exploratoires
 
 On cherche à étudier les possibles corrélations entre le montant demandé, le montant récolté, le nombre de backers et le résultat de la campagne :
 
@@ -597,6 +597,8 @@ ggpairs(data_kickstarter_corr_time,columns = 1:3, aes(color = state),
   theme(axis.text = element_text(size = 3))
 }
 ```
+
+### a) Analyse par catégories
 
 ### Quels sont les taux de réussite des campagnes en fonction des catégories ?
 
@@ -805,6 +807,8 @@ Ce graphique révèle que certaines catégories, comme **Technology**, ont une p
 Les projets nécessitant des financements plus importants, comme ceux de la catégorie **Technology**, ont souvent des taux de réussite plus faibles car ils impliquent des besoins financiers plus lourds. À l'inverse, des catégories comme **Dance** demandent des budgets plus modestes, ce qui permet à un plus grand nombre de projets de réussir sans exiger des sommes trop importantes.
 
 Une exception notable est la catégorie **Journalism** qui, malgré des besoins financiers modestes, embarque peu de contributeurs, ce qui peut expliquer son faible taux de réussite.
+
+### b) Analyse par pays
 
 ### Combien de projets sont lancés par pays ? Quelle proportion de projets réussis ?
 
@@ -1175,7 +1179,9 @@ success_rates_by_country %>%
 
 Il n'y a pas de lien clair entre la quantité de projet et le taux de réussite, la majorité des pays avec des quantités de projets très similaires ont des taux de réussites très variés.
 
-### Existe-t-il des périodes de l'année où les campagnes ont plus de chances de réussir ?
+### c) Analyse temporelle
+
+#### Existe-t-il des périodes de l'année où les campagnes ont plus de chances de réussir ?
 
 ```{r}
 data_kickstarter %>%
@@ -1214,7 +1220,7 @@ En particulier, on remarque un **taux de réussite plus faible en décembre**, p
 
 Par ailleurs, une tendance saisonnière apparaît durant l'été, période de vacances où les dépenses personnelles sont souvent consacrées à des loisirs, notamment les voyages. L'augmentation des coûts liés aux voyages pourrait réduire la capacité des individus à financer des projets, ce qui se traduit par une légère diminution du taux de réussite des campagnes lancées pendant cette période.
 
-On peut se demander si la corrélation se poursuit au niveau de la cloture des campagnes ?
+#### On peut se demander si la corrélation se poursuit au niveau de la cloture des campagnes ?
 
 ```{r}
 data_kickstarter %>%
@@ -1244,7 +1250,7 @@ data_kickstarter %>%
 
 Ce graphique illustre le taux de réussite mensuel des campagnes Kickstarter en fonction de leur date de clôture. On observe que les taux sont similaires à ceux basés sur la date de lancement, mais décalés d'un mois.
 
-Pour vérifier si cela est possible, il faut qu'on observe la durée des campagnes ?
+#### Pour vérifier si cela est possible, il faut qu'on observe la durée des campagnes ?
 
 ```{r}
 # Trouver la dernière année
@@ -1296,7 +1302,7 @@ data_kickstarter %>%
 
 Ce graphique représente la durée des campagnes sur Kickstarter, exprimée en jours. On peut observer que la durée des campagnes diminue depuis 2009 pour passer d'environ 2 mois a 1 mois en moyenne. Cette observation confirme l'hypothèse précédemment formulée : le décalage d'un mois observé entre les taux de réussite selon que l'on se base sur la date de lancement ou sur la date de clôture s'explique par la durée moyenne des campagnes. Ainsi, d'après nos analyses, les périodes les plus favorables au succès d'un projet se situent entre février et juin, ainsi qu'entre septembre et novembre.
 
-### Quelle est la durée idéale d'une campagne ?
+#### Quelle est la durée idéale d'une campagne ?
 
 Comme nous l'avons vu précédemment, la majorité des campagnes durent 30 jours. C'est la valeur par défaut de la durée dans l'interface de création de campagne, où il est aussi affirmé que les campagnes de moins de 30 jours ont plus de chances de réussir. Est-ce vrai?
 
@@ -1327,6 +1333,8 @@ data_kickstarter %>%
 ```
 
 On peut observer qu'une campagne inférieur a 40 jours à un taux de réussite de 40% à 50% alors qu'ensuite, le taux chute jusqu'à 30%. On en déduis donc qu'une durée idéale de campagne est de 20 à 25 jours avec un taux de réussite à 50%.
+
+### d) Analyse des montants demandés
 
 ### Comment les montants demandés et récoltés ont-ils évolué au cours du temps ?
 
@@ -1438,6 +1446,8 @@ data_kickstarter %>%
 On remarque que l'immense majorité des projets réussis dépassent de peu leur objectif, et ce peu importe l'époque.
 
 On remarque cependant qu'au fil des années de plus en plus de projets pulvérisent leur objectif, et dans des proportions de plus en plus grandes
+
+### e) Analyse des mots
 
 ### Le choix des mots dans le titre d'une campagne a-t-il un impact sur son succès ?
 
@@ -1787,7 +1797,9 @@ data_success_rate %>%
 
 On observe que la plupart des projets, qu'ils aient réussi ou échoué, ont un score de sentiment proche de 0 (neutre), avec un pic marqué à cette valeur. Cette analyse suggère que le sentiment du titre n'influence que marginalement le succès d'un projet, confirmant que d'autres facteurs pourraient jouer un rôle plus déterminant dans les résultats des campagnes Kickstarter.
 
-### Dans quelle mesure le montant de l'objectif influence-t-il la probabilité de succès d'une campagne ?
+### f) Analyse des montants
+
+#### Dans quelle mesure le montant de l'objectif influence-t-il la probabilité de succès d'une campagne ?
 
 On se demande si le montant demandé lors d'une campagne influence la réussite. On peut se demander si un projet qui demande une somme importante a peu de chance de réussir et inversement si un projet qui demande un budget faible a plus de chance de réussir.
 
@@ -1822,7 +1834,7 @@ data_kickstarter_successful %>%
 
 On observe que les campagnes ayant le plus de chances de réussir sont celles dont l'objectif se situe entre 0 et 5 000. Ensuite, entre 5 000 et 50 000, le taux de réussite diminue, bien qu'un certain nombre de campagnes parviennent tout de même à atteindre leur objectif. En revanche, au-delà de 50 000, très peu de campagnes atteignent le montant souhaité. L'hypothèse formulée se vérifie donc : plus la somme demandée est faible, plus le taux de réussite est élevé, et inversement, plus le montant demandé est élevé, moins les chances de réussite sont grandes.
 
-Il y a plus de chance de réussir un projet avec une somme inférieur a 5 000 est du au nombre de projet qui sont plus nombreux dans ces tranches ? On va donc regarder le taux de réussite par tranche de somme.
+Il y a plus de chance de réussir un projet avec une somme inférieur a 5 000 est du au nombre de projet qui sont plus nombreux dans ces tranches ? On va donc regarder le taux de réussite par tranche.
 
 ```{r}
 # On crée les catégories d'objectif
@@ -1861,3 +1873,5 @@ taux_succes %>%
   ) +
   theme_minimal()
 ```
+
+On remarque que le taux de réussite est décroissant au fur est à mesure des tranches. On commence avec presque 45% de réussite pour des montants inférieurs à 5 000 à moins de 10% pour les plus de 100 000 demandés. Mais pourquoi les projets avec une demande de plus petit budget réussisse mieux alors ? Cela peut être dû à un facteur psychologique. Les personnes qui voient une grosse somme demandés se disent inconsciemment que le projet va jamais atteindre ses objectifs. Inversement, si on demande une petite somme, les donnateurs vont avoir l'impression que le projet est plus réalisable.
