@@ -4,6 +4,8 @@ output:
   prettydoc::html_pretty:
     theme: hpstr
     highlight: github
+    html_document:
+     code_folding: hide
 ---
 
 L'objectif de ce projet d'IF36 est d'analyser et de présenter des données issues d'un jeu de données de notre choix.
@@ -174,7 +176,7 @@ Ces comparaisons nous permettront de mieux comprendre les facteurs influençant 
 Pour effectuer notre analyse, nous utilisons les libraries suivantes :
 
 ```{r echo=FALSE, warning=FALSE, cache=TRUE, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE)
 ```
 
 ```{r message=FALSE, warning=FALSE}
