@@ -1835,21 +1835,38 @@ On remarque que le taux de réussite est décroissant au fur est à mesure des t
 
 ## Conclusions
 
-> !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
->
-> Un résumé bref (une page grand maximum) comprenant ce que vous avez pu apprendre sur le jeu de données, les difficultés éventuelles et des pistes pour étendre ou élargir le travail effectué.
->
-> !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+### Conclusions de l'analyse graphique
+
+Dans le cadre de notre analyse, nous avons pu dégager des facteurs déterminants qui semblent avoir un impact important dans la réussite ou l'échec d'un projet Kickstarter.
+
+Un motif qui se dessine tout au long de notre analyse est l'enjeu central du **montant demandé** sur la réussite d'un projet.
+
+Comme nous avons pu le démontrer dans l'analyse exploratoire mais également dans la partie dédiée aux montants demandé, un **montant demandé faible est un facteur de réussite**, là où un montant demandé élevé est fortement corrélé à un échec.
+
+On peut relier cela à l'effet psychologique que peut avoir un montant demandé démesuré sur le financeur potentiel: L'objectif peut lui paraître irréaliste et sa contribution peut paraître dérisoire par rapport au montant à atteindre. La quantité de contributeurs requis peut également créer une dilution de la responsabilité.
+
+Au contraire, une campagne à l'objectif modeste permet à chaque contributeur de ressentir qu'il fait une différence visible, et de voir des réussites beaucoup plus rapidement. Les paliers supplémentaires réguliers ajoutés par les créateurs du projet permettent aux contributeurs de participer à des petites victoires, même après que l'objectif principal soit atteint.
+
+On remarque que les **catégories** avec le meilleur taux de réussite (comme **Dance**, **Theater** et **Comics**) sont des catégories où les montants demandés sont relativement modestes. On observe une corrélation du montant demandé avec le taux de réussite. Il y a cependant des exceptions, comme la catégorie **Journalism** qui affiche un taux de réussite relativement bas par rapport à ses objectifs plutôt modestes.
+
+Une analyse des **pays** de domiciliation les plus avantageux permet de dégager 3 pays très favorisés: Les **Etats-Unis**, le **Royaume-Uni** et **Hong Kong**. Les deux premiers sont ceux où Kickstarter a bénéficié d'une grande avance sur le marché du financement participatif. Dans d'autres pays, d'autres plate-formes ont pu capter le marché avant Kickstarter.
+
+Pour ce qui est de la **variable temporelle**, une stratégie **optimale** se dessine: Il ne faut pas lancer son projet en décembre ou en juillet-aout, où les dépenses sont généralement très hautes. La durée optimale d'une campagne se situe entre 20 et 30 jours, il faut au maximum éviter de la rallonger pour tirer profit de l'impression d'urgence et créer un moment de forte attention autour de son projet.
+
+Enfin, d'après notre analyse, il est inutile de charger son projet de **mots sensationnalistes** et émotionnellement chargés. En effet, ceux-ci ne semblent pas avoir d'impact sur la réussite du projet.
+
+Grâce à notre analyse graphique, nous avons pu déceler des facteurs clés permettant d'expliquer la réussite ou l'échecs des projets Kickstarter.
 
 ### Compétences acquises et perspectives des membres
 
-- **Florian BONELLI** :
+-   **Florian BONELLI** :
 
-- **Eyvan FAURE** : J'ai principalement appris l'importance de l'esthétique dans les visualisations, car c'est un facteur déterminant pour une compréhension plus rapide et instinctive des visualisations. Je pense qu'il aurait été intéressant d'aborder dans notre projet l'utilisation du logiciel Tableau plus en profondeur car il semble très pertinent pour notre projet je trouve donc j'aurais aimé avoir plus de temps pour l'approfondir davantage.
+-   **Eyvan FAURE** : J'ai principalement appris l'importance de l'esthétique dans les visualisations, car c'est un facteur déterminant pour une compréhension plus rapide et instinctive des visualisations. Je pense qu'il aurait été intéressant d'aborder dans notre projet l'utilisation du logiciel Tableau plus en profondeur car il semble très pertinent pour notre projet je trouve donc j'aurais aimé avoir plus de temps pour l'approfondir davantage.
 
-- **Ryan OUYED** :
+-   **Ryan OUYED** : Dans le cadre de ce projet, j'ai pu apprendre l'importance d'avoir un jeu de donnée exploitable et propre. En effet, les quelques incohérences et corruptions trouvables dans le jeu de données de base nous ont fait nous poser des questions sur la validité de nos analyses. On constate ici l'importance d'une bonne collecte des données.\
+    J'ai également pu constater les complications de traiter un jeu de données avec beaucoup de valeurs extrêmes (Montants élevés, prédominance des USA) qui m'a beaucoup fait réfléchir sur la façon de représenter des grandes disparités dans un espace limité.
 
-- **Lucas SAURON** :
+-   **Lucas SAURON** :
 
 ## Annexe
 
@@ -1857,26 +1874,26 @@ On remarque que le taux de réussite est décroissant au fur est à mesure des t
 
 **Florian BONELLI** :
 
-- Question 3
-- Question 4
-- présentation
+-   Question 3 (Périodes de l'année)
+-   Question 4 (Montants)
+-   Diaporama
 
 **Eyvan FAURE** :
 
-- Nettoyage des données
-- Question 1
-- Shiny Dashboard
-- Tableau
-- Présentation
+-   Nettoyage des données
+-   Question 1 (Catégories)
+-   Shiny Dashboard
+-   Tableau
+-   Diaporama
 
 **Ryan OUYED** :
 
-- Présentation du dataset
-- Analyses Exploratoires
-- Question 2
-- Présentation
+-   Présentation du dataset
+-   Analyses Exploratoires
+-   Question 2 (Pays)
+-   Diaporama
 
 **Lucas SAURON** :
 
-- Question 5
-- Présentation
+-   Question 5 (Mots utilisés)
+-   Diaporama
