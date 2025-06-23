@@ -441,11 +441,11 @@ data_kickstarter %>%
     breaks = seq(0, 10000, 1000),
     labels = label_comma(big.mark = " "),
   ) +
-  scale_y_continuous(
-    limits = c(0, 1200),
-    breaks = seq(0, 1200, 200),
-    labels = label_comma(big.mark = " "),
-  ) +
+  # scale_y_continuous(
+  #   limits = c(0, 1200),
+  #   breaks = seq(0, 1200, 200),
+  #   labels = label_comma(big.mark = " "),
+  # ) +
   labs(
     title = "Distribution du nombre de backers par projet",
     x = "Nombre de backers",
@@ -536,6 +536,8 @@ data_kickstarter_corr_money <- data_kickstarter %>%
   ) +
   theme_minimal(base_size = 8) +
   theme(axis.text = element_text(size = 3))
+
+data_kickstarter_corr_money
 ```
 
 On observe déjà un phénomène intéressant :
@@ -758,31 +760,9 @@ Les projets nécessitant des financements plus importants, comme ceux de la cat�
 
 Une exception notable est la catégorie **Journalism** qui, malgré des besoins financiers modestes, embarque peu de contributeurs, ce qui peut expliquer son faible taux de réussite.
 
-#### QUESTION 2 : Combien de projets sont lancés par pays ? Quelle proportion de projets réussis ?
+#### QUESTION 2 : Quels pays ont les meilleurs taux de réussite ?
 
-```{r}
-data_kickstarter %>%
-  ggplot(
-    aes(
-      x = reorder(country, table(country)[country]),
-    )
-  ) +
-  geom_bar(
-    fill = "steelblue",
-  ) +
- scale_y_log10(
-  breaks = c(10, 100, 1000, 10000, 30000, 100000, 300000),
-  labels = scales::comma_format()
-) +
-  labs(
-    title = "Nombre de projets Kickstarter par pays",
-    x = "Pays",
-    y = "Nombre de projets",
-    caption = "Note de lecture: l'axe des ordonnées est logarithmique",
-  ) +
-  coord_flip() +
-  theme_minimal(base_size = 11)
-```
+#####Quels pays ont le plus de projets?
 
 ```{r}
 # Création d'un dataframe avec le nombre total de projets par pays
@@ -810,63 +790,15 @@ data_kickstarter %>%
     subtitle = "Surface proportionnelle au nombre de projets",
   )
 ```
-
-```{r}
-# Préparation de la visualisation de la carte du monde
-mapdata <- map_data("world") %>%
-  rename(country = region)
-
-# Génération de la visualisation de la carte du monde
-mapdata_projects <- left_join(
-  mapdata,
-  data_kickstarter %>% count(country, name = "projects"),
-  by = "country"
-) %>%
-  ggplot(
-    aes(
-      x = long,
-      y = lat,
-      group = group,
-    )
-  ) +
-  geom_polygon(
-    aes(
-      fill = projects,
-    ),
-    color = "grey60",
-    linewidth = 0.2,
-  ) +
-  scale_fill_gradient(
-    low = "lightblue",
-    high = "steelblue",
-    na.value = "lightgrey",
-    trans = "log10",
-    breaks = c(1, 10, 100, 1000, 10000, 100000),
-    labels = label_comma(big.mark = " "),
-  ) +
-  labs(
-    title = "Nombre de projets Kickstarter par pays",
-    fill = "Nombre de projets",
-    caption = "Les pays sans données sont affichés en gris clair",
-  ) +
-  theme_minimal() +
-  theme(
-    axis.title = element_blank(),
-    axis.text = element_blank(),
-    axis.ticks = element_blank(),
-    panel.grid = element_blank(),
-    legend.position = "bottom",
-    legend.key.width = unit(2, "cm"),
-  )
-```
-
 Ce graphique représente la quantité de projets lancés sur Kickstarter par pays.
 
-On remarque une grande sur-représentation des États-Unis, pays de création de Kickstarter.
+On remarque une grande sur-représentation des États-Unis, pays de création de Kickstarter, dans une proportion qui ne saurait être expliquée par la seule différence de population.
 
 On remarque ensuite une proéminence des pays anglo-saxons dans les pays dont le plus de projets sont validés.
 
 On peut lier cela au fait que Kickstarter a été lancé progressivement dans le monde. Pour avoir une vision qui reflète mieux la popularité de Kickstarter, on pourrait comparer les quantités de projets selon le temps dans un prochain livrable. On peut également expliquer cela par le fait que, dans de nombreux pays, une offre plus locale et adaptée a eu le temps de se développer, avant l'arrivée de Kickstarter ou en parallèle.
+
+Etudions l'évolution de la quantité de projets selon le pays pour y voir plus clair:
 
 ```{r}
 # Sélection des 10 pays avec le plus de projets
@@ -986,7 +918,10 @@ Par exemple en France, Kickstarter est rarement cité comme la meilleure platefo
 
 Des services plus adaptés se sont implantés avant son arrivée.
 
-Dans la visualisation suivante, nous allons évaluer la répartition des projets selon leur statut dans les pays du top 10:
+#####Quels pays ont le meilleur taux de réussite?
+
+On émet l'hypothèse que les pays avec le plus grand nombre de projets, où Kickstarter est le plus implanté, ont un meilleur taux de réussite.
+Dans la visualisation suivante, nous allons évaluer la répartition des projets selon leur statut dans les pays du top 10.
 
 ```{r}
 data_kickstarter_top_ten_countries %>%
@@ -1015,42 +950,9 @@ data_kickstarter_top_ten_countries %>%
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 30, size = 9))
 ```
+On remarque que la variation des taux de réussite n'est pas clairement corrélée à la quantité de projets lancés: près de la moitié des pays représentés dérogent à cette règle.
 
-On remarque que tous les pays ont des taux d'échec et de réussite relativement similaires.
-
-On remarque une grande proportion de projets en cours au Japon. Cela s'explique par le fait que Kickstarter a été lancé en Septembre 2017 au Japon, soit un an avant la finalisation de notre base de donnée en 2018. Ainsi, il est attendu d'avoir une sur-représentation de projets en cours de financement: <https://www.theverge.com/2017/8/17/16161068/kickstarter-japan-launch-september>
-
-```{r}
-success_rates_by_country <- data_kickstarter %>%
-  group_by(country) %>%
-  summarise(
-    total = n(),
-    successful = sum(state == "successful"),
-    success_rate = successful / total
-  ) %>%
-  arrange(desc(success_rate))
-
-success_rates_by_country %>%
-  ggplot(
-    aes(
-      x = reorder(country, success_rate),
-      y = success_rate,
-    )
-  ) +
-  geom_col(
-    fill = "forestgreen"
-  ) +
-  scale_y_continuous(
-    labels = percent_format()
-  ) +
-  labs(
-    title = "Taux de réussite des campagnes Kickstarter par pays",
-    x = "Pays",
-    y = "Taux de réussite",
-  ) +
-  theme_minimal() +
-  coord_flip()
-```
+On émet l'hypothèse que les variations dans le taux de réussite pourraient avoir une composante géographique: Peut-être que les projets Kickstarter de certaines régions géograpphiques ont plus de succès que d'autres.
 
 ```{r}
 mapdata %>% left_join(
@@ -1092,7 +994,13 @@ mapdata %>% left_join(
   )
 ```
 
-On constate que les taux de réussite varient beaucoup selon le pays, de 37% à 15%. On constate que les deux pays avec le plus haut taux de réussite sont aussi ceux qui ont le plus de projets (mais ce n'est pas le cas au delà des deux premiers). Dans la suite de notre rapport, nous pourrions évaluer s'il existe une corrélation entre le nombre de projets lancés dans chaque pays et leur taux de réussite.
+Cette carte nous permet de constater deux phénomènes:
+- Kickstarter est majoritairement disponible dans des pays développés occidentaux: Amérique du nord, Europe de l'Ouest et du Nord, Australie-Nouvelle Zélande. La seule exception visible est le Japon, dont l'inclusion à Kickstarter était très récente en 2018.
+-Il ne semble pas y avoir de corrélation majeure entre la zone géographique et le taux de réussite. En Europe par exemple, les pays d'Europe de l'ouest ne semblent pas favorisés.
+
+Cette carte est utile mais a un défaut: elle ne permet pas de visualiser clairement les micro-nations comme Hong Kong ou Singapour, pourtant significatives pour Kickstarter.
+
+Dans notre prochaine visualisation, nous allons évaluer s'il existe une corrélation entre le nombre de projets lancés dans chaque pays et leur taux de réussite:
 
 ```{r}
 success_rates_by_country %>%
