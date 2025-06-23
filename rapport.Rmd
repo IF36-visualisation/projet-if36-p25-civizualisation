@@ -548,22 +548,6 @@ On observe ainsi une claire dichotomie dans les graphes du côté inférieur gau
 
 A noter: Cette analyse ne prend en compte que les projets dont le *goal* ou le *pledged* est relativement élevé. Or, comme on le voit dans les graphes de la diagonale, l'immense majorité des projets ont un *goal* et un *pledged* peu élevés qui les rend quasi invisible dans ce graphe.
 
-Refaisons la même analyse en retirant les montants très élevés.
-
-```{r}
-data_kickstarter %>%
-  select(usd_goal_real, usd_pledged_real, state, backers) %>%
-  filter(usd_goal_real < 10000 & usd_pledged_real < 10000) %>%
-  ggpairs(
-    aes(
-      color = state,
-    ),
-    lower = list(continuous = "points", combo = "dot_no_facet")
-  ) +
-  theme_minimal(base_size = 8) +
-  theme(axis.text = element_text(size = 3))
-```
-
 ### IV. QUESTIONS
 
 #### QUESTION 1 : Quels sont les taux de réussite des campagnes en fonction des catégories ?
@@ -1844,7 +1828,6 @@ Un motif qui se dessine tout au long de notre analyse est l'enjeu central du **m
 Comme nous avons pu le démontrer dans l'analyse exploratoire mais également dans la partie dédiée aux montants demandé, un **montant demandé faible est un facteur de réussite**, là où un montant demandé élevé est fortement corrélé à un échec.
 
 On peut relier cela à l'effet psychologique que peut avoir un montant demandé démesuré sur le financeur potentiel: L'objectif peut lui paraître irréaliste et sa contribution peut paraître dérisoire par rapport au montant à atteindre. La quantité de contributeurs requis peut également créer une dilution de la responsabilité.
-
 Au contraire, une campagne à l'objectif modeste permet à chaque contributeur de ressentir qu'il fait une différence visible, et de voir des réussites beaucoup plus rapidement. Les paliers supplémentaires réguliers ajoutés par les créateurs du projet permettent aux contributeurs de participer à des petites victoires, même après que l'objectif principal soit atteint.
 
 On remarque que les **catégories** avec le meilleur taux de réussite (comme **Dance**, **Theater** et **Comics**) sont des catégories où les montants demandés sont relativement modestes. On observe une corrélation du montant demandé avec le taux de réussite. Il y a cependant des exceptions, comme la catégorie **Journalism** qui affiche un taux de réussite relativement bas par rapport à ses objectifs plutôt modestes.
