@@ -955,6 +955,19 @@ On remarque que la variation des taux de réussite n'est pas clairement corrél�
 On émet l'hypothèse que les variations dans le taux de réussite pourraient avoir une composante géographique: Peut-être que les projets Kickstarter de certaines régions géograpphiques ont plus de succès que d'autres.
 
 ```{r}
+# Préparation de la visualisation de la carte du monde
+mapdata <- map_data("world") %>%
+  rename(country = region)
+
+success_rates_by_country <- data_kickstarter %>%
+  group_by(country) %>%
+  summarise(
+    total = n(),
+    successful = sum(state == "successful"),
+    success_rate = successful / total
+  ) %>%
+  arrange(desc(success_rate))
+
 mapdata %>% left_join(
   success_rates_by_country,
   by = "country"
