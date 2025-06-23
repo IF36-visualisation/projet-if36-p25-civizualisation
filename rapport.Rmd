@@ -4,8 +4,6 @@ output:
   prettydoc::html_pretty:
     theme: hpstr
     highlight: github
-    html_document:
-     code_folding: hide
 ---
 
 L'objectif de ce projet d'IF36 est d'analyser et de présenter des données issues d'un jeu de données de notre choix.
@@ -14,18 +12,18 @@ L'objectif de ce projet d'IF36 est d'analyser et de présenter des données issu
 
 Équipe Civizualisation :
 
--   Florian BONELLI
--   Eyvan FAURE
--   Ryan OUYED
--   Lucas SAURON
+- Florian BONELLI
+- Eyvan FAURE
+- Ryan OUYED
+- Lucas SAURON
 
 ## 📚 Sommaire
 
--   📝 Contexte des données choisis
--   📥 Téléchargement des données
--   📁 Présentation des données
--   📊 Plan d'analyse
--   🧭 Exploration des données
+- 📝 Contexte des données choisis
+- 📥 Téléchargement des données
+- 📁 Présentation des données
+- 📊 Plan d'analyse
+- 🧭 Exploration des données
 
 ## 📝 Contexte des données choisis
 
@@ -53,27 +51,27 @@ Il faut les télécharger manuellement.
 
 Suivez les étapes ci-dessous pour récupérer les fichiers nécessaires :
 
-1.  Téléchargez l'archive contenant les jeux de données.
+1. Téléchargez l'archive contenant les jeux de données.
 
-    ``` bash
+    ```bash
     curl -L -o ./data/kickstarter-projects.zip https://www.kaggle.com/api/v1/datasets/download/kemical/kickstarter-projects
     ```
 
-2.  Une fois l'archive téléchargée, extrayez les fichiers.
+2. Une fois l'archive téléchargée, extrayez les fichiers.
 
-    ``` bash
+    ```bash
     unzip ./data/kickstarter-projects.zip -d ./data
     ```
 
     Si `unzip` n'est pas installé, vous pouvez l'installer avec la commande suivante
 
-    ``` bash
+    ```bash
     sudo apt-get install unzip
     ```
 
-3.  (Facultatif) Après avoir extrait les fichiers, vous pouvez supprimer l'archive pour libérer de l'espace.
+3. (Facultatif) Après avoir extrait les fichiers, vous pouvez supprimer l'archive pour libérer de l'espace.
 
-    ``` bash
+    ```bash
     rm ./data/kickstarter-projects.zip
     ```
 
@@ -83,25 +81,25 @@ Suivez les étapes ci-dessous pour récupérer les fichiers nécessaires :
 
 Ce premier jeu de données au format CSV (Comma-Separated Values) contient 321 616 individus et 17 variables.
 
-| Variable | Type de données | Description |
-|--------------|--------------|--------------------------------------------|
-| `ID` | Integer | Identifiant unique du projet |
-| `name` | String | Nom du projet |
-| `category` | String | Catégorie spécifique du projet |
-| `main_category` | String | Catégorie principale du projet |
-| `currency` | String | Devise utilisée pour le financement |
-| `deadline` | Date | Date limite pour la collecte des fonds |
-| `goal` | Float | Montant que le projet espère récolter |
-| `launched` | Date and time | Date et heure de lancement du projet |
-| `pledged` | Float | Somme totale engagée par les contributeurs |
-| `state` | String | État de la campagne (ex : "failed", "successful") |
-| `backers` | Integer | Nombre de contributeurs |
-| `country` | String | Pays où le projet est lancé (ISO 3166) |
-| `usd pledged` | Float | Montant collecté en USD (conversion réalisée par Kickstarter) |
-| NA | NA | NA |
-| NA | NA | NA |
-| NA | NA | NA |
-| NA | NA | NA |
+| Variable             | Type de données   | Description                                                                            |
+|----------------------|-------------------|----------------------------------------------------------------------------------------|
+| `ID`                 | Integer           | Identifiant unique du projet                                                           |
+| `name`               | String            | Nom du projet                                                                          |
+| `category`           | String            | Catégorie spécifique du projet                                                         |
+| `main_category`      | String            | Catégorie principale du projet                                                         |
+| `currency`           | String            | Devise utilisée pour le financement                                                    |
+| `deadline`           | Date              | Date limite pour la collecte des fonds                                                 |
+| `goal`               | Float             | Montant que le projet espère récolter                                                  |
+| `launched`           | Date and time     | Date et heure de lancement du projet                                                   |
+| `pledged`            | Float             | Somme totale engagée par les contributeurs                                             |
+| `state`              | String            | État de la campagne (ex : "failed", "successful")                                      |
+| `backers`            | Integer           | Nombre de contributeurs                                                                |
+| `country`            | String            | Pays où le projet est lancé (ISO 3166)                                                 |
+| `usd pledged`        | Float             | Montant collecté en USD (conversion réalisée par Kickstarter)                          |
+| NA                   | NA                | NA                                                                                     |
+| NA                   | NA                | NA                                                                                     |
+| NA                   | NA                | NA                                                                                     |
+| NA                   | NA                | NA                                                                                     |
 
 On remarque que les 4 dernières variables sont sans titre et sans données.
 
@@ -109,23 +107,23 @@ On remarque que les 4 dernières variables sont sans titre et sans données.
 
 Ce deuxième jeu de données au format CSV (Comma-Separated Values) contient 375 765 individus et 15 variables.
 
-| Variable | Type de données | Description |
-|--------------|--------------|--------------------------------------------|
-| `ID` | Integer | Identifiant unique du projet |
-| `name` | String | Nom du projet |
-| `category` | String | Catégorie spécifique du projet |
-| `main_category` | String | Catégorie principale du projet |
-| `currency` | String | Devise utilisée pour le financement |
-| `deadline` | Date | Date limite pour la collecte des fonds |
-| `goal` | Float | Montant que le projet espère récolter |
-| `launched` | Date and time | Date et heure de lancement du projet |
-| `pledged` | Float | Somme totale engagée par les contributeurs |
-| `state` | String | État de la campagne (ex : "failed", "successful") |
-| `backers` | Integer | Nombre de contributeurs |
-| `country` | String | Pays où le projet est lancé (ISO 3166) |
-| `usd pledged` | Float | Montant collecté en USD (conversion réalisée par Kickstarter) |
-| `usd_pledged_real` | Float | Montant collecté en USD (conversion réalisée par l'API fixer.io) |
-| `usd_goal_real` | Float | Montant que le projet espère collecter en USD (conversion réalisée par l'API fixer.io) |
+| Variable             | Type de données   | Description                                                                            |
+|----------------------|-------------------|----------------------------------------------------------------------------------------|
+| `ID`                 | Integer           | Identifiant unique du projet                                                           |
+| `name`               | String            | Nom du projet                                                                          |
+| `category`           | String            | Catégorie spécifique du projet                                                         |
+| `main_category`      | String            | Catégorie principale du projet                                                         |
+| `currency`           | String            | Devise utilisée pour le financement                                                    |
+| `deadline`           | Date              | Date limite pour la collecte des fonds                                                 |
+| `goal`               | Float             | Montant que le projet espère récolter                                                  |
+| `launched`           | Date and time     | Date et heure de lancement du projet                                                   |
+| `pledged`            | Float             | Somme totale engagée par les contributeurs                                             |
+| `state`              | String            | État de la campagne (ex : "failed", "successful")                                      |
+| `backers`            | Integer           | Nombre de contributeurs                                                                |
+| `country`            | String            | Pays où le projet est lancé (ISO 3166)                                                 |
+| `usd pledged`        | Float             | Montant collecté en USD (conversion réalisée par Kickstarter)                          |
+| `usd_pledged_real`   | Float             | Montant collecté en USD (conversion réalisée par l'API fixer.io)                       |
+| `usd_goal_real`      | Float             | Montant que le projet espère collecter en USD (conversion réalisée par l'API fixer.io) |
 
 Ce fichier contient plus d'individus que le premier, exclut les variables inutiles et ajoute deux variables supplémentaires par rapport au premier fichier.
 
@@ -141,42 +139,40 @@ L'objectif principal de notre analyse est de comprendre les dynamiques du financ
 
 ### 🔍 Questions d'analyse
 
--   Quels sont les taux de réussite des campagnes selon les catégories ?
--   Dans quelle mesure le montant de l'objectif influence-t-il la probabilité de succès d'une campagne ?
--   Existe-t-il des périodes de l'année où les campagnes ont plus de chances de réussir ?
--   Quels sont les pays où le plus de campagnes sont créées? Parmi eux, lesquels ont les meilleurs taux de réussite?
--   L'écart entre l'objectif initial et les fonds réellement collectés varie-t-il en fonction de la catégorie ou de la devise utilisée ?
--   Le choix des mots dans le titre d'une campagne a-t-il un impact sur son succès ?
--   Comment a évolué le taux de réussite et le nombre de campagne au fil des années? Les campagnes sont elles plus ambitieuses qu'avant?
+- Quels sont les taux de réussite des campagnes selon les catégories ?
+- Dans quelle mesure le montant de l'objectif influence-t-il la probabilité de succès d'une campagne ?
+- Existe-t-il des périodes de l'année où les campagnes ont plus de chances de réussir ?
+- Quels sont les pays où le plus de campagnes sont créées? Parmi eux, lesquels ont les meilleurs taux de réussite?
+- L'écart entre l'objectif initial et les fonds réellement collectés varie-t-il en fonction de la catégorie ou de la devise utilisée ?
+- Le choix des mots dans le titre d'une campagne a-t-il un impact sur son succès ?
+- Comment a évolué le taux de réussite et le nombre de campagne au fil des années? Les campagnes sont elles plus ambitieuses qu'avant?
 
 ### 📈 Variables à comparer
 
 Pour répondre à nos questions d'analyse, nous comparerons les variables suivantes :
 
--   **Taux de réussite et d'échec par catégorie** : Identifier les catégories où les campagnes réussissent ou échouent le plus souvent.
--   **Taux de réussite et d'échec en fonction du montant de l'objectif** : Analyser l'impact du montant demandé sur le succès ou l'échec des campagnes.
--   **Taux de réussite et d'échec selon la période de lancement** : Étudier si certaines périodes de l'année influencent les chances de succès ou d'échec.
--   **Nombre de campagnes créées et leur taux de réussite selon le pays**: Comparer les pays où les campagnes sont les plus populaires pour observer des différences de nombres de campagnes et de taux de réussite selon les régions.
--   **Écart entre le montant collecté et l'objectif fixé** : Comparer les fonds espérés et les fonds réellement obtenus pour évaluer les écarts.
--   **Impact des mots-clés dans les titres sur le succès** : Identifier les mots les plus fréquents dans les titres des campagnes réussies et leur influence.
--   **Nombre de campagnes réussies montant moyen récolté par campagne réussie selon l'année** : Comparer le nombre de campagnes réussies et leur valeur moyenne chaque année pour dégager des tendances.
+- **Taux de réussite et d'échec par catégorie** : Identifier les catégories où les campagnes réussissent ou échouent le plus souvent.
+- **Taux de réussite et d'échec en fonction du montant de l'objectif** : Analyser l'impact du montant demandé sur le succès ou l'échec des campagnes.
+- **Taux de réussite et d'échec selon la période de lancement** : Étudier si certaines périodes de l'année influencent les chances de succès ou d'échec.
+- **Nombre de campagnes créées et leur taux de réussite selon le pays**: Comparer les pays où les campagnes sont les plus populaires pour observer des différences de nombres de campagnes et de taux de réussite selon les régions.
+- **Écart entre le montant collecté et l'objectif fixé** : Comparer les fonds espérés et les fonds réellement obtenus pour évaluer les écarts.
+- **Impact des mots-clés dans les titres sur le succès** : Identifier les mots les plus fréquents dans les titres des campagnes réussies et leur influence.
+- **Nombre de campagnes réussies montant moyen récolté par campagne réussie selon l'année** : Comparer le nombre de campagnes réussies et leur valeur moyenne chaque année pour dégager des tendances.
 
 Ces comparaisons nous permettront de mieux comprendre les facteurs influençant le succès des campagnes Kickstarter.
 
 ### ⚠️ Limitations et problèmes potentiels
 
--   Certains porteurs de projets peuvent fixer des objectifs volontairement bas pour maximiser leurs chances de succès ou, au contraire, volontairement élevé par manque de sérieux, ce qui pourrait biaiser les résultats de l'analyse.
-
--   Les taux de conversion en USD peuvent introduire des biais en fonction des fluctuations des taux de change et de l'inflation.
-
--   Des facteurs externes, tels que les tendances économiques ou médiatiques, qui ne sont pas inclus dans les données, peuvent également influencer le succès des campagnes.
+- Certains porteurs de projets peuvent fixer des objectifs volontairement bas pour maximiser leurs chances de succès ou, au contraire, volontairement élevé par manque de sérieux, ce qui pourrait biaiser les résultats de l'analyse.
+- Les taux de conversion en USD peuvent introduire des biais en fonction des fluctuations des taux de change et de l'inflation.
+- Des facteurs externes, tels que les tendances économiques ou médiatiques, qui ne sont pas inclus dans les données, peuvent également influencer le succès des campagnes.
 
 ## 🧭 Exploration des données
 
 Pour effectuer notre analyse, nous utilisons les libraries suivantes :
 
-```{r echo=FALSE, warning=FALSE, cache=TRUE, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, warning = FALSE)
+```{r include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 ```
 
 ```{r message=FALSE, warning=FALSE}
@@ -245,26 +241,15 @@ Nous décidons donc d'utiliser uniquement le fichier `ks-projects-201801.csv`, c
 data_kickstarter <- data2018
 ```
 
-#### a) Vérifions s'il y a des lignes entièrement vides
+Après avoir importé les données Kickstarter, nous avons réalisé plusieurs étapes de nettoyage et de préparation de nos données ont été réalisées afin d'assurer la qualité et la cohérence de l'analyse :
+
+Tout d'abord, les lignes vides et celles comportant des valeurs manquantes ou non valides sont supprimées.
 
 ```{r}
-cat(sum(rowSums(is.na(data_kickstarter)) == ncol(data_kickstarter)))
-```
-
-#### b) Nettoyage des individus comportant des valeurs NA
-
-```{r}
-print(sapply(data_kickstarter, function(x) sum(is.na(x))))
-
 data_kickstarter <- data_kickstarter %>%
   drop_na()
 
-print(sapply(data_kickstarter, function(x) sum(is.na(x))))
-```
-
-#### c) Nettoyage des individus comportant des valeurs non valides
-
-```{r}
+# Nettoyage des individus comportant des valeurs non valides
 data_kickstarter <- data_kickstarter %>%
   filter(state != "undefined")
 
@@ -272,22 +257,14 @@ data_kickstarter <- data_kickstarter %>%
   filter(country != "N,0\"")
 ```
 
-#### d) Conversion de la caractéristique "launched" en format Date
+De nouvelles variables, telles que le jour, le mois et l'année de lancement et de clôture, ainsi que la durée de la campagne, ont été ajoutées pour faciliter l'analyse.
 
 ```{r}
+# Conversion des variables qui représentent des dates en format Date
 data_kickstarter$launched <- as.Date(data_kickstarter$launched)
-```
+data_kickstarter$deadline <- as.Date(data_kickstarter$deadline)
 
-#### e) Nettoyage des individus dont la date de lancement est incohérente
-
-```{r}
-data_kickstarter <- data_kickstarter %>%
-  filter(year(launched) >= 2009)
-```
-
-f)  Ajout du jour et du mois de la date de lancement et de la deadline
-
-```{r}
+# Ajout du jour et du mois de la date de lancement et de la deadline
 data_kickstarter <- data_kickstarter %>%
   mutate(
     launch_day = day(launched),
@@ -300,7 +277,15 @@ data_kickstarter <- data_kickstarter %>%
   )
 ```
 
-#### g) Conversion des codes pays en noms de pays anglais
+Seules les campagnes lancées à partir de 2009 (année de création de Kickstarter) sont conservées.
+
+```{r}
+# Nettoyage des individus dont la date de lancement est incohérente
+data_kickstarter <- data_kickstarter %>%
+  filter(launch_year >= 2009)
+```
+
+Enfin, les codes pays ont été convertis en noms de pays en anglais.
 
 ```{r}
 data_kickstarter <- data_kickstarter %>%
@@ -313,6 +298,8 @@ data_kickstarter <- data_kickstarter %>%
     ),
   )
 ```
+
+Toutes ces étapes de nettoyage garantissent que le jeu de données final est propre, cohérent et prêt à analyser.
 
 ### II. Présentation du dataset
 
@@ -443,11 +430,6 @@ data_kickstarter %>%
     breaks = seq(0, 10000, 1000),
     labels = label_comma(big.mark = " "),
   ) +
-  # scale_y_continuous(
-  #   limits = c(0, 1200),
-  #   breaks = seq(0, 1200, 200),
-  #   labels = label_comma(big.mark = " "),
-  # ) +
   labs(
     title = "Distribution du nombre de backers par projet",
     x = "Nombre de backers",
@@ -764,7 +746,7 @@ Une exception notable est la catégorie **Journalism** qui, malgré des besoins 
 
 #### QUESTION 2 : Quels pays ont les meilleurs taux de réussite ?
 
-#####Quels pays ont le plus de projets?
+##### Quels pays ont le plus de projets?
 
 ```{r}
 # Création d'un dataframe avec le nombre total de projets par pays
@@ -801,7 +783,7 @@ On remarque ensuite une proéminence des pays anglo-saxons dans les pays dont le
 
 On peut lier cela au fait que Kickstarter a été lancé progressivement dans le monde. Pour avoir une vision qui reflète mieux la popularité de Kickstarter, on pourrait comparer les quantités de projets selon le temps dans un prochain livrable. On peut également expliquer cela par le fait que, dans de nombreux pays, une offre plus locale et adaptée a eu le temps de se développer, avant l'arrivée de Kickstarter ou en parallèle.
 
-Etudions l'évolution de la quantité de projets selon le pays pour y voir plus clair:
+Étudions l'évolution de la quantité de projets selon le pays pour y voir plus clair:
 
 ```{r}
 # Sélection des 10 pays avec le plus de projets
@@ -895,8 +877,8 @@ data_kickstarter_top_ten_countries_no_US %>%
     max.overlaps = Inf,
     arrow = arrow(length = unit(0.015, "npc"))
   ) +
-  xlim(as.Date("2013-01-01"), as.Date("2018-01-03")) +
   scale_x_date(
+    limits = c(as.Date("2013-01-01"), as.Date("2018-01-03")),
     date_breaks = "1 year",
     date_labels = "%Y",
     expand = expansion(mult = 0.05)
@@ -921,9 +903,11 @@ Par exemple en France, Kickstarter est rarement cité comme la meilleure platefo
 
 Des services plus adaptés se sont implantés avant son arrivée.
 
-#####Quels pays ont le meilleur taux de réussite?
+##### Quels pays ont le meilleur taux de réussite?
 
-On émet l'hypothèse que les pays avec le plus grand nombre de projets, où Kickstarter est le plus implanté, ont un meilleur taux de réussite. Dans la visualisation suivante, nous allons évaluer la répartition des projets selon leur statut dans les pays du top 10.
+On émet l'hypothèse que les pays avec le plus grand nombre de projets, où Kickstarter est le plus implanté, ont un meilleur taux de réussite.
+
+Dans la visualisation suivante, nous allons évaluer la répartition des projets selon leur statut dans les pays du top 10.
 
 ```{r}
 data_kickstarter_top_ten_countries %>%
@@ -1010,7 +994,10 @@ mapdata %>% left_join(
   )
 ```
 
-Cette carte nous permet de constater deux phénomènes: - Kickstarter est majoritairement disponible dans des pays développés occidentaux: Amérique du nord, Europe de l'Ouest et du Nord, Australie-Nouvelle Zélande. La seule exception visible est le Japon, dont l'inclusion à Kickstarter était très récente en 2018. -Il ne semble pas y avoir de corrélation majeure entre la zone géographique et le taux de réussite. En Europe par exemple, les pays d'Europe de l'ouest ne semblent pas favorisés.
+Cette carte nous permet de constater deux phénomènes:
+
+- Kickstarter est majoritairement disponible dans des pays développés occidentaux: Amérique du nord, Europe de l'Ouest et du Nord, Australie-Nouvelle Zélande. La seule exception visible est le Japon, dont l'inclusion à Kickstarter était très récente en 2018.
+- Il ne semble pas y avoir de corrélation majeure entre la zone géographique et le taux de réussite. En Europe par exemple, les pays d'Europe de l'ouest ne semblent pas favorisés.
 
 Cette carte est utile mais a un défaut: elle ne permet pas de visualiser clairement les micro-nations comme Hong Kong ou Singapour, pourtant significatives pour Kickstarter.
 
@@ -1749,7 +1736,9 @@ Un motif qui se dessine tout au long de notre analyse est l'enjeu central du **m
 
 Comme nous avons pu le démontrer dans l'analyse exploratoire mais également dans la partie dédiée aux montants demandé, un **montant demandé faible est un facteur de réussite**, là où un montant demandé élevé est fortement corrélé à un échec.
 
-On peut relier cela à l'effet psychologique que peut avoir un montant demandé démesuré sur le financeur potentiel: L'objectif peut lui paraître irréaliste et sa contribution peut paraître dérisoire par rapport au montant à atteindre. La quantité de contributeurs requis peut également créer une dilution de la responsabilité. Au contraire, une campagne à l'objectif modeste permet à chaque contributeur de ressentir qu'il fait une différence visible, et de voir des réussites beaucoup plus rapidement. Les paliers supplémentaires réguliers ajoutés par les créateurs du projet permettent aux contributeurs de participer à des petites victoires, même après que l'objectif principal soit atteint.
+On peut relier cela à l'effet psychologique que peut avoir un montant demandé démesuré sur le financeur potentiel: L'objectif peut lui paraître irréaliste et sa contribution peut paraître dérisoire par rapport au montant à atteindre. La quantité de contributeurs requis peut également créer une dilution de la responsabilité.
+
+Au contraire, une campagne à l'objectif modeste permet à chaque contributeur de ressentir qu'il fait une différence visible, et de voir des réussites beaucoup plus rapidement. Les paliers supplémentaires réguliers ajoutés par les créateurs du projet permettent aux contributeurs de participer à des petites victoires, même après que l'objectif principal soit atteint.
 
 On remarque que les **catégories** avec le meilleur taux de réussite (comme **Dance**, **Theater** et **Comics**) sont des catégories où les montants demandés sont relativement modestes. On observe une corrélation du montant demandé avec le taux de réussite. Il y a cependant des exceptions, comme la catégorie **Journalism** qui affiche un taux de réussite relativement bas par rapport à ses objectifs plutôt modestes.
 
@@ -1763,14 +1752,13 @@ Grâce à notre analyse graphique, nous avons pu déceler des facteurs clés per
 
 ### Compétences acquises et perspectives des membres
 
--   **Florian BONELLI** : De ce projet, il en ressort que la qualité des données, introduites par un filtrage (notamment en rejetant les valeurs extrêmes), permet d’obtenir des visualisations plus explicites et pertinentes. Il aurait été intéressant de se rendre sur les projets ayant atteint leurs objectifs respectifs, pour approfondir notre analyse du projet et donc estimer de combien il faudrait ajuster à la baisse l’objectif initial pour maximiser nos chances de succès.
+- **Florian BONELLI** : De ce projet, il en ressort que la qualité des données, introduites par un filtrage (notamment en rejetant les valeurs extrêmes), permet d'obtenir des visualisations plus explicites et pertinentes. Il aurait été intéressant de se rendre sur les projets ayant atteint leurs objectifs respectifs, pour approfondir notre analyse du projet et donc estimer de combien il faudrait ajuster à la baisse l'objectif initial pour maximiser nos chances de succès.
 
--   **Eyvan FAURE** : J'ai principalement appris l'importance de l'esthétique dans les visualisations, car c'est un facteur déterminant pour une compréhension plus rapide et instinctive des visualisations. Je pense qu'il aurait été intéressant d'aborder dans notre projet l'utilisation du logiciel Tableau plus en profondeur car il semble très pertinent pour notre projet je trouve donc j'aurais aimé avoir plus de temps pour l'approfondir davantage.
+- **Eyvan FAURE** : J'ai principalement appris l'importance de l'esthétique dans les visualisations, car c'est un facteur déterminant pour une compréhension plus rapide et instinctive des visualisations. Je pense qu'il aurait été intéressant d'aborder dans notre projet l'utilisation du logiciel Tableau plus en profondeur car il semble très pertinent pour notre projet je trouve donc j'aurais aimé avoir plus de temps pour l'approfondir davantage.
 
--   **Ryan OUYED** : Dans le cadre de ce projet, j'ai pu apprendre l'importance d'avoir un jeu de donnée exploitable et propre. En effet, les quelques incohérences et corruptions trouvables dans le jeu de données de base nous ont fait nous poser des questions sur la validité de nos analyses. On constate ici l'importance d'une bonne collecte des données.\
-    J'ai également pu constater les complications de traiter un jeu de données avec beaucoup de valeurs extrêmes (Montants élevés, prédominance des USA) qui m'a beaucoup fait réfléchir sur la façon de représenter des grandes disparités dans un espace limité.
+- **Ryan OUYED** : Dans le cadre de ce projet, j'ai pu apprendre l'importance d'avoir un jeu de donnée exploitable et propre. En effet, les quelques incohérences et corruptions trouvables dans le jeu de données de base nous ont fait nous poser des questions sur la validité de nos analyses. On constate ici l'importance d'une bonne collecte des données. J'ai également pu constater les complications de traiter un jeu de données avec beaucoup de valeurs extrêmes (Montants élevés, prédominance des USA) qui m'a beaucoup fait réfléchir sur la façon de représenter des grandes disparités dans un espace limité.
 
--   **Lucas SAURON** :
+- **Lucas SAURON** :
 
 ## Annexe
 
@@ -1778,26 +1766,26 @@ Grâce à notre analyse graphique, nous avons pu déceler des facteurs clés per
 
 **Florian BONELLI** :
 
--   Question 3 (Périodes de l'année)
--   Question 4 (Montants)
--   Diaporama
+- Question 3 (Périodes de l'année)
+- Question 4 (Montants)
+- Diaporama
 
 **Eyvan FAURE** :
 
--   Nettoyage des données
--   Question 1 (Catégories)
--   Shiny Dashboard
--   Tableau
--   Diaporama
+- Nettoyage des données
+- Question 1 (Catégories)
+- Shiny Dashboard
+- Tableau
+- Diaporama
 
 **Ryan OUYED** :
 
--   Présentation du dataset
--   Analyses Exploratoires
--   Question 2 (Pays)
--   Diaporama
+- Présentation du dataset
+- Analyses Exploratoires
+- Question 2 (Pays)
+- Diaporama
 
 **Lucas SAURON** :
 
--   Question 5 (Mots utilisés)
--   Diaporama
+- Question 5 (Mots utilisés)
+- Diaporama
