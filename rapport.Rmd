@@ -14,18 +14,18 @@ L'objectif de ce projet d'IF36 est d'analyser et de présenter des données issu
 
 Équipe Civizualisation :
 
-- Florian BONELLI
-- Eyvan FAURE
-- Ryan OUYED
-- Lucas SAURON
+-   Florian BONELLI
+-   Eyvan FAURE
+-   Ryan OUYED
+-   Lucas SAURON
 
 ## 📚 Sommaire
 
-- 📝 Contexte des données choisis
-- 📥 Téléchargement des données
-- 📁 Présentation des données
-- 📊 Plan d'analyse
-- 🧭 Exploration des données
+-   📝 Contexte des données choisis
+-   📥 Téléchargement des données
+-   📁 Présentation des données
+-   📊 Plan d'analyse
+-   🧭 Exploration des données
 
 ## 📝 Contexte des données choisis
 
@@ -53,27 +53,27 @@ Il faut les télécharger manuellement.
 
 Suivez les étapes ci-dessous pour récupérer les fichiers nécessaires :
 
-1. Téléchargez l'archive contenant les jeux de données.
+1.  Téléchargez l'archive contenant les jeux de données.
 
-    ```bash
+    ``` bash
     curl -L -o ./data/kickstarter-projects.zip https://www.kaggle.com/api/v1/datasets/download/kemical/kickstarter-projects
     ```
 
-2. Une fois l'archive téléchargée, extrayez les fichiers.
+2.  Une fois l'archive téléchargée, extrayez les fichiers.
 
-    ```bash
+    ``` bash
     unzip ./data/kickstarter-projects.zip -d ./data
     ```
 
     Si `unzip` n'est pas installé, vous pouvez l'installer avec la commande suivante
 
-    ```bash
+    ``` bash
     sudo apt-get install unzip
     ```
 
-3. (Facultatif) Après avoir extrait les fichiers, vous pouvez supprimer l'archive pour libérer de l'espace.
+3.  (Facultatif) Après avoir extrait les fichiers, vous pouvez supprimer l'archive pour libérer de l'espace.
 
-    ```bash
+    ``` bash
     rm ./data/kickstarter-projects.zip
     ```
 
@@ -83,25 +83,25 @@ Suivez les étapes ci-dessous pour récupérer les fichiers nécessaires :
 
 Ce premier jeu de données au format CSV (Comma-Separated Values) contient 321 616 individus et 17 variables.
 
-| Variable             | Type de données   | Description                                                                            |
-|----------------------|-------------------|----------------------------------------------------------------------------------------|
-| `ID`                 | Integer           | Identifiant unique du projet                                                           |
-| `name`               | String            | Nom du projet                                                                          |
-| `category`           | String            | Catégorie spécifique du projet                                                         |
-| `main_category`      | String            | Catégorie principale du projet                                                         |
-| `currency`           | String            | Devise utilisée pour le financement                                                    |
-| `deadline`           | Date              | Date limite pour la collecte des fonds                                                 |
-| `goal`               | Float             | Montant que le projet espère récolter                                                  |
-| `launched`           | Date and time     | Date et heure de lancement du projet                                                   |
-| `pledged`            | Float             | Somme totale engagée par les contributeurs                                             |
-| `state`              | String            | État de la campagne (ex : "failed", "successful")                                      |
-| `backers`            | Integer           | Nombre de contributeurs                                                                |
-| `country`            | String            | Pays où le projet est lancé (ISO 3166)                                                 |
-| `usd pledged`        | Float             | Montant collecté en USD (conversion réalisée par Kickstarter)                          |
-| NA                   | NA                | NA                                                                                     |
-| NA                   | NA                | NA                                                                                     |
-| NA                   | NA                | NA                                                                                     |
-| NA                   | NA                | NA                                                                                     |
+| Variable | Type de données | Description |
+|--------------|--------------|--------------------------------------------|
+| `ID` | Integer | Identifiant unique du projet |
+| `name` | String | Nom du projet |
+| `category` | String | Catégorie spécifique du projet |
+| `main_category` | String | Catégorie principale du projet |
+| `currency` | String | Devise utilisée pour le financement |
+| `deadline` | Date | Date limite pour la collecte des fonds |
+| `goal` | Float | Montant que le projet espère récolter |
+| `launched` | Date and time | Date et heure de lancement du projet |
+| `pledged` | Float | Somme totale engagée par les contributeurs |
+| `state` | String | État de la campagne (ex : "failed", "successful") |
+| `backers` | Integer | Nombre de contributeurs |
+| `country` | String | Pays où le projet est lancé (ISO 3166) |
+| `usd pledged` | Float | Montant collecté en USD (conversion réalisée par Kickstarter) |
+| NA | NA | NA |
+| NA | NA | NA |
+| NA | NA | NA |
+| NA | NA | NA |
 
 On remarque que les 4 dernières variables sont sans titre et sans données.
 
@@ -109,23 +109,23 @@ On remarque que les 4 dernières variables sont sans titre et sans données.
 
 Ce deuxième jeu de données au format CSV (Comma-Separated Values) contient 375 765 individus et 15 variables.
 
-| Variable             | Type de données   | Description                                                                            |
-|----------------------|-------------------|----------------------------------------------------------------------------------------|
-| `ID`                 | Integer           | Identifiant unique du projet                                                           |
-| `name`               | String            | Nom du projet                                                                          |
-| `category`           | String            | Catégorie spécifique du projet                                                         |
-| `main_category`      | String            | Catégorie principale du projet                                                         |
-| `currency`           | String            | Devise utilisée pour le financement                                                    |
-| `deadline`           | Date              | Date limite pour la collecte des fonds                                                 |
-| `goal`               | Float             | Montant que le projet espère récolter                                                  |
-| `launched`           | Date and time     | Date et heure de lancement du projet                                                   |
-| `pledged`            | Float             | Somme totale engagée par les contributeurs                                             |
-| `state`              | String            | État de la campagne (ex : "failed", "successful")                                      |
-| `backers`            | Integer           | Nombre de contributeurs                                                                |
-| `country`            | String            | Pays où le projet est lancé (ISO 3166)                                                 |
-| `usd pledged`        | Float             | Montant collecté en USD (conversion réalisée par Kickstarter)                          |
-| `usd_pledged_real`   | Float             | Montant collecté en USD (conversion réalisée par l'API fixer.io)                       |
-| `usd_goal_real`      | Float             | Montant que le projet espère collecter en USD (conversion réalisée par l'API fixer.io) |
+| Variable | Type de données | Description |
+|--------------|--------------|--------------------------------------------|
+| `ID` | Integer | Identifiant unique du projet |
+| `name` | String | Nom du projet |
+| `category` | String | Catégorie spécifique du projet |
+| `main_category` | String | Catégorie principale du projet |
+| `currency` | String | Devise utilisée pour le financement |
+| `deadline` | Date | Date limite pour la collecte des fonds |
+| `goal` | Float | Montant que le projet espère récolter |
+| `launched` | Date and time | Date et heure de lancement du projet |
+| `pledged` | Float | Somme totale engagée par les contributeurs |
+| `state` | String | État de la campagne (ex : "failed", "successful") |
+| `backers` | Integer | Nombre de contributeurs |
+| `country` | String | Pays où le projet est lancé (ISO 3166) |
+| `usd pledged` | Float | Montant collecté en USD (conversion réalisée par Kickstarter) |
+| `usd_pledged_real` | Float | Montant collecté en USD (conversion réalisée par l'API fixer.io) |
+| `usd_goal_real` | Float | Montant que le projet espère collecter en USD (conversion réalisée par l'API fixer.io) |
 
 Ce fichier contient plus d'individus que le premier, exclut les variables inutiles et ajoute deux variables supplémentaires par rapport au premier fichier.
 
@@ -141,35 +141,35 @@ L'objectif principal de notre analyse est de comprendre les dynamiques du financ
 
 ### 🔍 Questions d'analyse
 
-- Quels sont les taux de réussite des campagnes selon les catégories ?
-- Dans quelle mesure le montant de l'objectif influence-t-il la probabilité de succès d'une campagne ?
-- Existe-t-il des périodes de l'année où les campagnes ont plus de chances de réussir ?
-- Quels sont les pays où le plus de campagnes sont créées? Parmi eux, lesquels ont les meilleurs taux de réussite?
-- L'écart entre l'objectif initial et les fonds réellement collectés varie-t-il en fonction de la catégorie ou de la devise utilisée ?
-- Le choix des mots dans le titre d'une campagne a-t-il un impact sur son succès ?
-- Comment a évolué le taux de réussite et le nombre de campagne au fil des années? Les campagnes sont elles plus ambitieuses qu'avant?
+-   Quels sont les taux de réussite des campagnes selon les catégories ?
+-   Dans quelle mesure le montant de l'objectif influence-t-il la probabilité de succès d'une campagne ?
+-   Existe-t-il des périodes de l'année où les campagnes ont plus de chances de réussir ?
+-   Quels sont les pays où le plus de campagnes sont créées? Parmi eux, lesquels ont les meilleurs taux de réussite?
+-   L'écart entre l'objectif initial et les fonds réellement collectés varie-t-il en fonction de la catégorie ou de la devise utilisée ?
+-   Le choix des mots dans le titre d'une campagne a-t-il un impact sur son succès ?
+-   Comment a évolué le taux de réussite et le nombre de campagne au fil des années? Les campagnes sont elles plus ambitieuses qu'avant?
 
 ### 📈 Variables à comparer
 
 Pour répondre à nos questions d'analyse, nous comparerons les variables suivantes :
 
-- **Taux de réussite et d'échec par catégorie** : Identifier les catégories où les campagnes réussissent ou échouent le plus souvent.
-- **Taux de réussite et d'échec en fonction du montant de l'objectif** : Analyser l'impact du montant demandé sur le succès ou l'échec des campagnes.
-- **Taux de réussite et d'échec selon la période de lancement** : Étudier si certaines périodes de l'année influencent les chances de succès ou d'échec.
-- **Nombre de campagnes créées et leur taux de réussite selon le pays**: Comparer les pays où les campagnes sont les plus populaires pour observer des différences de nombres de campagnes et de taux de réussite selon les régions.
-- **Écart entre le montant collecté et l'objectif fixé** : Comparer les fonds espérés et les fonds réellement obtenus pour évaluer les écarts.
-- **Impact des mots-clés dans les titres sur le succès** : Identifier les mots les plus fréquents dans les titres des campagnes réussies et leur influence.
-- **Nombre de campagnes réussies montant moyen récolté par campagne réussie selon l'année** : Comparer le nombre de campagnes réussies et leur valeur moyenne chaque année pour dégager des tendances.
+-   **Taux de réussite et d'échec par catégorie** : Identifier les catégories où les campagnes réussissent ou échouent le plus souvent.
+-   **Taux de réussite et d'échec en fonction du montant de l'objectif** : Analyser l'impact du montant demandé sur le succès ou l'échec des campagnes.
+-   **Taux de réussite et d'échec selon la période de lancement** : Étudier si certaines périodes de l'année influencent les chances de succès ou d'échec.
+-   **Nombre de campagnes créées et leur taux de réussite selon le pays**: Comparer les pays où les campagnes sont les plus populaires pour observer des différences de nombres de campagnes et de taux de réussite selon les régions.
+-   **Écart entre le montant collecté et l'objectif fixé** : Comparer les fonds espérés et les fonds réellement obtenus pour évaluer les écarts.
+-   **Impact des mots-clés dans les titres sur le succès** : Identifier les mots les plus fréquents dans les titres des campagnes réussies et leur influence.
+-   **Nombre de campagnes réussies montant moyen récolté par campagne réussie selon l'année** : Comparer le nombre de campagnes réussies et leur valeur moyenne chaque année pour dégager des tendances.
 
 Ces comparaisons nous permettront de mieux comprendre les facteurs influençant le succès des campagnes Kickstarter.
 
 ### ⚠️ Limitations et problèmes potentiels
 
-- Certains porteurs de projets peuvent fixer des objectifs volontairement bas pour maximiser leurs chances de succès ou, au contraire, volontairement élevé par manque de sérieux, ce qui pourrait biaiser les résultats de l'analyse.
+-   Certains porteurs de projets peuvent fixer des objectifs volontairement bas pour maximiser leurs chances de succès ou, au contraire, volontairement élevé par manque de sérieux, ce qui pourrait biaiser les résultats de l'analyse.
 
-- Les taux de conversion en USD peuvent introduire des biais en fonction des fluctuations des taux de change et de l'inflation.
+-   Les taux de conversion en USD peuvent introduire des biais en fonction des fluctuations des taux de change et de l'inflation.
 
-- Des facteurs externes, tels que les tendances économiques ou médiatiques, qui ne sont pas inclus dans les données, peuvent également influencer le succès des campagnes.
+-   Des facteurs externes, tels que les tendances économiques ou médiatiques, qui ne sont pas inclus dans les données, peuvent également influencer le succès des campagnes.
 
 ## 🧭 Exploration des données
 
@@ -792,6 +792,7 @@ data_kickstarter %>%
     subtitle = "Surface proportionnelle au nombre de projets",
   )
 ```
+
 Ce graphique représente la quantité de projets lancés sur Kickstarter par pays.
 
 On remarque une grande sur-représentation des États-Unis, pays de création de Kickstarter, dans une proportion qui ne saurait être expliquée par la seule différence de population.
@@ -922,8 +923,7 @@ Des services plus adaptés se sont implantés avant son arrivée.
 
 #####Quels pays ont le meilleur taux de réussite?
 
-On émet l'hypothèse que les pays avec le plus grand nombre de projets, où Kickstarter est le plus implanté, ont un meilleur taux de réussite.
-Dans la visualisation suivante, nous allons évaluer la répartition des projets selon leur statut dans les pays du top 10.
+On émet l'hypothèse que les pays avec le plus grand nombre de projets, où Kickstarter est le plus implanté, ont un meilleur taux de réussite. Dans la visualisation suivante, nous allons évaluer la répartition des projets selon leur statut dans les pays du top 10.
 
 ```{r}
 data_kickstarter_top_ten_countries %>%
@@ -952,6 +952,7 @@ data_kickstarter_top_ten_countries %>%
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 30, size = 9))
 ```
+
 On remarque que la variation des taux de réussite n'est pas clairement corrélée à la quantité de projets lancés: près de la moitié des pays représentés dérogent à cette règle.
 
 On émet l'hypothèse que les variations dans le taux de réussite pourraient avoir une composante géographique: Peut-être que les projets Kickstarter de certaines régions géograpphiques ont plus de succès que d'autres.
@@ -1009,9 +1010,7 @@ mapdata %>% left_join(
   )
 ```
 
-Cette carte nous permet de constater deux phénomènes:
-- Kickstarter est majoritairement disponible dans des pays développés occidentaux: Amérique du nord, Europe de l'Ouest et du Nord, Australie-Nouvelle Zélande. La seule exception visible est le Japon, dont l'inclusion à Kickstarter était très récente en 2018.
--Il ne semble pas y avoir de corrélation majeure entre la zone géographique et le taux de réussite. En Europe par exemple, les pays d'Europe de l'ouest ne semblent pas favorisés.
+Cette carte nous permet de constater deux phénomènes: - Kickstarter est majoritairement disponible dans des pays développés occidentaux: Amérique du nord, Europe de l'Ouest et du Nord, Australie-Nouvelle Zélande. La seule exception visible est le Japon, dont l'inclusion à Kickstarter était très récente en 2018. -Il ne semble pas y avoir de corrélation majeure entre la zone géographique et le taux de réussite. En Europe par exemple, les pays d'Europe de l'ouest ne semblent pas favorisés.
 
 Cette carte est utile mais a un défaut: elle ne permet pas de visualiser clairement les micro-nations comme Hong Kong ou Singapour, pourtant significatives pour Kickstarter.
 
@@ -1204,7 +1203,7 @@ data_kickstarter %>%
 
 On peut observer qu'une campagne inférieur a 40 jours à un taux de réussite de 40% à 50% alors qu'ensuite, le taux chute jusqu'à 30%. On en déduis donc qu'une durée idéale de campagne est de 20 à 25 jours avec un taux de réussite à 50%.
 
-#### QUESTION 4 :  Comment les montants demandés et récoltés ont-ils évolué au cours du temps ?
+#### QUESTION 4 : Comment les montants demandés et récoltés ont-ils évolué au cours du temps ?
 
 ##### Evolution brute des montants
 
@@ -1315,7 +1314,7 @@ On remarque que l'immense majorité des projets réussis dépassent de peu leur 
 
 On remarque cependant qu'au fil des années de plus en plus de projets pulvérisent leur objectif, et dans des proportions de plus en plus grandes
 
-#### QUESTION 5 :  Le choix des mots dans le titre d'une campagne a-t-il un impact sur son succès ?
+#### QUESTION 5 : Le choix des mots dans le titre d'une campagne a-t-il un impact sur son succès ?
 
 ##### La longueur du titre influence-t-elle le taux de succès d'une campagne ?
 
@@ -1663,7 +1662,7 @@ data_success_rate %>%
 
 On observe que la plupart des projets, qu'ils aient réussi ou échoué, ont un score de sentiment proche de 0 (neutre), avec un pic marqué à cette valeur. Cette analyse suggère que le sentiment du titre n'influence que marginalement le succès d'un projet, confirmant que d'autres facteurs pourraient jouer un rôle plus déterminant dans les résultats des campagnes Kickstarter.
 
-#### QUESTION 6 :  Dans quelle mesure le montant de l'objectif influence-t-il la probabilité de succès d'une campagne ?
+#### QUESTION 6 : Dans quelle mesure le montant de l'objectif influence-t-il la probabilité de succès d'une campagne ?
 
 On se demande si le montant demandé lors d'une campagne influence la réussite. On peut se demander si un projet qui demande une somme importante a peu de chance de réussir et inversement si un projet qui demande un budget faible a plus de chance de réussir.
 
@@ -1750,8 +1749,7 @@ Un motif qui se dessine tout au long de notre analyse est l'enjeu central du **m
 
 Comme nous avons pu le démontrer dans l'analyse exploratoire mais également dans la partie dédiée aux montants demandé, un **montant demandé faible est un facteur de réussite**, là où un montant demandé élevé est fortement corrélé à un échec.
 
-On peut relier cela à l'effet psychologique que peut avoir un montant demandé démesuré sur le financeur potentiel: L'objectif peut lui paraître irréaliste et sa contribution peut paraître dérisoire par rapport au montant à atteindre. La quantité de contributeurs requis peut également créer une dilution de la responsabilité.
-Au contraire, une campagne à l'objectif modeste permet à chaque contributeur de ressentir qu'il fait une différence visible, et de voir des réussites beaucoup plus rapidement. Les paliers supplémentaires réguliers ajoutés par les créateurs du projet permettent aux contributeurs de participer à des petites victoires, même après que l'objectif principal soit atteint.
+On peut relier cela à l'effet psychologique que peut avoir un montant demandé démesuré sur le financeur potentiel: L'objectif peut lui paraître irréaliste et sa contribution peut paraître dérisoire par rapport au montant à atteindre. La quantité de contributeurs requis peut également créer une dilution de la responsabilité. Au contraire, une campagne à l'objectif modeste permet à chaque contributeur de ressentir qu'il fait une différence visible, et de voir des réussites beaucoup plus rapidement. Les paliers supplémentaires réguliers ajoutés par les créateurs du projet permettent aux contributeurs de participer à des petites victoires, même après que l'objectif principal soit atteint.
 
 On remarque que les **catégories** avec le meilleur taux de réussite (comme **Dance**, **Theater** et **Comics**) sont des catégories où les montants demandés sont relativement modestes. On observe une corrélation du montant demandé avec le taux de réussite. Il y a cependant des exceptions, comme la catégorie **Journalism** qui affiche un taux de réussite relativement bas par rapport à ses objectifs plutôt modestes.
 
@@ -1765,7 +1763,7 @@ Grâce à notre analyse graphique, nous avons pu déceler des facteurs clés per
 
 ### Compétences acquises et perspectives des membres
 
--   **Florian BONELLI** :
+-   **Florian BONELLI** : De ce projet, il en ressort que la qualité des données, introduites par un filtrage (notamment en rejetant les valeurs extrêmes), permet d’obtenir des visualisations plus explicites et pertinentes. Il aurait été intéressant de se rendre sur les projets ayant atteint leurs objectifs respectifs, pour approfondir notre analyse du projet et donc estimer de combien il faudrait ajuster à la baisse l’objectif initial pour maximiser nos chances de succès.
 
 -   **Eyvan FAURE** : J'ai principalement appris l'importance de l'esthétique dans les visualisations, car c'est un facteur déterminant pour une compréhension plus rapide et instinctive des visualisations. Je pense qu'il aurait été intéressant d'aborder dans notre projet l'utilisation du logiciel Tableau plus en profondeur car il semble très pertinent pour notre projet je trouve donc j'aurais aimé avoir plus de temps pour l'approfondir davantage.
 
