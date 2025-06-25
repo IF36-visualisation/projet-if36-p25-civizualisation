@@ -1758,7 +1758,8 @@ Grâce à notre analyse graphique, nous avons pu déceler des facteurs clés per
 
 - **Ryan OUYED** : Dans le cadre de ce projet, j'ai pu apprendre l'importance d'avoir un jeu de donnée exploitable et propre. En effet, les quelques incohérences et corruptions trouvables dans le jeu de données de base nous ont fait nous poser des questions sur la validité de nos analyses. On constate ici l'importance d'une bonne collecte des données. J'ai également pu constater les complications de traiter un jeu de données avec beaucoup de valeurs extrêmes (Montants élevés, prédominance des USA) qui m'a beaucoup fait réfléchir sur la façon de représenter des grandes disparités dans un espace limité.
 
-- **Lucas SAURON** :
+- **Lucas SAURON** : Ce projet m’a permis de prendre conscience de l’utilité d’explorer les données sans idée préconçue dans un premier temps. Cette approche permet souvent de faire émerger des tendances ou des éléments inattendus, que l’on n’aurait pas remarqués autrement. J’ai également compris l’importance de bien choisir le type de graphique en fonction de ce que l’on souhaite mettre en avant. Il existe une grande variété de visualisations, souvent méconnues, qui peuvent grandement améliorer la clarté et la pertinence d’une analyse si elles sont bien utilisées.
+
 
 ## Annexe
 
